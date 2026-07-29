@@ -600,17 +600,17 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
   featuredEcosystem: [
     {
       id: "eco_1",
-      badge: "Protfolio",
-      title: "Protfolio Website",
+      badge: "Portfolio",
+      title: "Portfolio Website",
       mainUrl: "https://www.9t9.pro.bd",
       description: "A professional portfolio featuring graphic design, branding, UI concepts, and AI-powered web development. Showcasing creative projects, technical expertise, and digital solutions for modern businesses.",
       stats: [
-        { label: "ACHIVEMENT", value: "100+ Clients" },
+        { label: "ACHIEVEMENT", value: "100+ Clients" },
         { label: "Earn", value: "$10K+" }
       ],
       keyFeatures: [
         "Premium UI/UX with smooth interactive animations.",
-        "Seamless Bilingual Support (English & বাংলা)"
+        "Seamless Bilingual Support (English & বাংলা)",
         "Fully responsive across desktop, tablet, and mobile.",
         "SEO & performance optimized for faster loading.",
         "Professional showcase for design, branding, and web projects."
@@ -620,39 +620,12 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
         "https://i.postimg.cc/908FVcMX/Screenshot-(18).png",
         "https://i.postimg.cc/SRvq3VTj/Screenshot-(19).png"
       ],
-     links: [
-      {
-      label: "Live Demo",
-      url: "https://9t9.pro.bd",
-      type: "web"
-      }
-    ]
-    },
-    {
-      id: "eco_2",
-      badge: "WEB & MOBILE APP",
-      title: "ACS Future School",
-      mainUrl: "https://www.acsfutureschool.com",
-      description: "Enabling massive scale education delivery for Class 6 to 10 students in Bangladesh with gamified learning & live classes.",
-      stats: [
-        { label: "DOWNLOADS", value: "170k+" },
-        { label: "ACTIVE USERS", value: "200k+" },
-        { label: "REVENUE", value: "10 Crore+" }
-      ],
-      keyFeatures: [
-        "Live Classes & Recorded Classes for flexible learning.",
-        "Gamified Rewards System based on student performance.",
-        "Affiliate Program for referrals & Printing Service.",
-        "Interactive Quizzes & Exams with real-time feedback."
-      ],
-      galleryImages: [
-        "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1200",
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800"
-      ],
       links: [
-        { label: "www.acsfutureschool.com", url: "https://www.acsfutureschool.com", type: "web" },
-        { label: "Play Store", url: "https://play.google.com", type: "playstore" }
+        {
+          label: "Live Demo",
+          url: "https://9t9.pro.bd",
+          type: "web"
+        }
       ]
     }
   ],
