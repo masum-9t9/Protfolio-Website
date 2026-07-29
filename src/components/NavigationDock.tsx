@@ -3,9 +3,11 @@ import { motion } from 'motion/react';
 import {
   Home,
   User,
-  Cpu,
+  Wrench,
   Briefcase,
-  FolderKanban,
+  FolderGit2,
+  Globe as GlobeIcon,
+  Award,
   History,
   MessageSquareQuote,
   Mail,
@@ -16,43 +18,43 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface NavItem {
   id: keyof typeof UI_TRANSLATIONS.bn.nav;
-  icon: React.ElementType;
-  faIconClass: string;
+  labelKey: keyof typeof UI_TRANSLATIONS.bn.nav;
+  icon: React.FC<{ className?: string }>;
+  href: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'hero', icon: Home, faIconClass: 'fa-solid fa-house' },
-  { id: 'about', icon: User, faIconClass: 'fa-solid fa-user' },
-  { id: 'skills', icon: Cpu, faIconClass: 'fa-solid fa-code' },
-  { id: 'services', icon: Briefcase, faIconClass: 'fa-solid fa-briefcase' },
-  { id: 'portfolio', icon: FolderKanban, faIconClass: 'fa-solid fa-diagram-project' },
-  { id: 'experience', icon: History, faIconClass: 'fa-solid fa-clock-rotate-left' },
-  { id: 'testimonials', icon: MessageSquareQuote, faIconClass: 'fa-solid fa-comment-dots' },
-  { id: 'contact', icon: Mail, faIconClass: 'fa-solid fa-envelope' },
+  { id: 'hero', labelKey: 'hero', icon: Home, href: '#hero' },
+  { id: 'about', labelKey: 'about', icon: User, href: '#about' },
+  { id: 'skills', labelKey: 'skills', icon: Wrench, href: '#skills' },
+  { id: 'services', labelKey: 'services', icon: Briefcase, href: '#services' },
+  { id: 'portfolio', labelKey: 'portfolio', icon: FolderGit2, href: '#portfolio' },
+  { id: 'ecosystem', labelKey: 'ecosystem', icon: GlobeIcon, href: '#ecosystem' },
+  { id: 'experience', labelKey: 'experience', icon: History, href: '#experience' },
+  { id: 'testimonials', labelKey: 'testimonials', icon: MessageSquareQuote, href: '#testimonials' },
+  { id: 'contact', labelKey: 'contact', icon: Mail, href: '#contact' },
 ];
 
 export const NavigationDock: React.FC = () => {
-  const { language, toggleLanguage } = useLanguage();
+  const { language } = useLanguage();
   const t = UI_TRANSLATIONS[language];
-  
-  const [activeSection, setActiveSection] = useState('hero');
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Scroll Spy Effect with Intersection / Scroll listener
+  const [activeSection, setActiveSection] = useState('hero');
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      const sections = NAV_ITEMS.map((item) => item.id);
+      const scrollPosition = window.scrollY + 200;
 
-      const sectionIds = NAV_ITEMS.map((item) => item.id);
-      const scrollPosition = window.scrollY + window.innerHeight * 0.35;
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
 
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sectionIds[i]);
-        if (section) {
-          const top = section.offsetTop;
-          if (scrollPosition >= top - 80) {
-            setActiveSection(sectionIds[i]);
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionId);
             break;
           }
         }
@@ -60,108 +62,68 @@ export const NavigationDock: React.FC = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    setActiveSection(id);
-    const element = document.getElementById(id);
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+
     if (element) {
-      const yOffset = -70;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(targetId);
     }
   };
 
-  // Calculate Apple macOS Dock magnification scale for 60 FPS spring effect
-  const getScale = (index: number) => {
-    if (hoveredIndex === null) return 1;
-    const distance = Math.abs(hoveredIndex - index);
-    if (distance === 0) return 1.28;
-    if (distance === 1) return 1.14;
-    if (distance === 2) return 1.05;
-    return 1;
-  };
-
   return (
-    <header className="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center pointer-events-none px-2 sm:px-4">
+    <header className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[95vw]">
       <motion.nav
-        initial={{ y: -80, opacity: 0 }}
+        initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-        onMouseLeave={() => setHoveredIndex(null)}
-        className={`pointer-events-auto flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-full backdrop-blur-2xl border transition-all duration-300 max-w-full overflow-x-auto no-scrollbar ${
-          isScrolled
-            ? 'bg-neutral-950/85 border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_1px_0_rgba(255,255,255,0.15)_inset]'
-            : 'bg-neutral-950/70 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
-        }`}
-        role="navigation"
-        aria-label="Apple Floating Dock Navigation"
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full bg-neutral-950/85 backdrop-blur-xl border border-neutral-800/80 shadow-[0_10px_30px_rgba(0,0,0,0.8)]"
       >
-        {NAV_ITEMS.map((item, index) => {
+        {NAV_ITEMS.map((item) => {
+          const Icon = item.icon;
           const isActive = activeSection === item.id;
-          const scale = getScale(index);
-          const label = t.nav[item.id];
+          const isHovered = hoveredId === item.id;
+          const label = t.nav[item.labelKey] || item.id;
 
           return (
-            <div key={item.id} className="relative group shrink-0">
-              <motion.button
-                onClick={() => scrollToSection(item.id)}
-                onMouseEnter={() => setHoveredIndex(index)}
-                animate={{
-                  scale,
-                  y: isActive ? -4 : 0,
-                }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 450,
-                  damping: 28,
-                  mass: 0.6,
-                }}
-                className={`relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-200 select-none ${
+            <div key={item.id} className="relative group">
+              <a
+                href={item.href}
+                onClick={(e) => scrollToSection(e, item.href)}
+                onMouseEnter={() => setHoveredId(item.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                className={`relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-all duration-200 ${
                   isActive
-                    ? 'bg-[#3A86FF] text-white shadow-[0_0_20px_rgba(58,134,255,0.45)] ring-1 ring-white/30'
-                    : 'text-neutral-300 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#3A86FF] text-white shadow-[0_0_15px_rgba(58,134,255,0.5)] scale-110'
+                    : 'text-neutral-400 hover:text-white hover:bg-neutral-900/80'
                 }`}
+                aria-label={label}
               >
-                {/* Font Awesome Icon */}
-                <i
-                  className={`${item.faIconClass} text-sm sm:text-base transition-transform duration-200 ${
-                    isActive ? 'scale-110' : 'group-hover:scale-110'
-                  }`}
-                  aria-hidden="true"
-                />
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
 
-                {/* Localized Label (hidden on small mobile) */}
-                <span className="hidden md:inline whitespace-nowrap text-xs font-bold tracking-wide">
-                  {label}
-                </span>
-
-                {/* Active Indicator Light */}
                 {isActive && (
-                  <motion.span
-                    layoutId="activeDockDot"
-                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff]"
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                  <motion.div
+                    layoutId="activeDockIndicator"
+                    className="absolute -bottom-1 w-1.5 h-1.5 bg-white rounded-full shadow-sm"
                   />
                 )}
-              </motion.button>
+              </a>
 
-              {/* Tooltip on Mobile / Small Tablet hover */}
-              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-neutral-900/95 border border-white/10 text-white text-[11px] font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none md:hidden whitespace-nowrap z-50 shadow-xl backdrop-blur-md">
+              <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-neutral-900/95 border border-neutral-800 text-white text-[11px] font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap shadow-xl backdrop-blur-md">
                 {label}
               </div>
             </div>
           );
         })}
 
-        {/* Vertical Separator */}
         <div className="w-[1px] h-5 bg-white/20 mx-1 shrink-0" />
 
-        {/* Language Switcher Component on Apple Dock */}
         <LanguageSwitcher variant="dock" />
-
       </motion.nav>
     </header>
   );

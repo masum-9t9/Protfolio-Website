@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Globe, Languages, Check } from 'lucide-react';
-import { useLanguage, Language } from '../context/LanguageContext';
+import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
 
 interface LanguageSwitcherProps {
@@ -64,7 +64,6 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
     );
   }
 
-  // 'dock' & 'pill' & 'compact' variants
   return (
     <div className={`relative group shrink-0 ${className}`}>
       <motion.button
@@ -87,7 +86,6 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
           </span>
         </div>
 
-        {/* Subtle glowing pill indicator */}
         <span
           className={`w-1.5 h-1.5 rounded-full animate-pulse ml-0.5 ${
             isBn ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'bg-[#3A86FF] shadow-[0_0_8px_#3a86ff]'
@@ -95,7 +93,6 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
         />
       </motion.button>
 
-      {/* Floating Tooltip */}
       <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-neutral-900/95 border border-white/10 text-white text-[11px] font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50 shadow-xl backdrop-blur-md">
         {t.switchLanguageTooltip}
       </div>
