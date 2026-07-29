@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Facebook, Youtube, Send, MessageSquare, Heart, Sparkles, Mail, Phone, ExternalLink } from 'lucide-react';
+import { ArrowUp, Facebook, Youtube, Send, MessageSquare, Heart, Sparkles, Mail, Phone, Github } from 'lucide-react';
 import { SocialLinks } from '../types';
 
 interface FooterProps {
@@ -11,15 +11,13 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const behanceUrl = socials.behance || "https://www.behance.net/masum_9t9_official";
+  const fiverrUrl = socials.fiverr || "https://www.fiverr.com/sellers/masum9t9/";
+
   return (
     <footer className="relative bg-gradient-to-b from-[#090D16] via-neutral-950 to-black border-t border-neutral-800/80 pt-16 pb-8 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Decorative Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-[#3A86FF]/5 blur-3xl pointer-events-none rounded-full" />
-      
-      {/* Subtle Background Watermark Text */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[120px] sm:text-[180px] font-black tracking-tighter text-neutral-900/20 select-none pointer-events-none whitespace-nowrap z-0">
-        MASUM 9T9
-      </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -33,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
                 9T9
               </div>
               <div>
-                <span className="text-xl font-bold text-white tracking-tight block">Masum 9T9</span>
+                <span className="text-xl font-bold text-white tracking-tight block">মাসুম ৯টি৯ (Masum 9T9)</span>
                 <span className="text-[11px] text-[#3A86FF] font-medium flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   নতুন প্রজেক্টের জন্য এভেলেবল
@@ -47,18 +45,18 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
 
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <a 
-                href={`mailto:masum.9t9.gd@gmail.com`} 
+                href={`mailto:${socials.email || 'masum.9t9.gd@gmail.com'}`} 
                 className="px-3 py-1.5 rounded-lg bg-neutral-900/80 border border-neutral-800 hover:border-[#3A86FF]/40 text-neutral-300 hover:text-white text-xs font-medium flex items-center gap-2 transition-all"
               >
                 <Mail className="w-3.5 h-3.5 text-[#3A86FF]" />
-                <span>masum.9t9.gd@gmail.com</span>
+                <span>{socials.email || 'masum.9t9.gd@gmail.com'}</span>
               </a>
               <a 
-                href={`tel:01303623838`} 
+                href={`tel:${socials.phone ? socials.phone.replace(/[^0-9]/g, '') : '01303623838'}`} 
                 className="px-3 py-1.5 rounded-lg bg-neutral-900/80 border border-neutral-800 hover:border-emerald-500/40 text-neutral-300 hover:text-white text-xs font-medium flex items-center gap-2 transition-all"
               >
                 <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <span>01303-623838</span>
+                <span>{socials.phone || '01303-623838'}</span>
               </a>
             </div>
           </div>
@@ -94,8 +92,9 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
             </span>
           </div>
 
-          {/* Social Media Pills */}
-          <div className="flex items-center gap-2.5">
+          {/* Social Media Pills with All 6 Links (Facebook, YouTube, Telegram, WhatsApp, Behance, Fiverr) */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            {/* Facebook */}
             <a 
               href={socials.facebook} 
               target="_blank" 
@@ -106,6 +105,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               <Facebook className="w-4 h-4" />
             </a>
 
+            {/* YouTube */}
             <a 
               href={socials.youtube} 
               target="_blank" 
@@ -116,6 +116,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               <Youtube className="w-4 h-4" />
             </a>
 
+            {/* Telegram */}
             <a 
               href={socials.telegram} 
               target="_blank" 
@@ -126,6 +127,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               <Send className="w-4 h-4" />
             </a>
 
+            {/* WhatsApp */}
             <a 
               href={socials.whatsapp} 
               target="_blank" 
@@ -134,6 +136,43 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               title="হোয়াটসঅ্যাপে মেসেজ দিন"
             >
               <MessageSquare className="w-4 h-4" />
+            </a>
+
+            {/* Behance */}
+            <a 
+              href={behanceUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-[#0535FF] hover:bg-[#0535FF]/10 hover:border-[#0535FF]/40 transition-all hover:scale-105 active:scale-95 group relative"
+              title="বিহ্যান্স পোর্টফোলিও (Behance)"
+            >
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426h-3.033c-.085-.814-.808-1.571-2.177-1.571-1.394 0-2.383.967-2.383 2.68 0 1.776.97 2.755 2.456 2.755 1.341 0 2.18-.84 2.298-1.695h2.663zm-14.726-8.6h-5v3.13h4.63c.63 0 1.25-.23 1.25-.97 0-.79-.58-1.16-1.14-1.16zm.4 4.88h-5.4v3.72h5.4c.73 0 1.48-.28 1.48-1.19 0-.96-.75-1.28-1.48-1.28zm-8.4-7.28h8.841c2.147 0 3.823.824 3.823 2.784 0 1.15-.688 2.037-1.802 2.522 1.483.435 2.338 1.547 2.338 3.037 0 2.261-1.921 3.257-4.148 3.257h-9.052v-11.6zm0 0"/>
+              </svg>
+            </a>
+
+            {/* Fiverr */}
+            <a 
+              href={fiverrUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-[#1DBF73] hover:bg-[#1DBF73]/10 hover:border-[#1DBF73]/40 transition-all hover:scale-105 active:scale-95 group relative flex items-center justify-center"
+              title="ফাইভার প্রোফাইল (Fiverr)"
+            >
+              <span className="font-extrabold text-xs tracking-tighter leading-none text-[#1DBF73] group-hover:brightness-125">
+                fi
+              </span>
+            </a>
+
+            {/* GitHub */}
+            <a 
+              href={socials.github || "https://github.com/masum-9t9/"} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all hover:scale-105 active:scale-95 group relative flex items-center justify-center"
+              title="গিটহাব প্রোফাইল (GitHub)"
+            >
+              <Github className="w-4 h-4" />
             </a>
           </div>
 

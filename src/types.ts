@@ -86,8 +86,8 @@ export interface TestimonialItem {
   id: string;
   name: string;
   role: string;
-  company?: string;
-  avatarUrl?: string;
+  company: string;
+  avatarUrl: string;
   rating: number;
   comment: string;
   projectType: string;
@@ -117,6 +117,7 @@ export interface SocialLinks {
   email: string;
   phone: string;
   behance?: string;
+  fiverr?: string;
   github?: string;
 }
 
@@ -127,9 +128,9 @@ export interface ContactConfig {
   telegramUsername: string;
   whatsappNumber: string;
   location: string;
-  googleSheetScriptUrl?: string;
-  telegramBotToken?: string;
-  telegramChatId?: string;
+  googleSheetScriptUrl: string;
+  telegramBotToken: string;
+  telegramChatId: string;
 }
 
 export interface EcosystemLink {

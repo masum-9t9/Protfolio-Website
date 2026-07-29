@@ -385,7 +385,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       name: "আল মাহি রহমান",
       role: "শিক্ষক",
       company: "HulkenStein Infinity School",
-      avatarUrl: "hhttps://i.postimg.cc/VLJCtYG2/Al-Mahi-Rahman.jpg",
+      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250",
       rating: 5,
       comment: "আমাদের অনেকগুলো একাডেমিক ক্লাস থাম্বনেইল ও পোস্টার মাসুম ডিজাইন করে দিয়েছে। সময়মতো ডেলিভারি ও প্রিমিয়াম কোয়ালিটির জন্য তাকে ১০০% রিকমেন্ড করি।",
       projectType: "এডুকেশন গ্রাফিক্স"
@@ -497,8 +497,9 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     whatsapp: "https://wa.me/8801303623838",
     email: "masum.9t9.gd@gmail.com",
     phone: "01303-623838",
-    behance: "https://www.behance.net/Masum_9t9_official",
-    github: "https://github.com/masum-9t9"
+    behance: "https://www.behance.net/masum_9t9_official",
+    fiverr: "https://www.fiverr.com/sellers/masum9t9/",
+    github: "https://github.com/masum-9t9/"
   },
   contact: {
     phone: "01303-623838",
@@ -507,9 +508,9 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     telegramUsername: "@masum_9t9_official",
     whatsappNumber: "+8801303623838",
     location: "সাতক্ষীরা, খুলনা, বাংলাদেশ",
-    googleSheetScriptUrl: import.meta.env.VITE_GOOGLE_SHEET_URL || "",
-    telegramBotToken: import.meta.env.VITE_TELEGRAM_BOT_TOKEN || "",
-    telegramChatId: import.meta.env.VITE_TELEGRAM_CHAT_ID || ""
+    googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbybx_ey85GMFxDSMHXH3ljkaM4s4PRircG3XPOWVYjYkLTfwJJqFo85wnKzjsbR51FIfg/exec",
+    telegramBotToken: "8833148612:AAHihj3OkapzuM0RemcOv29ahsUEhnRIhuc",
+    telegramChatId: "8634088852"
   }
 };
 

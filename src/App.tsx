@@ -2,9 +2,8 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-import 'dotenv/config'; 
-// অথবা: require('dotenv').config();
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { loadPortfolioConfig, savePortfolioConfig } from './data/config';
 import { PortfolioConfig, PortfolioItem } from './types';
 
@@ -26,6 +25,7 @@ import { ProjectModal } from './components/ProjectModal';
 export default function App() {
   const [config, setConfig] = useState<PortfolioConfig>(loadPortfolioConfig());
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+
   const handleAddTestimonial = (newTestimonial: any) => {
     const updatedConfig = {
       ...config,
