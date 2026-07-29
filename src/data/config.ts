@@ -507,9 +507,9 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     telegramUsername: "@masum_9t9_official",
     whatsappNumber: "+8801303623838",
     location: "সাতক্ষীরা, খুলনা, বাংলাদেশ",
-    googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbybx_ey85GMFxDSMHXH3ljkaM4s4PRircG3XPOWVYjYkLTfwJJqFo85wnKzjsbR51FIfg/exec",
-    telegramBotToken: "8833148612:AAGSPsGtv4dApiRQ3r-ad7mKxFZUj0MdTc0",
-    telegramChatId: "8634088852"
+googleSheetScriptUrl: import.meta.env.VITE_GOOGLE_SHEET_URL || "",
+telegramBotToken: import.meta.env.VITE_TELEGRAM_BOT_TOKEN || "",
+telegramChatId: import.meta.env.VITE_TELEGRAM_CHAT_ID || ""
   }
 };
 
