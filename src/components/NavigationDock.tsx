@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import {
-  Home,
-  User,
-  Cpu,
-  Briefcase,
-  FolderKanban,
-  History,
-  MessageSquareQuote,
-  Mail,
-} from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface NavItem {
-  id: keyof typeof UI_TRANSLATIONS.bn.nav;
-  icon: React.ElementType;
+  id: string;
   faIconClass: string;
+  labelKey: keyof typeof UI_TRANSLATIONS.bn.nav;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'hero', icon: Home, faIconClass: 'fa-solid fa-house' },
-  { id: 'about', icon: User, faIconClass: 'fa-solid fa-user' },
-  { id: 'skills', icon: Cpu, faIconClass: 'fa-solid fa-code' },
-  { id: 'services', icon: Briefcase, faIconClass: 'fa-solid fa-briefcase' },
-  { id: 'portfolio', icon: FolderKanban, faIconClass: 'fa-solid fa-diagram-project' },
-  { id: 'experience', icon: History, faIconClass: 'fa-solid fa-clock-rotate-left' },
-  { id: 'testimonials', icon: MessageSquareQuote, faIconClass: 'fa-solid fa-comment-dots' },
-  { id: 'contact', icon: Mail, faIconClass: 'fa-solid fa-envelope' },
+  { id: 'hero', faIconClass: 'fa-solid fa-house', labelKey: 'hero' },
+  { id: 'about', faIconClass: 'fa-solid fa-user', labelKey: 'about' },
+  { id: 'skills', faIconClass: 'fa-solid fa-code', labelKey: 'skills' },
+  { id: 'services', faIconClass: 'fa-solid fa-briefcase', labelKey: 'services' },
+  { id: 'portfolio', faIconClass: 'fa-solid fa-palette', labelKey: 'designProjects' },
+  { id: 'ecosystem', faIconClass: 'fa-solid fa-laptop-code', labelKey: 'codingProjects' },
+  { id: 'experience', faIconClass: 'fa-solid fa-clock-rotate-left', labelKey: 'experience' },
+  { id: 'testimonials', faIconClass: 'fa-solid fa-comment-dots', labelKey: 'testimonials' },
+  { id: 'contact', faIconClass: 'fa-solid fa-envelope', labelKey: 'contact' },
 ];
 
 export const NavigationDock: React.FC = () => {
@@ -102,7 +93,7 @@ export const NavigationDock: React.FC = () => {
         {NAV_ITEMS.map((item, index) => {
           const isActive = activeSection === item.id;
           const scale = getScale(index);
-          const label = t.nav[item.id];
+          const label = t.nav[item.labelKey] || item.id;
 
           return (
             <div key={item.id} className="relative group shrink-0">
