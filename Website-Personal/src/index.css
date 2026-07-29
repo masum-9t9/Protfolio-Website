@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Hardware-Accelerated High-Performance Utilities for Low-End PC & Mobile */
+.will-change-transform {
+  will-change: transform;
+}
+
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090D16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3A86FF;
+}
+
+/* Hide scrollbar for clean horizontal dock scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Marquee Animations for 25-30 Degree Angled Testimonials */
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left var(--marquee-duration, 35s) linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  animation: marquee-right var(--marquee-duration, 35s) linear infinite;
+  will-change: transform;
+}
+
+.marquee-container:hover .animate-marquee-left,
+.marquee-container:hover .animate-marquee-right {
+  animation-play-state: paused;
+}
+
+/* 25-30 Degree Angled Isometric Perspective Views */
+.perspective-3d {
+  perspective: 1200px;
+}
+
+.tilt-25deg {
+  transform: rotateX(14deg) rotateY(-8deg) rotateZ(-25deg) scale(1.04);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-30deg {
+  transform: rotateX(18deg) rotateY(-12deg) rotateZ(-30deg) scale(1.08);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-15deg {
+  transform: rotateX(10deg) rotateY(-5deg) rotateZ(-15deg) scale(1.02);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Respect user's reduced motion preferences for low-end devices */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
+  }
+  .tilt-30deg {
+    transform: none;
+  }
+}
+
+/* Utility Glass Card Styles - lightweight performance mode */
+.glass-card {
+  background: rgba(18, 24, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+@supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+  .glass-card {
+    background: rgba(18, 24, 38, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+.glass-card-hover {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.glass-card-hover:hover {
+  background: rgba(26, 35, 54, 0.9);
+  border-color: rgba(58, 134, 255, 0.35);
+  transform: translate3d(0, -4px, 0);
+}
+
+.glass-dock {
+  background: rgba(13, 18, 30, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+/* GPU Accelerated Infinite Marquee */
+@keyframes marqueeLeft {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marqueeRight {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.animate-marquee-left {
+  animation: marqueeLeft var(--marquee-duration, 35s) linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  animation: marqueeRight var(--marquee-duration, 35s) linear infinite;
+  will-change: transform;
+}
+
+.marquee-container:hover .animate-marquee-left,
+.marquee-container:hover .animate-marquee-right {
+  animation-play-state: paused;
+}
+
+/* 3D Perspective Tilt Classes */
+.perspective-container {
+  perspective: 1200px;
+}
+
+.tilt-25deg {
+  transform: rotateX(12deg) rotateY(-18deg) rotateZ(5deg);
+  transform-style: preserve-3d;
+}
+
+.tilt-30deg {
+  transform: rotateX(15deg) rotateY(-22deg) rotateZ(7deg);
+  transform-style: preserve-3d;
+}
+
+.tilt-15deg {
+  transform: rotateX(8deg) rotateY(-10deg) rotateZ(3deg);
+  transform-style: preserve-3d;
+}
