@@ -85,16 +85,16 @@ export const NavigationDock: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-2 sm:top-3 left-0 right-0 z-[100] flex justify-center pointer-events-none px-2 sm:px-4">
+    <header className="fixed top-2 sm:top-4 left-0 right-0 z-[100] flex justify-center pointer-events-none px-2 sm:px-4">
       <motion.nav
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 350, damping: 25 }}
         onMouseLeave={() => setHoveredIndex(null)}
-        className={`pointer-events-auto flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-2xl border transition-all duration-300 max-w-[98vw] sm:max-w-full overflow-x-auto no-scrollbar ${
+        className={`glass-dock pointer-events-auto flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-full backdrop-blur-2xl border transition-all duration-300 max-w-[98vw] sm:max-w-full overflow-x-auto no-scrollbar ${
           isScrolled
-            ? 'bg-neutral-950/90 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_1px_0_rgba(255,255,255,0.2)_inset]'
-            : 'bg-neutral-950/80 border-white/15 shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
+            ? 'bg-neutral-950/85 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_1px_0_rgba(255,255,255,0.2)_inset]'
+            : 'bg-neutral-950/70 border-white/15 shadow-[0_10px_35px_rgba(0,0,0,0.6),0_1px_0_rgba(255,255,255,0.15)_inset]'
         }`}
         role="navigation"
         aria-label="Top Navigation Header"
@@ -111,7 +111,7 @@ export const NavigationDock: React.FC = () => {
                 onMouseEnter={() => setHoveredIndex(index)}
                 animate={{
                   scale,
-                  y: isActive ? -2 : 0,
+                  y: isActive ? -1 : 0,
                 }}
                 transition={{
                   type: 'spring',
@@ -119,26 +119,36 @@ export const NavigationDock: React.FC = () => {
                   damping: 28,
                   mass: 0.6,
                 }}
-                className={`relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 select-none shrink-0 ${
+                className={`relative flex items-center justify-center gap-1.5 sm:gap-2 p-2 sm:p-2.5 md:px-3.5 md:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 select-none shrink-0 ${
                   isActive
-                    ? 'bg-[#3A86FF] text-white shadow-[0_0_20px_rgba(58,134,255,0.45)] ring-1 ring-white/30'
-                    : 'text-neutral-300 hover:text-white hover:bg-white/10'
+                    ? 'text-white'
+                    : 'text-neutral-400 hover:text-white hover:bg-white/5'
                 }`}
+                title={label}
               >
+                {/* Sliding Active Background Pill */}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeDockPill"
+                    className="absolute inset-0 bg-gradient-to-r from-[#3A86FF] to-[#2563EB] rounded-full shadow-[0_0_20px_rgba(58,134,255,0.5)] ring-1 ring-white/30 -z-10"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+
                 {/* Font Awesome Icon */}
                 <i
-                  className={`${item.faIconClass} text-xs sm:text-sm transition-transform duration-200 ${
-                    isActive ? 'scale-110' : 'group-hover:scale-110'
+                  className={`${item.faIconClass} text-sm sm:text-base relative z-10 transition-transform duration-200 ${
+                    isActive ? 'scale-110 text-white' : 'group-hover:scale-110'
                   }`}
                   aria-hidden="true"
                 />
 
-                {/* Localized Label - Always visible next to icon */}
-                <span className="whitespace-nowrap text-xs sm:text-sm font-bold tracking-wide">
+                {/* Localized Label - Desktop only (md+) */}
+                <span className="hidden md:inline whitespace-nowrap text-xs sm:text-sm font-bold tracking-wide relative z-10">
                   {label}
                 </span>
 
-                {/* Active Indicator Light */}
+                {/* Active Indicator Dot under pill */}
                 {isActive && (
                   <motion.span
                     layoutId="activeDockDot"
@@ -147,6 +157,11 @@ export const NavigationDock: React.FC = () => {
                   />
                 )}
               </motion.button>
+
+              {/* Mobile Tooltip */}
+              <div className="absolute top-full mt-2.5 left-1/2 -translate-x-1/2 px-3 py-1 bg-neutral-900/95 border border-white/20 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none md:hidden whitespace-nowrap z-50 shadow-2xl backdrop-blur-md">
+                {label}
+              </div>
             </div>
           );
         })}
