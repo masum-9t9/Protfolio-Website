@@ -3,10 +3,9 @@ import { motion } from 'motion/react';
 import {
   Home,
   User,
-  Wrench,
+  Cpu,
   Briefcase,
   FolderKanban,
-  Globe2,
   History,
   MessageSquareQuote,
   Mail,
@@ -17,114 +16,145 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface NavItem {
   id: keyof typeof UI_TRANSLATIONS.bn.nav;
-  href: string;
   icon: React.ElementType;
+  faIconClass: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'home', href: '#hero', icon: Home },
-  { id: 'about', href: '#about', icon: User },
-  { id: 'skills', href: '#skills', icon: Wrench },
-  { id: 'services', href: '#services', icon: Briefcase },
-  { id: 'experience', href: '#experience', icon: History },
-  { id: 'portfolio', href: '#portfolio', icon: FolderKanban },
-  { id: 'ecosystem', href: '#ecosystem', icon: Globe2 },
-  { id: 'testimonials', href: '#testimonials', icon: MessageSquareQuote },
-  { id: 'contact', href: '#contact', icon: Mail },
+  { id: 'hero', icon: Home, faIconClass: 'fa-solid fa-house' },
+  { id: 'about', icon: User, faIconClass: 'fa-solid fa-user' },
+  { id: 'skills', icon: Cpu, faIconClass: 'fa-solid fa-code' },
+  { id: 'services', icon: Briefcase, faIconClass: 'fa-solid fa-briefcase' },
+  { id: 'portfolio', icon: FolderKanban, faIconClass: 'fa-solid fa-diagram-project' },
+  { id: 'experience', icon: History, faIconClass: 'fa-solid fa-clock-rotate-left' },
+  { id: 'testimonials', icon: MessageSquareQuote, faIconClass: 'fa-solid fa-comment-dots' },
+  { id: 'contact', icon: Mail, faIconClass: 'fa-solid fa-envelope' },
 ];
 
 export const NavigationDock: React.FC = () => {
-  const { language } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
   const t = UI_TRANSLATIONS[language];
+  
   const [activeSection, setActiveSection] = useState('hero');
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  // Scroll Spy Effect with Intersection / Scroll listener
   useEffect(() => {
     const handleScroll = () => {
-      const sections = NAV_ITEMS.map((item) => item.href.substring(1));
-      const scrollPosition = window.scrollY + 200;
+      setIsScrolled(window.scrollY > 30);
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
+      const sectionIds = NAV_ITEMS.map((item) => item.id);
+      const scrollPosition = window.scrollY + window.innerHeight * 0.35;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sectionIds[i]);
+        if (section) {
+          const top = section.offsetTop;
+          if (scrollPosition >= top - 80) {
+            setActiveSection(sectionIds[i]);
+            break;
+          }
         }
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const targetId = href.substring(1);
-    const elem = document.getElementById(targetId);
-    if (elem) {
-      const offsetTop = elem.offsetTop - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth',
-      });
-      setActiveSection(targetId);
+  const scrollToSection = (id: string) => {
+    setActiveSection(id);
+    const element = document.getElementById(id);
+    if (element) {
+      const yOffset = -70;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
+  // Calculate Apple macOS Dock magnification scale for 60 FPS spring effect
+  const getScale = (index: number) => {
+    if (hoveredIndex === null) return 1;
+    const distance = Math.abs(hoveredIndex - index);
+    if (distance === 0) return 1.28;
+    if (distance === 1) return 1.14;
+    if (distance === 2) return 1.05;
+    return 1;
+  };
+
   return (
-    <header className="fixed bottom-6 left-0 right-0 z-50 flex justify-center items-center px-4 pointer-events-none">
+    <header className="fixed top-2 sm:top-3 left-0 right-0 z-[100] flex justify-center pointer-events-none px-2 sm:px-4">
       <motion.nav
-        initial={{ y: 80, opacity: 0 }}
+        initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 25 }}
-        className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-full bg-neutral-900/80 border border-white/10 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] ring-1 ring-white/5 max-w-[95vw] overflow-x-auto no-scrollbar scroll-smooth"
+        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+        onMouseLeave={() => setHoveredIndex(null)}
+        className={`pointer-events-auto flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-2xl border transition-all duration-300 max-w-[98vw] sm:max-w-full overflow-x-auto no-scrollbar ${
+          isScrolled
+            ? 'bg-neutral-950/90 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_1px_0_rgba(255,255,255,0.2)_inset]'
+            : 'bg-neutral-950/80 border-white/15 shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
+        }`}
+        role="navigation"
+        aria-label="Top Navigation Header"
       >
-        {NAV_ITEMS.map((item) => {
-          const Icon = item.icon;
-          const sectionId = item.href.substring(1);
-          const isActive = activeSection === sectionId;
-          const label = t.nav[item.id] || item.id;
+        {NAV_ITEMS.map((item, index) => {
+          const isActive = activeSection === item.id;
+          const scale = getScale(index);
+          const label = t.nav[item.id];
 
           return (
-            <a
-              key={item.id}
-              href={item.href}
-              onClick={(e) => scrollToSection(e, item.href)}
-              className="relative group shrink-0"
-              aria-label={label}
-            >
-              <motion.div
-                whileHover={{ scale: 1.15, y: -4 }}
-                whileTap={{ scale: 0.95 }}
-                className={`flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-all duration-300 ${
+            <div key={item.id} className="relative group shrink-0">
+              <motion.button
+                onClick={() => scrollToSection(item.id)}
+                onMouseEnter={() => setHoveredIndex(index)}
+                animate={{
+                  scale,
+                  y: isActive ? -2 : 0,
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 450,
+                  damping: 28,
+                  mass: 0.6,
+                }}
+                className={`relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 select-none shrink-0 ${
                   isActive
-                    ? 'bg-[#3A86FF] text-white shadow-[0_0_20px_rgba(58,134,255,0.6)]'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#3A86FF] text-white shadow-[0_0_20px_rgba(58,134,255,0.45)] ring-1 ring-white/30'
+                    : 'text-neutral-300 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.2]" />
+                {/* Font Awesome Icon */}
+                <i
+                  className={`${item.faIconClass} text-xs sm:text-sm transition-transform duration-200 ${
+                    isActive ? 'scale-110' : 'group-hover:scale-110'
+                  }`}
+                  aria-hidden="true"
+                />
 
-                {/* Active Indicator Dot */}
+                {/* Localized Label - Always visible next to icon */}
+                <span className="whitespace-nowrap text-xs sm:text-sm font-bold tracking-wide">
+                  {label}
+                </span>
+
+                {/* Active Indicator Light */}
                 {isActive && (
                   <motion.span
                     layoutId="activeDockDot"
-                    className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff]"
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
                 )}
-              </motion.div>
-
-              {/* Floating Tooltip */}
-              <div className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-neutral-900/95 border border-white/10 text-white text-[11px] font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50 shadow-xl backdrop-blur-md">
-                {label}
-              </div>
-            </a>
+              </motion.button>
+            </div>
           );
         })}
 
         {/* Vertical Separator */}
         <div className="w-[1px] h-5 bg-white/20 mx-1 shrink-0" />
 
-        {/* Language Switcher Component on Apple Dock */}
+        {/* Language Switcher Component on Navigation Dock */}
         <LanguageSwitcher variant="dock" />
 
       </motion.nav>
