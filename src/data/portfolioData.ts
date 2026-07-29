@@ -1,16 +1,10 @@
-import { INITIAL_PORTFOLIO_CONFIG, loadPortfolioConfig, savePortfolioConfig, getLocalizedPortfolioConfig, resetPortfolioConfig } from './config';
-import { UI_TRANSLATIONS, ENGLISH_PORTFOLIO_CONFIG } from './translations';
+import { INITIAL_PORTFOLIO_CONFIG } from './config';
+import { UI_TRANSLATIONS } from './translations';
 
-export {
-  INITIAL_PORTFOLIO_CONFIG,
-  loadPortfolioConfig,
-  savePortfolioConfig,
-  getLocalizedPortfolioConfig,
-  resetPortfolioConfig,
-  UI_TRANSLATIONS,
-  ENGLISH_PORTFOLIO_CONFIG
-};
+export * from './config';
+export * from './translations';
 
+export const BANGLA_PORTFOLIO_CONFIG = INITIAL_PORTFOLIO_CONFIG;
 export const portfolioData = INITIAL_PORTFOLIO_CONFIG;
 export const PORTFOLIO_DATA = INITIAL_PORTFOLIO_CONFIG;
 export const portfolioConfig = INITIAL_PORTFOLIO_CONFIG;
