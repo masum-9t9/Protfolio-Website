@@ -2,7 +2,8 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-
+import 'dotenv/config'; 
+// অথবা: require('dotenv').config();
 import React, { useState, useEffect } from 'react';
 import { loadPortfolioConfig, savePortfolioConfig } from './data/config';
 import { PortfolioConfig, PortfolioItem } from './types';
