@@ -119,11 +119,12 @@ export const NavigationDock: React.FC = () => {
                   damping: 28,
                   mass: 0.6,
                 }}
-                className={`relative flex items-center justify-center gap-1 xs:gap-1.5 p-1.5 xs:p-2 sm:p-2.5 lg:px-3 lg:py-1.5 xl:px-3.5 xl:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 select-none shrink-0 ${
+                className={`relative flex items-center justify-center gap-1 xs:gap-1.5 p-1.5 xs:p-2 sm:p-2.5 lg:px-3 lg:py-1.5 xl:px-3.5 xl:py-2 rounded-full text-xs sm:text-sm font-semibold select-none shrink-0 dock-icon-anim ${
                   isActive
                     ? 'text-white'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                    : 'text-neutral-400 hover:text-white hover:bg-white/10'
                 }`}
+                style={{ animationDelay: `${index * 0.22}s` }}
                 title={label}
               >
                 {/* Sliding Active Background Pill */}
