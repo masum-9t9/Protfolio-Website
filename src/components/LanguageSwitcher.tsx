@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Globe, Languages, Check } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage, Language } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
 
 interface LanguageSwitcherProps {
@@ -71,7 +71,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
         onClick={toggleLanguage}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-extrabold transition-all duration-200 select-none shadow-md ${
+        className={`relative flex items-center gap-1 xs:gap-1.5 px-2 xs:px-2.5 sm:px-3 py-1 xs:py-1.5 rounded-full text-xs font-extrabold transition-all duration-200 select-none shadow-md ${
           isBn
             ? 'bg-gradient-to-r from-emerald-950/80 via-neutral-900 to-neutral-900 border border-emerald-500/40 text-emerald-300 hover:border-emerald-400 hover:text-white'
             : 'bg-gradient-to-r from-blue-950/80 via-neutral-900 to-neutral-900 border border-[#3A86FF]/40 text-blue-300 hover:border-[#3A86FF] hover:text-white'
@@ -82,8 +82,9 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
         <Globe className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-45 ${isBn ? 'text-emerald-400' : 'text-[#3A86FF]'}`} />
         
         <div className="flex items-center gap-1">
-          <span className="text-[11px] font-black uppercase tracking-wider">
-            {isBn ? '🇧🇩 বাংলা' : '🇺🇸 EN'}
+          <span className="text-[10px] xs:text-[11px] font-black uppercase tracking-wider">
+            <span className="inline sm:hidden">{isBn ? 'BD' : 'EN'}</span>
+            <span className="hidden sm:inline">{isBn ? '🇧🇩 বাংলা' : '🇺🇸 EN'}</span>
           </span>
         </div>
 
