@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, MessageCircle, Sparkles, Facebook, Youtube, Send, PhoneCall, Github } from 'lucide-react';
 import { HeroData, SocialLinks } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface HeroProps {
   data: HeroData;
@@ -9,6 +11,8 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
 
   useEffect(() => {
@@ -119,7 +123,9 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="flex items-center gap-3 pt-4 border-t border-neutral-800/80 w-full max-w-xl"
           >
-            <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider mr-2">সোশ্যাল মিডিয়া:</span>
+            <span className="text-xs text-neutral-400 font-medium uppercase tracking-wider mr-2">
+              {language === 'bn' ? 'সোশ্যাল মিডিয়া:' : 'Social Links:'}
+            </span>
             
             <a
               href={socials.facebook}
@@ -225,7 +231,9 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               {/* Bottom Badge overlay */}
               <div className="absolute bottom-5 left-5 right-5 p-3.5 rounded-xl bg-neutral-950/85 backdrop-blur-md border border-white/10 flex items-center justify-between">
                 <div className="overflow-hidden pr-2">
-                  <p className="text-xs text-neutral-400 font-medium truncate">অফিশিয়াল পোর্টফোলিও</p>
+                  <p className="text-xs text-neutral-400 font-medium truncate">
+                    {language === 'bn' ? 'অফিশিয়াল পোর্টফোলিও' : 'Official Portfolio'}
+                  </p>
                   <p className="text-sm text-white font-bold truncate">{data.name} • {data.role}</p>
                 </div>
                 {data.logoImage ? (

@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Briefcase, Maximize2, PlayCircle, BookOpen, Share2, Code2, Check, Clock, PackageCheck } from 'lucide-react';
 import { ServiceItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface ServicesProps {
   services: ServiceItem[];
@@ -16,6 +18,9 @@ const ICON_MAP: Record<string, React.ElementType> = {
 };
 
 export const Services: React.FC<ServicesProps> = ({ services }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+
   return (
     <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 relative bg-neutral-950/40">
       <div className="max-w-7xl mx-auto">
@@ -24,13 +29,13 @@ export const Services: React.FC<ServicesProps> = ({ services }) => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <Briefcase className="w-3.5 h-3.5" />
-            <span>আমার সেবাসমূহ</span>
+            <span>{t.services.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">
-            যা যা অফার করছি
+            {t.services.title}
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base">
-            আপনার অনলাইন ব্র্যান্ডিং ও কন্টেন্টের ভিজ্যুয়াল রিচ বাড়াতে হাই-কোয়ালিটি সার্ভিসেস
+            {t.services.subtitle}
           </p>
           <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4" />
         </div>
@@ -86,7 +91,7 @@ export const Services: React.FC<ServicesProps> = ({ services }) => {
                     href={`#contact?service=${encodeURIComponent(service.title)}`}
                     className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-[#3A86FF] text-white text-xs font-bold border border-neutral-800 hover:border-[#3A86FF] flex items-center justify-center gap-2 transition-all duration-200 active:scale-95"
                   >
-                    <span>অর্ডার অথবা বিস্তারিত জানুন</span>
+                    <span>{t.services.orderButton}</span>
                   </a>
                 </div>
               </motion.div>

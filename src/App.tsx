@@ -1,11 +1,7 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React, { useState } from 'react';
-import { loadPortfolioConfig, savePortfolioConfig } from './data/config';
+import { loadPortfolioConfig, savePortfolioConfig, getLocalizedPortfolioConfig } from './data/config';
 import { PortfolioConfig, PortfolioItem } from './types';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
 import { NavigationDock } from './components/NavigationDock';
 import { Hero } from './components/Hero';
@@ -22,64 +18,68 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 
-export default function App() {
-  const [config, setConfig] = useState<PortfolioConfig>(loadPortfolioConfig());
+function MainContent() {
+  const { language } = useLanguage();
+  const [baseConfig, setBaseConfig] = useState<PortfolioConfig>(loadPortfolioConfig());
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+
+  // Dynamically get English or Bengali config
+  const activeConfig = getLocalizedPortfolioConfig(baseConfig, language);
 
   const handleAddTestimonial = (newTestimonial: any) => {
     const updatedConfig = {
-      ...config,
-      testimonials: [newTestimonial, ...config.testimonials],
+      ...baseConfig,
+      testimonials: [newTestimonial, ...baseConfig.testimonials],
     };
-    setConfig(updatedConfig);
+    setBaseConfig(updatedConfig);
     savePortfolioConfig(updatedConfig);
   };
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-neutral-100 font-['Hind_Siliguri',sans-serif] selection:bg-[#3A86FF] selection:text-white relative">
+    <div className="min-h-screen bg-[#090D16] text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-[#3A86FF] selection:text-white relative">
       
       {/* Floating Apple macOS Dock Navigation */}
       <NavigationDock />
 
       {/* Hero Section */}
-      <Hero data={config.hero} socials={config.socials} />
+      <Hero data={activeConfig.hero} socials={activeConfig.socials} />
 
       {/* About Section */}
-      <About data={config.about} testimonials={config.testimonials} />
+      <About data={activeConfig.about} testimonials={activeConfig.testimonials} />
 
       {/* Skills Section */}
-      <Skills skills={config.skills} />
+      <Skills skills={activeConfig.skills} />
 
       {/* Services Section */}
-      <Services services={config.services} />
+      <Services services={activeConfig.services} />
 
       {/* Experience Timeline */}
-      <Experience experiences={config.experiences} />
+      <Experience experiences={activeConfig.experiences} />
 
       {/* Portfolio Showcase Grid */}
-      <Portfolio items={config.portfolio} onSelectProject={setSelectedProject} />
+      <Portfolio items={activeConfig.portfolio} onSelectProject={setSelectedProject} />
 
       {/* Featured Web Platform & Ecosystem Showcase */}
-      <FeaturedEcosystem items={config.featuredEcosystem} />
+      <FeaturedEcosystem items={activeConfig.featuredEcosystem} />
 
       {/* 25-30 Degree Angled Side-by-Side Scrolling Testimonials */}
       <Testimonials3D
-        testimonials={config.testimonials}
+        testimonials={activeConfig.testimonials}
         onAddTestimonial={handleAddTestimonial}
-        contactConfig={config.contact}
+        contactConfig={activeConfig.contact}
       />
 
       {/* Achievements Counter Stats */}
-      <Achievements achievements={config.achievements} />
+      <Achievements achievements={activeConfig.achievements} />
 
       {/* FAQ Section */}
-      <FAQ faqs={config.faqs} />
+      <FAQ faqs={activeConfig.faqs} />
 
       {/* Glass Contact Section */}
-      <Contact config={config.contact} socials={config.socials} />
+      <Contact config={activeConfig.contact} socials={activeConfig.socials} />
 
       {/* Footer */}
-      <Footer socials={config.socials} />
+      <Footer socials={activeConfig.socials} />
 
       {/* Portfolio Item Detail Lightbox Modal */}
       <ProjectModal
@@ -88,5 +88,13 @@ export default function App() {
       />
 
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <MainContent />
+    </LanguageProvider>
   );
 }

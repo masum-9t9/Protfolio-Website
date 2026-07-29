@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FolderKanban, ExternalLink, Eye, Github, Info, Sparkles, Trophy } from 'lucide-react';
+import { FolderKanban, ExternalLink, Eye, Github, Info, Trophy } from 'lucide-react';
 import { PortfolioItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface PortfolioProps {
   items: PortfolioItem[];
@@ -15,6 +17,8 @@ interface TiltCardProps {
 }
 
 const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
@@ -157,7 +161,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                       onClick={(e) => e.stopPropagation()}
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>লাইভ প্রিভিউ</span>
+                      <span>{t.portfolio.livePreview}</span>
                     </a>
                   ) : (
                     <button
@@ -168,7 +172,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                       className="px-3.5 py-2 rounded-xl bg-[#3A86FF] hover:bg-[#2b75ed] text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-[#3A86FF]/30 transition-all hover:scale-105"
                     >
                       <Eye className="w-3.5 h-3.5" />
-                      <span>প্রিভিউ দেখুন</span>
+                      <span>{t.portfolio.viewDetails}</span>
                     </button>
                   )}
 
@@ -178,7 +182,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                       onSelectProject(item);
                     }}
                     className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 text-xs font-semibold transition-all hover:scale-105"
-                    title="বিস্তারিত"
+                    title={t.portfolio.viewDetails}
                   >
                     <Info className="w-4 h-4 text-[#3A86FF]" />
                   </button>
@@ -255,18 +259,18 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                 className="px-2.5 py-2 rounded-xl bg-neutral-950 hover:bg-[#3A86FF] text-neutral-300 hover:text-white border border-neutral-800 hover:border-[#3A86FF] text-[11px] font-bold flex items-center justify-center gap-1 transition-all duration-200"
               >
                 <ExternalLink className="w-3 h-3 text-[#3A86FF] group-hover:text-white" />
-                <span className="truncate">লাইভ</span>
+                <span className="truncate">{language === 'bn' ? 'লাইভ' : 'Live'}</span>
               </a>
 
               <a
-                href={item.githubUrl || 'https://github.com'}
+                href={item.githubUrl || 'https://github.com/masum-9t9/'}
                 onClick={(e) => e.stopPropagation()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-2.5 py-2 rounded-xl bg-neutral-950 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 text-[11px] font-bold flex items-center justify-center gap-1 transition-all duration-200"
               >
                 <Github className="w-3 h-3 text-neutral-400" />
-                <span className="truncate">গিটহাব</span>
+                <span className="truncate">GitHub</span>
               </a>
 
               <button
@@ -277,7 +281,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                 className="px-2.5 py-2 rounded-xl bg-neutral-950 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 text-[11px] font-bold flex items-center justify-center gap-1 transition-all duration-200"
               >
                 <Info className="w-3 h-3 text-emerald-400" />
-                <span className="truncate">ডিটেইলস</span>
+                <span className="truncate">{language === 'bn' ? 'ডিটেইলস' : 'Details'}</span>
               </button>
             </div>
           </div>
@@ -288,15 +292,17 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
 };
 
 export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
   const [activeTab, setActiveTab] = useState<string>('all');
 
   const categories = React.useMemo(() => {
     const defaultCats = [
-      { id: 'all', label: 'সব প্রজেক্ট' },
-      { id: 'poster', label: 'পোস্টার ডিজাইন' },
-      { id: 'yt_thumbnail', label: 'ইউটিউব থাম্বনেল' },
-      { id: 'education', label: 'এডুকেশন থাম্বনেল' },
-      { id: 'custom_theme', label: 'কাস্টম থিম' },
+      { id: 'all', label: t.portfolio.filterAll },
+      { id: 'natok_poster', label: t.portfolio.filterPoster },
+      { id: 'natok_thumbnail', label: t.portfolio.filterYtThumbnail },
+      { id: 'education', label: t.portfolio.filterEducation },
+      { id: 'custom_theme', label: t.portfolio.filterCustomTheme },
     ];
     
     const catMap = new Map<string, string>();
@@ -309,7 +315,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) 
     });
 
     return Array.from(catMap.entries()).map(([id, label]) => ({ id, label }));
-  }, [items]);
+  }, [items, t]);
 
   const filteredItems = items.filter((item) => {
     if (activeTab === 'all') return true;
@@ -326,13 +332,13 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) 
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <FolderKanban className="w-3.5 h-3.5" />
-            <span>আমার পোর্টফোলিও প্রজেক্টস</span>
+            <span>{t.portfolio.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            সেরা ক্রিয়েটিভ ওয়ার্কস
+            {t.portfolio.title}
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
-            ফটোরিয়ালিস্টিক পোস্টার ডিজাইন, হাই-সিটিআর থাম্বনেল ও ব্র্যান্ড ভিজ্যুয়াল সমাহার
+            {t.portfolio.subtitle}
           </p>
           <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4 shadow-[0_0_10px_#3A86FF]" />
         </div>

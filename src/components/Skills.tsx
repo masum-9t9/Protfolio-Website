@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Cpu, Image, PenTool, Smartphone, Layout, Layers, Palette, Youtube, GraduationCap } from 'lucide-react';
 import { SkillItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface SkillsProps {
   skills: SkillItem[];
@@ -19,6 +21,8 @@ const ICON_MAP: Record<string, React.ElementType> = {
 };
 
 export const Skills: React.FC<SkillsProps> = ({ skills }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
   const [activeCategory, setActiveCategory] = useState<'all' | 'software' | 'design_field'>('all');
 
   const filteredSkills = skills.filter((skill) => {
@@ -34,19 +38,19 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <Cpu className="w-3.5 h-3.5" />
-            <span>আমার কারিগরি দক্ষতা</span>
+            <span>{t.skills.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">
-            টুলস ও ডিজাইন স্পেশালাইজেশন
+            {t.skills.title}
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base">
-            মোবাইল ও পিসির প্রফেশনাল সফটওয়্যার ব্যবহারে অর্জিত ৫+ বছরের অভিজ্ঞতা
+            {t.skills.subtitle}
           </p>
           <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4" />
         </div>
 
         {/* Category Filter Tabs */}
-        <div className="flex justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           <button
             onClick={() => setActiveCategory('all')}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 ${
@@ -55,7 +59,7 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
                 : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
             }`}
           >
-            সব দক্ষতা ({skills.length})
+            {language === 'bn' ? `সব দক্ষতা (${skills.length})` : `All Skills (${skills.length})`}
           </button>
           <button
             onClick={() => setActiveCategory('software')}
@@ -65,7 +69,7 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
                 : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
             }`}
           >
-            সফটওয়্যার (Ibis, Pixellab, Photoshop, etc.)
+            {language === 'bn' ? 'সফটওয়্যার (Photoshop, Ibis, Pixellab)' : 'Software Tools'}
           </button>
           <button
             onClick={() => setActiveCategory('design_field')}
@@ -75,15 +79,13 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
                 : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
             }`}
           >
-            ডিজাইন সেক্টর
+            {language === 'bn' ? 'ডিজাইন ফিল্ড' : 'Design Fields'}
           </button>
         </div>
 
         {/* Skills Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredSkills.map((skill, index) => {
-            // Eikhane check hobe link naki direct string keyword
-            const isUrlIcon = skill.iconName.startsWith('http://') || skill.iconName.startsWith('https://');
             const IconComponent = ICON_MAP[skill.iconName] || Cpu;
 
             return (
@@ -97,16 +99,15 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center p-2 text-[#3A86FF] group-hover:bg-[#3A86FF] group-hover:text-white transition-colors duration-300">
-                      {isUrlIcon ? (
-                        /* Jodi config e image link thake system eti render korbe */
+                    <div className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-[#3A86FF] group-hover:bg-[#3A86FF] group-hover:text-white transition-colors duration-300">
+                      {skill.iconName && skill.iconName.startsWith('http') ? (
                         <img 
                           src={skill.iconName} 
                           alt={skill.name} 
-                          className="w-full h-full object-contain group-hover:brightness-100 group-hover:invert-0 transition-all"
+                          className="w-6 h-6 object-contain rounded-md" 
+                          referrerPolicy="no-referrer"
                         />
                       ) : (
-                        /* Jodi built-in default literal keyword thake */
                         <IconComponent className="w-6 h-6" />
                       )}
                     </div>

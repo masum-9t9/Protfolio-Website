@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { User, Target, Compass, Award, GraduationCap, Download, FileText, CheckCircle, X } from 'lucide-react';
 import { AboutData, TestimonialItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface AboutProps {
   data: AboutData;
@@ -14,6 +16,8 @@ const toBengaliNumerals = (numStr: string | number): string => {
 };
 
 export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
   const [showResumeModal, setShowResumeModal] = useState(false);
 
   // Dynamic average rating from all reviews
@@ -42,9 +46,12 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
         {/* Highlights Stats Bar */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
           {data.highlights.map((item, idx) => {
-            const displayVal = item.label === 'রেটিং'
-              ? `${toBengaliNumerals(dynamicAvgRating)} / ৫.০`
-              : item.value;
+            let displayVal = item.value;
+            if (item.label === 'রেটিং' || item.label === 'Rating') {
+              displayVal = language === 'bn'
+                ? `${toBengaliNumerals(dynamicAvgRating)} / ৫.০`
+                : `${dynamicAvgRating} / 5.0`;
+            }
 
             return (
               <motion.div
@@ -105,7 +112,7 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
                 className="px-6 py-3.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-sm border border-neutral-800 hover:border-neutral-700 flex items-center gap-3 transition-all duration-200 shadow-md active:scale-95"
               >
                 <FileText className="w-4 h-4 text-[#3A86FF]" />
-                <span>বায়োডাটা / রেজুমি দেখুন (Resume)</span>
+                <span>{t.about.downloadCv}</span>
                 <Download className="w-4 h-4 text-neutral-400" />
               </button>
             </div>
@@ -116,7 +123,7 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
             <div className="glass-card p-8 rounded-2xl border border-neutral-800 h-full flex flex-col">
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                 <GraduationCap className="w-6 h-6 text-[#3A86FF]" />
-                <span>শিক্ষা ও পেশাদার প্রশিক্ষণ</span>
+                <span>{t.about.educationHeading}</span>
               </h3>
 
               <div className="space-y-6 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-neutral-800">
@@ -159,31 +166,40 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
               </button>
 
               <div className="border-b border-neutral-800 pb-4 mb-6">
-                <p className="text-xs text-[#3A86FF] font-semibold uppercase tracking-wider">অফিশিয়াল জীবনবৃত্তান্ত</p>
-                <h3 className="text-2xl font-bold text-white">মাসুম ৯টি৯ (Masum 9T9) - Resume</h3>
+                <p className="text-xs text-[#3A86FF] font-semibold uppercase tracking-wider">
+                  {language === 'bn' ? 'অফিশিয়াল জীবনবৃত্তান্ত' : 'Official Resume'}
+                </p>
+                <h3 className="text-2xl font-bold text-white">Masum 9T9 — Resume</h3>
                 <p className="text-xs text-neutral-400 mt-1">Professional Graphics Designer & Content Creator</p>
               </div>
 
               <div className="space-y-6 text-sm text-neutral-300">
                 <div>
                   <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-[#3A86FF]" /> মূল দক্ষতা
+                    <CheckCircle className="w-4 h-4 text-[#3A86FF]" />
+                    {language === 'bn' ? 'মূল দক্ষতা' : 'Core Skills'}
                   </h4>
                   <p>Photoshop, Illustrator, Ibis Paint X, Pixellab, PS CC 2019, Poster Compositing, High CTR YouTube Thumbnails, Educational Graphics.</p>
                 </div>
 
                 <div>
                   <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-[#3A86FF]" /> অভিজ্ঞতা
+                    <CheckCircle className="w-4 h-4 text-[#3A86FF]" />
+                    {language === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}
                   </h4>
-                  <p>৫+ বছর ধরে ৫০০+ সাকসেসফুল ডিজাইন প্রজেক্ট সম্পন্ন করেছি। বাংলাদেশ ও আন্তর্জাতিক বিভিন্ন ক্রিয়েটরদের সাথে কাজ করার অভিজ্ঞতা।</p>
+                  <p>
+                    {language === 'bn'
+                      ? '৩+ বছর ধরে ৫০০+ সাকসেসফুল ডিজাইন প্রজেক্ট সম্পন্ন করেছি। বাংলাদেশ ও আন্তর্জাতিক বিভিন্ন ক্রিয়েটরদের সাথে কাজ করার অভিজ্ঞতা।'
+                      : 'Completed 500+ successful design projects over 3+ years. Experienced in working with Bangladeshi and international content creators.'}
+                  </p>
                 </div>
 
                 <div>
                   <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-[#3A86FF]" /> যোগাযোগ
+                    <CheckCircle className="w-4 h-4 text-[#3A86FF]" />
+                    {language === 'bn' ? 'যোগাযোগ' : 'Contact'}
                   </h4>
-                  <p>ফোন: 01303-623838 | ইমেইল: masum.9t9.gd@gmail.com / parahinacademy@gmail.com</p>
+                  <p>Phone: +8801303-623838 | Email: masum.9t9.gd@gmail.com / parahinacademy@gmail.com</p>
                 </div>
               </div>
 
@@ -192,14 +208,14 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
                   onClick={() => setShowResumeModal(false)}
                   className="px-4 py-2 rounded-lg bg-neutral-800 text-neutral-300 text-xs font-semibold hover:bg-neutral-700"
                 >
-                  বন্ধ করুন
+                  {language === 'bn' ? 'বন্ধ করুন' : 'Close'}
                 </button>
                 <a
                   href="mailto:masum.9t9.gd@gmail.com?subject=Requesting%20Full%20Resume%20PDF"
                   className="px-5 py-2 rounded-lg bg-[#3A86FF] text-white text-xs font-semibold hover:bg-[#2b75ed] flex items-center gap-1.5"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>রেজুমি রিকোয়েস্ট করুন</span>
+                  <span>{language === 'bn' ? 'রেজুমি রিকোয়েস্ট করুন' : 'Request Full Resume'}</span>
                 </a>
               </div>
             </motion.div>

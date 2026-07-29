@@ -509,7 +509,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     whatsappNumber: "+8801303623838",
     location: "সাতক্ষীরা, খুলনা, বাংলাদেশ",
     googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbybx_ey85GMFxDSMHXH3ljkaM4s4PRircG3XPOWVYjYkLTfwJJqFo85wnKzjsbR51FIfg/exec",
-    telegramBotToken: "8833148612:AAHihj3OkapzuM0RemcOv29ahsUEhnRIhuc",
+    telegramBotToken: (import.meta as unknown as { env: Record<string, string> }).env?.VITE_TELEGRAM_BOT_TOKEN || "8833148612:AAHihj3OkapzuM0RemcOv29ahsUEhnRIhuc",
     telegramChatId: "8634088852"
   }
 };
@@ -538,7 +538,10 @@ export function loadPortfolioConfig(): PortfolioConfig {
         },
         contact: {
           ...INITIAL_PORTFOLIO_CONFIG.contact,
-          ...(parsed.contact || {})
+          ...(parsed.contact || {}),
+          telegramBotToken: (parsed.contact?.telegramBotToken && !parsed.contact.telegramBotToken.includes('AAGSPsGtv4dApiRQ3r-ad7mKxFZUj0MdTc0'))
+            ? parsed.contact.telegramBotToken
+            : INITIAL_PORTFOLIO_CONFIG.contact.telegramBotToken
         },
         featuredEcosystem: parsed.featuredEcosystem || INITIAL_PORTFOLIO_CONFIG.featuredEcosystem
       };
@@ -547,6 +550,28 @@ export function loadPortfolioConfig(): PortfolioConfig {
     console.error("Failed to load portfolio config from storage", e);
   }
   return INITIAL_PORTFOLIO_CONFIG;
+}
+
+import { ENGLISH_PORTFOLIO_CONFIG } from './translations';
+
+export function getLocalizedPortfolioConfig(baseConfig: PortfolioConfig, lang: 'bn' | 'en'): PortfolioConfig {
+  if (lang === 'bn') {
+    return baseConfig;
+  }
+  return {
+    ...ENGLISH_PORTFOLIO_CONFIG,
+    socials: {
+      ...ENGLISH_PORTFOLIO_CONFIG.socials,
+      ...(baseConfig.socials || {})
+    },
+    contact: {
+      ...ENGLISH_PORTFOLIO_CONFIG.contact,
+      ...(baseConfig.contact || {})
+    },
+    testimonials: baseConfig.testimonials && baseConfig.testimonials.length > 0
+      ? baseConfig.testimonials
+      : ENGLISH_PORTFOLIO_CONFIG.testimonials
+  };
 }
 
 export function savePortfolioConfig(config: PortfolioConfig): void {

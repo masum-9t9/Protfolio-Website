@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { HelpCircle, ChevronDown, Search } from 'lucide-react';
 import { FAQItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface FAQProps {
   faqs: FAQItem[];
 }
 
 export const FAQ: React.FC<FAQProps> = ({ faqs }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+
   const [openId, setOpenId] = useState<string | null>(faqs[0]?.id || null);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -25,13 +30,13 @@ export const FAQ: React.FC<FAQProps> = ({ faqs }) => {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>সাধারণ প্রশ্নাবলী (FAQ)</span>
+            <span>{t.faq.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">
-            সচরাচর জিজ্ঞাসিত প্রশ্নসমূহ
+            {t.faq.title}
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base">
-            আপনার মনে থাকা যেকোনো প্রশ্নের দ্রুত ও স্পষ্ট উত্তর
+            {t.faq.subtitle}
           </p>
           <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4" />
         </div>
@@ -43,7 +48,7 @@ export const FAQ: React.FC<FAQProps> = ({ faqs }) => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="প্রশ্ন খুঁজুন..."
+            placeholder={t.faq.searchPlaceholder}
             className="w-full pl-11 pr-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF] transition-colors"
           />
         </div>
@@ -91,7 +96,7 @@ export const FAQ: React.FC<FAQProps> = ({ faqs }) => {
 
           {filteredFaqs.length === 0 && (
             <div className="text-center py-12 text-neutral-400 text-sm">
-              কোনো প্রশ্ন পাওয়া যায়নি। সরাসরি ইমেইল বা হোয়াটসঅ্যাপে যোগাযোগ করুন।
+              {language === 'bn' ? 'কোনো প্রশ্ন পাওয়া যায়নি। সরাসরি ইমেইল বা হোয়াটসঅ্যাপে যোগাযোগ করুন।' : 'No matching questions found. Contact directly via email or WhatsApp.'}
             </div>
           )}
         </div>

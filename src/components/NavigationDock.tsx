@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   Home,
   User,
@@ -8,28 +8,33 @@ import {
   FolderKanban,
   History,
   MessageSquareQuote,
-  Mail
+  Mail,
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface NavItem {
-  id: string;
-  label: string;
+  id: keyof typeof UI_TRANSLATIONS.bn.nav;
   icon: React.ElementType;
   faIconClass: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'hero', label: 'হোম', icon: Home, faIconClass: 'fa-solid fa-house' },
-  { id: 'about', label: 'আমার সম্পর্কে', icon: User, faIconClass: 'fa-solid fa-user' },
-  { id: 'skills', label: 'দক্ষতা', icon: Cpu, faIconClass: 'fa-solid fa-code' },
-  { id: 'services', label: 'সেবা', icon: Briefcase, faIconClass: 'fa-solid fa-briefcase' },
-  { id: 'portfolio', label: 'প্রজেক্ট', icon: FolderKanban, faIconClass: 'fa-solid fa-diagram-project' },
-  { id: 'experience', label: 'অভিজ্ঞতা', icon: History, faIconClass: 'fa-solid fa-clock-rotate-left' },
-  { id: 'testimonials', label: 'মতামত', icon: MessageSquareQuote, faIconClass: 'fa-solid fa-comment-dots' },
-  { id: 'contact', label: 'যোগাযোগ', icon: Mail, faIconClass: 'fa-solid fa-envelope' },
+  { id: 'hero', icon: Home, faIconClass: 'fa-solid fa-house' },
+  { id: 'about', icon: User, faIconClass: 'fa-solid fa-user' },
+  { id: 'skills', icon: Cpu, faIconClass: 'fa-solid fa-code' },
+  { id: 'services', icon: Briefcase, faIconClass: 'fa-solid fa-briefcase' },
+  { id: 'portfolio', icon: FolderKanban, faIconClass: 'fa-solid fa-diagram-project' },
+  { id: 'experience', icon: History, faIconClass: 'fa-solid fa-clock-rotate-left' },
+  { id: 'testimonials', icon: MessageSquareQuote, faIconClass: 'fa-solid fa-comment-dots' },
+  { id: 'contact', icon: Mail, faIconClass: 'fa-solid fa-envelope' },
 ];
 
 export const NavigationDock: React.FC = () => {
+  const { language, toggleLanguage } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+  
   const [activeSection, setActiveSection] = useState('hero');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -97,6 +102,7 @@ export const NavigationDock: React.FC = () => {
         {NAV_ITEMS.map((item, index) => {
           const isActive = activeSection === item.id;
           const scale = getScale(index);
+          const label = t.nav[item.id];
 
           return (
             <div key={item.id} className="relative group shrink-0">
@@ -127,9 +133,9 @@ export const NavigationDock: React.FC = () => {
                   aria-hidden="true"
                 />
 
-                {/* Bengali Label (hidden on small mobile to preserve Apple dock compactness) */}
+                {/* Localized Label (hidden on small mobile) */}
                 <span className="hidden md:inline whitespace-nowrap text-xs font-bold tracking-wide">
-                  {item.label}
+                  {label}
                 </span>
 
                 {/* Active Indicator Light */}
@@ -144,11 +150,18 @@ export const NavigationDock: React.FC = () => {
 
               {/* Tooltip on Mobile / Small Tablet hover */}
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-neutral-900/95 border border-white/10 text-white text-[11px] font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none md:hidden whitespace-nowrap z-50 shadow-xl backdrop-blur-md">
-                {item.label}
+                {label}
               </div>
             </div>
           );
         })}
+
+        {/* Vertical Separator */}
+        <div className="w-[1px] h-5 bg-white/20 mx-1 shrink-0" />
+
+        {/* Language Switcher Component on Apple Dock */}
+        <LanguageSwitcher variant="dock" />
+
       </motion.nav>
     </header>
   );

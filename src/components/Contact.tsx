@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
 import { Mail, Phone, Send, MapPin, CheckCircle2, AlertCircle, Loader2, MessageSquare } from 'lucide-react';
 import { ContactConfig, SocialLinks } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface ContactProps {
   config: ContactConfig;
@@ -9,11 +10,14 @@ interface ContactProps {
 }
 
 export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    service: 'পোস্টার ডিজাইন',
+    service: language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design',
     message: ''
   });
 
@@ -29,7 +33,9 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
     if (!formData.name.trim() || !formData.phone.trim() || !formData.message.trim()) {
       setStatus({
         type: 'error',
-        message: 'অনুগ্রহ করে নাম, ফোন নম্বর এবং মেসেজ ঘরগুলো পূরণ করুন।'
+        message: language === 'bn'
+          ? 'অনুগ্রহ করে নাম, ফোন নম্বর এবং মেসেজ ঘরগুলো পূরণ করুন।'
+          : 'Please fill in your name, phone number, and message.'
       });
       return;
     }
@@ -39,7 +45,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
 
     try {
       // Send Telegram notification
-      const botToken = config.telegramBotToken || "8833148612:AAGSPsGtv4dApiRQ3r-ad7mKxFZUj0MdTc0";
+      const botToken = config.telegramBotToken || "8833148612:AAHihj3OkapzuM0RemcOv29ahsUEhnRIhuc";
       const chatId = config.telegramChatId || "8634088852";
 
       if (botToken && chatId) {
@@ -49,12 +55,12 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        const htmlText = `<b>📬 নতুন পোর্টফোলিও মেসেজ (Masum 9T9)</b>\n\n` +
-          `<b>👤 নাম:</b> ${escapeHtml(formData.name)}\n` +
-          `<b>📞 ফোন:</b> ${escapeHtml(formData.phone)}\n` +
-          `<b>✉️ ইমেইল:</b> ${escapeHtml(formData.email || 'দেওয়া হয়নি')}\n` +
-          `<b>🛠️ সার্ভিস:</b> ${escapeHtml(formData.service)}\n` +
-          `<b>💬 মেসেজ:</b> "${escapeHtml(formData.message)}"`;
+        const htmlText = `<b>📬 New Portfolio Contact Message (Masum 9T9)</b>\n\n` +
+          `<b>👤 Name:</b> ${escapeHtml(formData.name)}\n` +
+          `<b>📞 Phone:</b> ${escapeHtml(formData.phone)}\n` +
+          `<b>✉️ Email:</b> ${escapeHtml(formData.email || 'N/A')}\n` +
+          `<b>🛠️ Service:</b> ${escapeHtml(formData.service)}\n` +
+          `<b>💬 Message:</b> "${escapeHtml(formData.message)}"`;
 
         try {
           const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -68,13 +74,12 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
           });
           const resData = await res.json();
           if (!resData.ok) {
-            // Plain text fallback
             await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 chat_id: chatId,
-                text: `📬 নতুন পোর্টফোলিও মেসেজ\n\nনাম: ${formData.name}\nফোন: ${formData.phone}\nইমেইল: ${formData.email}\nসার্ভিস: ${formData.service}\nমেসেজ: ${formData.message}`
+                text: `New Portfolio Message\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nService: ${formData.service}\nMessage: ${formData.message}`
               })
             });
           }
@@ -113,26 +118,29 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
         }
       }
 
-      // Simulate quick processing delay for UI feedback
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       setStatus({
         type: 'success',
-        message: 'ধন্যবাদ! আপনার মেসেজটি সফলভাবে পাঠানো হয়েছে। আমি খুব দ্রুত আপনার সাথে যোগাযোগ করবো।'
+        message: language === 'bn'
+          ? 'ধন্যবাদ! আপনার মেসেজটি সফলভাবে পাঠানো হয়েছে। আমি খুব দ্রুত আপনার সাথে যোগাযোগ করবো।'
+          : 'Thank you! Your message has been sent successfully. I will get back to you shortly.'
       });
 
       setFormData({
         name: '',
         phone: '',
         email: '',
-        service: 'পোস্টার ডিজাইন',
+        service: language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design',
         message: ''
       });
     } catch (err) {
       console.error(err);
       setStatus({
         type: 'success',
-        message: 'মেসেজটি রেকর্ড করা হয়েছে! শীঘ্রই আপনার সাথে ইমেইল অথবা ফোনে যোগাযোগ করা হবে।'
+        message: language === 'bn'
+          ? 'মেসেজটি রেকর্ড করা হয়েছে! শীঘ্রই আপনার সাথে যোগাযোগ করা হবে।'
+          : 'Your message has been received! I will contact you shortly.'
       });
     } finally {
       setLoading(false);
@@ -147,13 +155,13 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <Mail className="w-3.5 h-3.5" />
-            <span>সরাসরি যোগাযোগ করুন</span>
+            <span>{t.contact.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">
-            আসুন এক সাথে কাজ শুরু করি
+            {t.contact.title}
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base">
-            আপনার প্রজেক্টের আইডিয়া শেয়ার করুন অথবা সরাসরি কথা বলুন
+            {t.contact.subtitle}
           </p>
           <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4" />
         </div>
@@ -163,13 +171,12 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
           {/* Contact Details (Left Column - 5 Cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             
-            {/* Direct Contact Cards */}
             <div className="glass-card p-6 rounded-2xl border border-neutral-800 flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-[#3A86FF]/10 text-[#3A86FF] flex items-center justify-center border border-[#3A86FF]/20 shrink-0">
                 <Phone className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-neutral-400 font-medium">সরাসরি কল বা হোয়াটসঅ্যাপ</p>
+                <p className="text-xs text-neutral-400 font-medium">{t.contact.directCall}</p>
                 <a href={`tel:${config.phone}`} className="text-lg font-bold text-white hover:text-[#3A86FF] transition-colors">
                   {config.phone}
                 </a>
@@ -181,7 +188,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                 <Mail className="w-6 h-6" />
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs text-neutral-400 font-medium">অফিশিয়াল ইমেইল এড্রেস</p>
+                <p className="text-xs text-neutral-400 font-medium">{t.contact.officialEmail}</p>
                 <a href={`mailto:${config.emailPrimary}`} className="text-sm sm:text-base font-bold text-white hover:text-[#3A86FF] transition-colors block truncate">
                   {config.emailPrimary}
                 </a>
@@ -194,7 +201,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                 <Send className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-neutral-400 font-medium">টেলিগ্রাম ইউজারনেম</p>
+                <p className="text-xs text-neutral-400 font-medium">Telegram</p>
                 <a href={socials.telegram} target="_blank" rel="noopener noreferrer" className="text-base font-bold text-white hover:text-[#3A86FF] transition-colors">
                   {config.telegramUsername}
                 </a>
@@ -206,7 +213,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                 <MapPin className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-neutral-400 font-medium">অবস্থান</p>
+                <p className="text-xs text-neutral-400 font-medium">{t.contact.locationLabel}</p>
                 <p className="text-base font-bold text-white">{config.location}</p>
               </div>
             </div>
@@ -218,7 +225,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
             <div className="glass-card p-8 rounded-2xl border border-neutral-800">
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                 <MessageSquare className="w-6 h-6 text-[#3A86FF]" />
-                <span>মেসেজ পাঠান</span>
+                <span>{t.contact.sendMessageHeading}</span>
               </h3>
 
               {status.type && (
@@ -242,28 +249,28 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-semibold text-neutral-300 mb-2">
-                      আপনার নাম <span className="text-rose-400">*</span>
+                      {t.contact.nameLabel} <span className="text-rose-400">*</span>
                     </label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="যেমন: তানভীর হাসান"
+                      placeholder={language === 'bn' ? 'যেমন: তানভীর হাসান' : 'e.g. Tanvir Hasan'}
                       className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-neutral-300 mb-2">
-                      ফোন নম্বর <span className="text-rose-400">*</span>
+                      {t.contact.phoneLabel} <span className="text-rose-400">*</span>
                     </label>
                     <input
                       type="tel"
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="যেমন: 01700-000000"
+                      placeholder={language === 'bn' ? 'যেমন: 01700-000000' : 'e.g. +8801700-000000'}
                       className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
                     />
                   </div>
@@ -272,45 +279,52 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-semibold text-neutral-300 mb-2">
-                      ইমেইল এড্রেস
+                      {t.contact.emailLabel}
                     </label>
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="যেমন: example@gmail.com"
+                      placeholder="example@gmail.com"
                       className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-neutral-300 mb-2">
-                      প্রজেক্টের ক্যাটাগরি
+                      {t.contact.serviceCategoryLabel}
                     </label>
                     <select
                       value={formData.service}
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                     >
-                      <option value="পোস্টার ডিজাইন">পোস্টার ডিজাইন</option>
-                      <option value="ইউটিউব থাম্বনেল">ইউটিউব থাম্বনেল</option>
-                      <option value="এডুকেশন থাম্বনেল">এডুকেশন থাম্বনেল</option>
-                      <option value="কন্টেন্ট ক্রিয়েশন">কন্টেন্ট ক্রিয়েশন</option>
-                      <option value="কাস্টম থিম">কাস্টম থিম ডিজাইন</option>
+                      <option value={language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}>
+                        {language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}
+                      </option>
+                      <option value={language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}>
+                        {language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}
+                      </option>
+                      <option value={language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}>
+                        {language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}
+                      </option>
+                      <option value={language === 'bn' ? 'কাস্টম থিম ডিজাইন' : 'Custom Theme Design'}>
+                        {language === 'bn' ? 'কাস্টম থিম ডিজাইন' : 'Custom Theme Design'}
+                      </option>
                     </select>
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-neutral-300 mb-2">
-                    মেসেজ বা প্রজেক্ট বিবরণ <span className="text-rose-400">*</span>
+                    {t.contact.messageLabel} <span className="text-rose-400">*</span>
                   </label>
                   <textarea
                     rows={4}
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="আপনার প্রজেক্ট সম্পর্কে কিছু লিখুন..."
+                    placeholder={language === 'bn' ? 'আপনার প্রজেক্ট সম্পর্কে কিছু লিখুন...' : 'Write details about your project...'}
                     className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
                   />
                 </div>
@@ -323,12 +337,12 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>মেসেজ পাঠানো হচ্ছে...</span>
+                      <span>{language === 'bn' ? 'মেসেজ পাঠানো হচ্ছে...' : 'Sending message...'}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>মেসেজ সাবমিট করুন</span>
+                      <span>{t.contact.submitBtn}</span>
                     </>
                   )}
                 </button>

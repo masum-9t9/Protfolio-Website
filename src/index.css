@@ -2,7 +2,7 @@
 
 @layer base {
   html {
-    font-family: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
 }
 
@@ -80,24 +80,25 @@
 }
 
 /* 25-30 Degree Angled Isometric Perspective Views */
-.perspective-3d {
+.perspective-container {
   perspective: 1200px;
+  perspective-origin: center center;
 }
 
 .tilt-25deg {
-  transform: rotateX(14deg) rotateY(-8deg) rotateZ(-25deg) scale(1.04);
+  transform: rotateX(14deg) rotateY(-8deg) rotateZ(-20deg) scale(1.05);
   transform-style: preserve-3d;
   will-change: transform;
 }
 
 .tilt-30deg {
-  transform: rotateX(18deg) rotateY(-12deg) rotateZ(-30deg) scale(1.08);
+  transform: rotateX(18deg) rotateY(-12deg) rotateZ(-28deg) scale(1.1);
   transform-style: preserve-3d;
   will-change: transform;
 }
 
 .tilt-15deg {
-  transform: rotateX(10deg) rotateY(-5deg) rotateZ(-15deg) scale(1.02);
+  transform: rotateX(10deg) rotateY(-5deg) rotateZ(-12deg) scale(1.02);
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -144,50 +145,4 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
-}
-
-/* GPU Accelerated Infinite Marquee */
-@keyframes marqueeLeft {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
-}
-
-@keyframes marqueeRight {
-  0% { transform: translate3d(-50%, 0, 0); }
-  100% { transform: translate3d(0, 0, 0); }
-}
-
-.animate-marquee-left {
-  animation: marqueeLeft var(--marquee-duration, 35s) linear infinite;
-  will-change: transform;
-}
-
-.animate-marquee-right {
-  animation: marqueeRight var(--marquee-duration, 35s) linear infinite;
-  will-change: transform;
-}
-
-.marquee-container:hover .animate-marquee-left,
-.marquee-container:hover .animate-marquee-right {
-  animation-play-state: paused;
-}
-
-/* 3D Perspective Tilt Classes */
-.perspective-container {
-  perspective: 1200px;
-}
-
-.tilt-25deg {
-  transform: rotateX(12deg) rotateY(-18deg) rotateZ(5deg);
-  transform-style: preserve-3d;
-}
-
-.tilt-30deg {
-  transform: rotateX(15deg) rotateY(-22deg) rotateZ(7deg);
-  transform-style: preserve-3d;
-}
-
-.tilt-15deg {
-  transform: rotateX(8deg) rotateY(-10deg) rotateZ(3deg);
-  transform-style: preserve-3d;
 }

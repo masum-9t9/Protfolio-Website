@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ExternalLink, Layers, Link2, Globe, Smartphone, Sparkles } from 'lucide-react';
 import { FeaturedEcosystemItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface FeaturedEcosystemProps {
   items?: FeaturedEcosystemItem[];
@@ -13,6 +15,9 @@ interface EcosystemCardProps {
 }
 
 const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+
   const gallery = item.galleryImages && item.galleryImages.length > 0
     ? item.galleryImages
     : ["https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200"];
@@ -107,7 +112,7 @@ const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-full bg-neutral-900/90 hover:bg-[#3A86FF] text-neutral-300 hover:text-white border border-neutral-800 hover:border-[#3A86FF] transition-all duration-200 shadow-md hover:scale-110"
-                title="লাইভ সাইট দেখুন"
+                title={t.ecosystem.visitWebsite}
               >
                 <ExternalLink className="w-4 h-4" />
               </a>
@@ -197,6 +202,9 @@ const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false 
 };
 
 export const FeaturedEcosystem: React.FC<FeaturedEcosystemProps> = ({ items }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+
   if (!items || items.length === 0) return null;
 
   return (
@@ -209,13 +217,13 @@ export const FeaturedEcosystem: React.FC<FeaturedEcosystemProps> = ({ items }) =
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>আমাদের প্রজেক্ট ইকোসিস্টেম</span>
+            <span>{t.ecosystem.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            ওয়েবসাইট ও বিশেষ প্ল্যাটফর্ম
+            {t.ecosystem.title}
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
-            লাইভ রিয়েল-টাইম ওয়েবসাইট, এডটেক প্ল্যাটফর্ম ও কাস্টম ওয়েব ইকোসিস্টেম শোকেস
+            {t.ecosystem.subtitle}
           </p>
           <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4 shadow-[0_0_10px_#3A86FF]" />
         </div>

@@ -2,12 +2,6 @@
  * @file Testimonials3D.tsx
  * @description Professional 25°–30° Angled Side-by-Side Dual-Lane Marquee Testimonial Section
  * Crafted for high-performance 60 FPS scrolling, custom angle selection, and live client feedback submission.
- * 
- * PRO PROGRAMMER CUSTOMIZATION GUIDE:
- * 1. Rotation Angles: Select between 25° tilt, 30° tilt, 15° tilt, or flat grid mode via state or props.
- * 2. Marquee Speed: Adjust scrolling duration via `speedSeconds` state (Default: 35s).
- * 3. Add Custom Testimonials: Interactive modal allows adding live client reviews instantly.
- * 4. CSS Classes: Utilizes GPU-accelerated `translate3d` and `will-change: transform`.
  */
 
 import React, { useState } from 'react';
@@ -23,10 +17,11 @@ import {
   SlidersHorizontal,
   Upload,
   Image as ImageIcon,
-  CheckCircle2,
-  Sparkles
+  CheckCircle2
 } from 'lucide-react';
 import { TestimonialItem, ContactConfig } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface Testimonials3DProps {
   testimonials: TestimonialItem[];
@@ -52,6 +47,7 @@ const toBengaliNumerals = (numStr: string | number): string => {
  * Modular Testimonial Card Component
  */
 const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
+  const { language } = useLanguage();
   const ratingNum = Number(item.rating) || 5;
 
   return (
@@ -95,7 +91,7 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
           <div className="mb-4 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950/80 p-2">
             <p className="text-[10px] text-neutral-400 font-semibold mb-1.5 flex items-center gap-1">
               <ImageIcon className="w-3 h-3 text-[#3A86FF]" />
-              <span>আমার জন্য করা ডিজাইন:</span>
+              <span>{language === 'bn' ? 'আমার জন্য করা ডিজাইন:' : 'Design for Client:'}</span>
             </p>
             <div className="relative aspect-video rounded-lg overflow-hidden bg-neutral-900 border border-neutral-800/80">
               <img
@@ -146,6 +142,9 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
   onAddTestimonial,
   contactConfig
 }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+
   const [localTestimonials, setLocalTestimonials] = useState<TestimonialItem[]>(initialTestimonials);
   const [selectedAngle, setSelectedAngle] = useState<TiltAngle>('25deg');
   const [selectedSpeed, setSelectedSpeed] = useState<ScrollSpeed>('normal');
@@ -165,7 +164,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
     company: '',
     comment: '',
     rating: 4.9,
-    projectType: 'পোস্টার ডিজাইন',
+    projectType: language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design',
     avatarUrl: '',
     designImageUrl: '',
   });
@@ -178,7 +177,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
     : 5.0;
   const formattedAvgRating = avgRatingNum.toFixed(1);
 
-  // Duplicate items for infinite continuous marquee loop (4 repetitions for seamless -50% loop)
+  // Duplicate items for infinite continuous marquee loop
   const lane1 = [...currentList, ...currentList, ...currentList, ...currentList];
   const revList = [...currentList].reverse();
   const lane2 = [...revList, ...revList, ...revList, ...revList];
@@ -204,7 +203,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
     const createdItem: TestimonialItem = {
       id: `test-custom-${Date.now()}`,
       name: newReview.name,
-      role: newReview.role || 'ক্লায়েন্ট',
+      role: newReview.role || (language === 'bn' ? 'ক্লায়েন্ট' : 'Client'),
       company: newReview.company || '',
       comment: newReview.comment,
       rating: Number(newReview.rating) || 5.0,
@@ -213,20 +212,18 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
       designImageUrl: newReview.designImageUrl || undefined,
     };
 
-
-    // 2. Update local state & parent state
     setLocalTestimonials((prev) => [createdItem, ...prev.filter(i => i.id !== createdItem.id)]);
     if (onAddTestimonial) {
       onAddTestimonial(createdItem);
     }
 
-    // 3. Telegram Bot notification alert with FULL PHOTO ATTACHMENT & FAILSAFE SUPPORT
+    // Telegram Bot notification
     const botToken = contactConfig?.telegramBotToken || "8833148612:AAGSPsGtv4dApiRQ3r-ad7mKxFZUj0MdTc0";
     const chatId = contactConfig?.telegramChatId || "8634088852";
 
     if (botToken && chatId) {
       try {
-        const timeString = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
+        const timeString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' });
 
         const escapeHtml = (str: string) =>
           String(str || '')
@@ -234,7 +231,6 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        // Helper to prepare clean JSON string without giant Base64 strings
         const sanitizeForJson = (url?: string) => {
           if (!url) return undefined;
           if (url.startsWith('data:') || url.startsWith('blob:')) {
@@ -255,25 +251,22 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
           designImageUrl: sanitizeForJson(createdItem.designImageUrl)
         }, null, 2);
 
-        // Keep caption concise (Telegram max caption is 1024 chars)
         let htmlCaption =
-          `<b>🌟 নতুন ক্লায়েন্ট রিভিউ जमा হয়েছে! (Masum 9T9)</b>\n\n` +
-          `<b>👤 নাম:</b> ${escapeHtml(createdItem.name)}\n` +
-          `<b>💼 পেশা/রোল:</b> ${escapeHtml(createdItem.role)} ${createdItem.company ? `(${escapeHtml(createdItem.company)})` : ''}\n` +
-          `<b>⭐ রেটিং:</b> ${createdItem.rating} / 5.0\n` +
-          `<b>🎨 প্রজেক্ট:</b> ${escapeHtml(createdItem.projectType)}\n` +
-          `<b>💬 রিভিউ:</b> "${escapeHtml(createdItem.comment)}"\n` +
-          `<b>📅 সময়:</b> ${escapeHtml(timeString)}\n\n` +
+          `<b>🌟 New Client Review Submitted! (Masum 9T9)</b>\n\n` +
+          `<b>👤 Name:</b> ${escapeHtml(createdItem.name)}\n` +
+          `<b>💼 Role:</b> ${escapeHtml(createdItem.role)} ${createdItem.company ? `(${escapeHtml(createdItem.company)})` : ''}\n` +
+          `<b>⭐ Rating:</b> ${createdItem.rating} / 5.0\n` +
+          `<b>🎨 Project:</b> ${escapeHtml(createdItem.projectType)}\n` +
+          `<b>💬 Comment:</b> "${escapeHtml(createdItem.comment)}"\n` +
+          `<b>📅 Time:</b> ${escapeHtml(timeString)}\n\n` +
           `<b>📌 JSON snippet:</b>\n<pre>${escapeHtml(jsonFormatted)}</pre>`;
 
-        // Ensure caption never exceeds 950 chars for photo captions
         if (htmlCaption.length > 950) {
           htmlCaption = htmlCaption.substring(0, 920) + '\n...</pre>';
         }
 
         let photoSent = false;
 
-        // Helper to send photo to Telegram
         const sendTelegramPhoto = async (photoDataOrUrl: string, captionHtml: string, filename: string) => {
           try {
             const safeCaption = captionHtml.length > 950 ? captionHtml.substring(0, 920) + '...' : captionHtml;
@@ -293,7 +286,6 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                 body: formData,
               });
               const resData = await res.json();
-              console.log('Telegram sendPhoto base64 result:', resData);
               return resData.ok === true;
             } else if (photoDataOrUrl.startsWith('http://') || photoDataOrUrl.startsWith('https://')) {
               const res = await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
@@ -307,7 +299,6 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                 })
               });
               const resData = await res.json();
-              console.log('Telegram sendPhoto URL result:', resData);
               return resData.ok === true;
             }
             return false;
@@ -317,21 +308,19 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
           }
         };
 
-        // Send Design Image if available
         if (createdItem.designImageUrl) {
           const ok = await sendTelegramPhoto(
             createdItem.designImageUrl,
-            `<b>🖼️ প্রজেক্ট ডিজাইন ছবি:</b> ${escapeHtml(createdItem.name)}\n\n` + htmlCaption,
+            `<b>🖼️ Project Design Image:</b> ${escapeHtml(createdItem.name)}\n\n` + htmlCaption,
             `design_${Date.now()}.jpg`
           );
           if (ok) photoSent = true;
         }
 
-        // Send Avatar Photo if custom uploaded
         if (createdItem.avatarUrl && !createdItem.avatarUrl.includes('dicebear.com')) {
           const avatarCaption = photoSent
-            ? `<b>👤 ক্লায়েন্ট প্রোফাইল ছবি:</b> ${escapeHtml(createdItem.name)}`
-            : `<b>👤 ক্লায়েন্ট প্রোফাইল ছবিসহ নতুন রিভিউ:</b> ${escapeHtml(createdItem.name)}\n\n` + htmlCaption;
+            ? `<b>👤 Client Avatar:</b> ${escapeHtml(createdItem.name)}`
+            : `<b>👤 Client Avatar with Review:</b> ${escapeHtml(createdItem.name)}\n\n` + htmlCaption;
 
           const ok = await sendTelegramPhoto(
             createdItem.avatarUrl,
@@ -341,9 +330,8 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
           if (ok) photoSent = true;
         }
 
-        // Failsafe Text Message if no photos sent or photo upload failed
         if (!photoSent) {
-          const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -352,54 +340,9 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
               parse_mode: 'HTML',
             })
           });
-          const resData = await res.json();
-          console.log('Telegram sendMessage HTML result:', resData);
-
-          // Plain text ultimate fallback if HTML fails
-          if (!resData.ok) {
-            const plainText =
-              `🌟 নতুন ক্লায়েন্ট রিভিউ (Masum 9T9 Portfolio)\n\n` +
-              `নাম: ${createdItem.name}\n` +
-              `পেশা: ${createdItem.role}\n` +
-              `রেটিং: ${createdItem.rating}/5.0\n` +
-              `প্রজেক্ট: ${createdItem.projectType}\n` +
-              `কমেন্ট: ${createdItem.comment}`;
-
-            const plainRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                chat_id: chatId,
-                text: plainText,
-              })
-            });
-            console.log('Telegram sendMessage plain text result:', await plainRes.json());
-          }
         }
       } catch (err) {
         console.error('Telegram review alert failed:', err);
-      }
-    }
-
-    // 4. Google Sheet Webhook if configured
-    if (contactConfig?.googleSheetScriptUrl) {
-      try {
-        const sheetParams = new URLSearchParams({
-          Name: createdItem.name,
-          Role: createdItem.role,
-          Company: createdItem.company,
-          Rating: String(createdItem.rating),
-          Category: createdItem.projectType,
-          Comment: createdItem.comment,
-          Data: new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' })
-        });
-        await fetch(contactConfig.googleSheetScriptUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: sheetParams
-        });
-      } catch (e) {
-        console.error('Google sheet review submit error:', e);
       }
     }
 
@@ -415,7 +358,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
         company: '',
         comment: '',
         rating: 4.9,
-        projectType: 'পোস্টার ডিজাইন',
+        projectType: language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design',
         avatarUrl: '',
         designImageUrl: '',
       });
@@ -447,11 +390,11 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <MessageSquareQuote className="w-3.5 h-3.5" />
-            <span>ক্লায়েন্টদের প্রতিক্রিয়া & রিভিউ</span>
+            <span>{t.testimonials.badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
-            যা বলছেন আমার সন্তুষ্ট ক্লায়েন্টগণ
+            {t.testimonials.title}
           </h2>
 
           {/* Dynamic Calculated Rating Badge */}
@@ -468,12 +411,18 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                 />
               ))}
             </div>
-            <span>গড় রেটিং: {toBengaliNumerals(formattedAvgRating)} / ৫.০</span>
-            <span className="text-neutral-400 font-normal">({toBengaliNumerals(totalReviewsCount)} টি রিভিউ)</span>
+            <span>
+              {language === 'bn'
+                ? `গড় রেটিং: ${toBengaliNumerals(formattedAvgRating)} / ৫.০`
+                : `Avg Rating: ${formattedAvgRating} / 5.0`}
+            </span>
+            <span className="text-neutral-400 font-normal">
+              ({language === 'bn' ? `${toBengaliNumerals(totalReviewsCount)} টি রিভিউ` : `${totalReviewsCount} Reviews`})
+            </span>
           </div>
 
           <p className="text-neutral-400 text-sm sm:text-base leading-relaxed mb-6">
-            ৩৫০+ সফল প্রজেক্টের অভিজ্ঞতা থেকে রিয়েল ক্লায়েন্টদের মতামত ও প্রফেশনাল ফিডব্যাক
+            {t.testimonials.subtitle}
           </p>
 
           {/* Toolbar: Angle & Speed & Add Review Button */}
@@ -482,7 +431,9 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
             {/* Angle Selector Controls */}
             <div className="flex items-center gap-1.5 bg-neutral-950 p-1 rounded-xl border border-neutral-800/80">
               <SlidersHorizontal className="w-3.5 h-3.5 text-[#3A86FF] ml-2" />
-              <span className="text-[11px] font-bold text-neutral-400 mr-1 hidden sm:inline">এঙ্গেল:</span>
+              <span className="text-[11px] font-bold text-neutral-400 mr-1 hidden sm:inline">
+                {language === 'bn' ? 'এঙ্গেল:' : 'Angle:'}
+              </span>
               
               {(['25deg', '30deg', '15deg', 'flat'] as TiltAngle[]).map((angle) => (
                 <button
@@ -494,10 +445,10 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                       : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  {angle === '25deg' && '২৫° এঙ্গেল'}
-                  {angle === '30deg' && '৩০° এঙ্গেল'}
-                  {angle === '15deg' && '১৫° এঙ্গেল'}
-                  {angle === 'flat' && 'ফ্ল্যাট'}
+                  {angle === '25deg' && (language === 'bn' ? '২৫° এঙ্গেল' : '25° Tilt')}
+                  {angle === '30deg' && (language === 'bn' ? '৩০° এঙ্গেল' : '30° Tilt')}
+                  {angle === '15deg' && (language === 'bn' ? '১৫° এঙ্গেল' : '15° Tilt')}
+                  {angle === 'flat' && (language === 'bn' ? 'ফ্ল্যাট' : 'Flat')}
                 </button>
               ))}
             </div>
@@ -515,9 +466,9 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                       : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  {spd === 'fast' && 'দ্রুত'}
-                  {spd === 'normal' && 'স্বাভাবিক'}
-                  {spd === 'slow' && 'ধীর'}
+                  {spd === 'fast' && (language === 'bn' ? 'দ্রুত' : 'Fast')}
+                  {spd === 'normal' && (language === 'bn' ? 'স্বাভাবিক' : 'Normal')}
+                  {spd === 'slow' && (language === 'bn' ? 'ধীর' : 'Slow')}
                 </button>
               ))}
             </div>
@@ -528,7 +479,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
               className="px-3.5 py-1.5 rounded-xl bg-[#3A86FF] hover:bg-[#2b75ed] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#3A86FF]/20 active:scale-95 transition-all"
             >
               <PlusCircle className="w-3.5 h-3.5" />
-              <span>রিভিউ যোগ করুন</span>
+              <span>{t.testimonials.addReviewBtn}</span>
             </button>
           </div>
 
@@ -548,14 +499,14 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
 
         <div className={`transition-all duration-700 ease-out origin-center ${getTiltClass()}`}>
           
-          {/* Lane 1: Side-by-Side Scrolling Left */}
+          {/* Lane 1 */}
           <div className="flex gap-6 w-max animate-marquee-left mb-8">
             {lane1.map((item, index) => (
               <TestimonialCardItem key={`lane1-${item.id}-${index}`} item={item} />
             ))}
           </div>
 
-          {/* Lane 2: Side-by-Side Scrolling Right */}
+          {/* Lane 2 */}
           <div className="flex gap-6 w-max animate-marquee-right">
             {lane2.map((item, index) => (
               <TestimonialCardItem key={`lane2-${item.id}-${index}`} item={item} />
@@ -584,19 +535,22 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
 
               <div className="flex items-center gap-2 mb-1">
                 <MessageSquareQuote className="w-5 h-5 text-[#3A86FF]" />
-                <h3 className="text-xl font-extrabold text-white">নতুন ক্লায়েন্ট মতামত যোগ করুন</h3>
+                <h3 className="text-xl font-extrabold text-white">
+                  {language === 'bn' ? 'নতুন ক্লায়েন্ট মতামত যোগ করুন' : 'Add New Client Review'}
+                </h3>
               </div>
               <p className="text-xs text-neutral-400 mb-5">
-                আপনার রিভিউটি সরাসরি সাইটে লাইভ থাকবে এবং সেকশনে যুক্ত হবে।
+                {language === 'bn'
+                  ? 'আপনার রিভিউটি সরাসরি সাইটে লাইভ থাকবে এবং সেকশনে যুক্ত হবে।'
+                  : 'Your review will be instantly added to the live section.'}
               </p>
 
               {showSuccessMsg ? (
                 <div className="py-12 text-center flex flex-col items-center justify-center space-y-3">
                   <CheckCircle2 className="w-12 h-12 text-emerald-400 animate-bounce" />
-                  <h4 className="text-lg font-bold text-white">ধন্যবাদ! আপনার মতামত টেলিগ্রামে পাঠানো হয়েছে।</h4>
-                  <p className="text-xs text-neutral-300 max-w-sm mx-auto leading-relaxed">
-                    আপনার রিভিউ এবং ছবি মাসুম ৯টি৯ এর টেলিগ্রামে সফলভাবে পৌঁছে গেছে। এডমিন রিভিউটি যাচাই করার পর ম্যানুয়ালি ওয়েবসাইটে প্রকাশ করবেন।
-                  </p>
+                  <h4 className="text-lg font-bold text-white">
+                    {language === 'bn' ? 'ধন্যবাদ! আপনার মতামত পাঠানো হয়েছে।' : 'Thank you! Your review has been submitted.'}
+                  </h4>
                 </div>
               ) : (
                 <form onSubmit={handleAddSubmit} className="space-y-4">
@@ -604,25 +558,29 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                   {/* Name & Profession */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-neutral-300 mb-1">আপনার নাম *</label>
+                      <label className="block text-xs font-bold text-neutral-300 mb-1">
+                        {language === 'bn' ? 'আপনার নাম *' : 'Your Name *'}
+                      </label>
                       <input
                         type="text"
                         required
                         value={newReview.name}
                         onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                        placeholder="যেমন: তানভীর আহমেদ"
+                        placeholder={language === 'bn' ? 'যেমন: তানভীর আহমেদ' : 'e.g. Tanvir Ahmed'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-neutral-300 mb-1">আপনি কি করেন? (পেশা / রোল) *</label>
+                      <label className="block text-xs font-bold text-neutral-300 mb-1">
+                        {language === 'bn' ? 'আপনি কি করেন? (পেশা / রোল) *' : 'Your Role / Title *'}
+                      </label>
                       <input
                         type="text"
                         required
                         value={newReview.role}
                         onChange={(e) => setNewReview({ ...newReview, role: e.target.value })}
-                        placeholder="যেমন: কনটেন্ট ক্রিয়েটর / উদ্যোক্তা"
+                        placeholder={language === 'bn' ? 'যেমন: কনটেন্ট ক্রিয়েটর' : 'e.g. Content Creator'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
@@ -631,35 +589,48 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                   {/* Brand / Company & Category */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-neutral-300 mb-1">চ্যানেল / ব্র্যান্ডের নাম</label>
+                      <label className="block text-xs font-bold text-neutral-300 mb-1">
+                        {language === 'bn' ? 'চ্যানেল / ব্র্যান্ডের নাম' : 'Channel / Brand Name'}
+                      </label>
                       <input
                         type="text"
                         value={newReview.company}
                         onChange={(e) => setNewReview({ ...newReview, company: e.target.value })}
-                        placeholder="যেমন: Tech Bangla / Raad Media"
+                        placeholder={language === 'bn' ? 'যেমন: Tech Bangla' : 'e.g. Tech Media'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-neutral-300 mb-1">প্রজেক্ট ক্যাটাগরি *</label>
+                      <label className="block text-xs font-bold text-neutral-300 mb-1">
+                        {language === 'bn' ? 'প্রজেক্ট ক্যাটাগরি *' : 'Project Category *'}
+                      </label>
                       <select
                         value={newReview.projectType}
                         onChange={(e) => setNewReview({ ...newReview, projectType: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       >
-                        <option value="পোস্টার ডিজাইন">পোস্টার ডিজাইন</option>
-                        <option value="ইউটিউব থাম্বনেল">ইউটিউব থাম্বনেল</option>
-                        <option value="এডুকেশন থাম্বনেল">এডুকেশন থাম্বনেল</option>
-                        <option value="ব্র্যান্ডিং প্যাকেজ">ব্র্যান্ডিং প্যাকেজ</option>
-                        <option value="কাস্টম থিম">কাস্টম থিম</option>
+                        <option value={language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}>
+                          {language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}
+                        </option>
+                        <option value={language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}>
+                          {language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}
+                        </option>
+                        <option value={language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}>
+                          {language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}
+                        </option>
+                        <option value={language === 'bn' ? 'ব্র্যান্ডিং প্যাকেজ' : 'Branding Package'}>
+                          {language === 'bn' ? 'ব্র্যান্ডিং প্যাকেজ' : 'Branding Package'}
+                        </option>
                       </select>
                     </div>
                   </div>
 
                   {/* Client Photo Upload */}
                   <div>
-                    <label className="block text-xs font-bold text-neutral-300 mb-1">আপনার ছবি (Client Picture)</label>
+                    <label className="block text-xs font-bold text-neutral-300 mb-1">
+                      {language === 'bn' ? 'আপনার ছবি (Client Picture)' : 'Your Profile Picture'}
+                    </label>
                     <div className="flex items-center gap-3">
                       {newReview.avatarUrl ? (
                         <img
@@ -675,7 +646,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                       <div className="flex-1 flex gap-2">
                         <label className="px-3 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold cursor-pointer flex items-center gap-1.5 shrink-0">
                           <Upload className="w-3.5 h-3.5 text-[#3A86FF]" />
-                          <span>ছবি আপলোড</span>
+                          <span>{language === 'bn' ? 'ছবি আপলোড' : 'Upload Image'}</span>
                           <input
                             type="file"
                             accept="image/*"
@@ -687,7 +658,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                           type="text"
                           value={newReview.avatarUrl}
                           onChange={(e) => setNewReview({ ...newReview, avatarUrl: e.target.value })}
-                          placeholder="বা ছবির URL লিংক দিন..."
+                          placeholder={language === 'bn' ? 'বা ছবির URL লিংক দিন...' : 'or image URL...'}
                           className="flex-1 px-3 py-2 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-[11px] focus:outline-none focus:border-[#3A86FF]"
                         />
                       </div>
@@ -696,12 +667,14 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
 
                   {/* Designed Project Image Upload */}
                   <div>
-                    <label className="block text-xs font-bold text-neutral-300 mb-1">আপনার জন্য করা ডিজাইন (Project Design Image)</label>
+                    <label className="block text-xs font-bold text-neutral-300 mb-1">
+                      {language === 'bn' ? 'আপনার জন্য করা ডিজাইন (Project Design Image)' : 'Designed Project Image'}
+                    </label>
                     <div className="space-y-2">
                       <div className="flex gap-2">
                         <label className="px-3 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold cursor-pointer flex items-center gap-1.5 shrink-0">
                           <Upload className="w-3.5 h-3.5 text-emerald-400" />
-                          <span>ডিজাইন আপলোড</span>
+                          <span>{language === 'bn' ? 'ডিজাইন আপলোড' : 'Upload Design'}</span>
                           <input
                             type="file"
                             accept="image/*"
@@ -713,31 +686,22 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                           type="text"
                           value={newReview.designImageUrl}
                           onChange={(e) => setNewReview({ ...newReview, designImageUrl: e.target.value })}
-                          placeholder="বা ডিজাইনের ছবির URL লিংক দিন..."
+                          placeholder={language === 'bn' ? 'বা ডিজাইনের ছবির URL...' : 'or design image URL...'}
                           className="flex-1 px-3 py-2 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-[11px] focus:outline-none focus:border-[#3A86FF]"
                         />
                       </div>
-                      {newReview.designImageUrl ? (
-                        <div className="relative aspect-video max-h-32 w-full rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950">
-                          <img
-                            src={newReview.designImageUrl}
-                            alt="Design Preview"
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                      ) : null}
                     </div>
                   </div>
 
-                  {/* Rating Slider (1.0 to 5.0 with 0.1 precision) */}
+                  {/* Rating Slider */}
                   <div className="bg-neutral-950 p-3.5 rounded-xl border border-neutral-800">
                     <div className="flex items-center justify-between mb-2">
                       <label className="text-xs font-bold text-neutral-300 flex items-center gap-1.5">
                         <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                        <span>রেটিং নির্বাচন করুন (১.০ থেকে ৫.০):</span>
+                        <span>{language === 'bn' ? 'রেটিং নির্বাচন করুন:' : 'Select Rating:'}</span>
                       </label>
                       <span className="text-sm font-extrabold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">
-                        {toBengaliNumerals(Number(newReview.rating).toFixed(1))} / ৫.০
+                        {language === 'bn' ? `${toBengaliNumerals(Number(newReview.rating).toFixed(1))} / ৫.০` : `${Number(newReview.rating).toFixed(1)} / 5.0`}
                       </span>
                     </div>
 
@@ -750,22 +714,19 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                       onChange={(e) => setNewReview({ ...newReview, rating: parseFloat(e.target.value) })}
                       className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-[#3A86FF]"
                     />
-                    <div className="flex justify-between text-[10px] text-neutral-500 font-bold mt-1">
-                      <span>১.০ (খুব খারাপ)</span>
-                      <span>৩.০ (মাঝারি)</span>
-                      <span>৫.০ (চমৎকার)</span>
-                    </div>
                   </div>
 
                   {/* Comment Area */}
                   <div>
-                    <label className="block text-xs font-bold text-neutral-300 mb-1">আপনার মতামত / কমেন্ট *</label>
+                    <label className="block text-xs font-bold text-neutral-300 mb-1">
+                      {language === 'bn' ? 'আপনার মতামত / কমেন্ট *' : 'Your Comment *'}
+                    </label>
                     <textarea
                       required
                       rows={3}
                       value={newReview.comment}
                       onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                      placeholder="ডিজাইনের মান, কমিউনিকেশন এবং ডেলিভারির অভিজ্ঞতা শেয়ার করুন..."
+                      placeholder={language === 'bn' ? 'ডিজাইনের মান ও অভিজ্ঞতা শেয়ার করুন...' : 'Share your design and delivery experience...'}
                       className="w-full p-3 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF] resize-none"
                     />
                   </div>
@@ -777,7 +738,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                       onClick={() => setIsModalOpen(false)}
                       className="px-4 py-2 rounded-xl bg-neutral-800 text-neutral-300 text-xs font-semibold hover:bg-neutral-700"
                     >
-                      বাতিল
+                      {language === 'bn' ? 'বাতিল' : 'Cancel'}
                     </button>
                     <button
                       type="submit"
@@ -785,7 +746,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                       className="px-6 py-2.5 rounded-xl bg-[#3A86FF] hover:bg-[#2b75ed] text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-[#3A86FF]/20 disabled:opacity-50"
                     >
                       <Send className="w-3.5 h-3.5" />
-                      <span>{isSubmitting ? 'সাবমিট হচ্ছে...' : 'সাবমিট করুন'}</span>
+                      <span>{isSubmitting ? (language === 'bn' ? 'সাবমিট হচ্ছে...' : 'Submitting...') : (language === 'bn' ? 'সাবমিট করুন' : 'Submit Review')}</span>
                     </button>
                   </div>
                 </form>

@@ -2,12 +2,17 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { History, Calendar, MapPin, Briefcase } from 'lucide-react';
 import { ExperienceItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_TRANSLATIONS } from '../data/translations';
 
 interface ExperienceProps {
   experiences: ExperienceItem[];
 }
 
 export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
+  const { language } = useLanguage();
+  const t = UI_TRANSLATIONS[language];
+
   return (
     <section id="experience" className="py-24 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto">
@@ -16,13 +21,13 @@ export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
             <History className="w-3.5 h-3.5" />
-            <span>কর্মজীবন ও অভিজ্ঞতা</span>
+            <span>{t.experience.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">
-            পেশাদার অভিজ্ঞতার সময়রেখা
+            {t.experience.title}
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base">
-            বিভিন্ন ব্র্যান্ড, এজেন্সি ও কন্টেন্ট ক্রিয়েটরদের সাথে কাজের মাইলফলক
+            {t.experience.subtitle}
           </p>
           <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4" />
         </div>
