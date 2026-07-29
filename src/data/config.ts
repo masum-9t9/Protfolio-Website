@@ -318,28 +318,30 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       badge: "Protfolio",
       title: "Protfolio Website",
       mainUrl: "https://www.9t9.pro.bd",
-      description: "A dedicated platform for nurturing technical talent with courses led by industry experts and interactive live problem solving.",
+      description: "A professional portfolio featuring graphic design, branding, UI concepts, and AI-powered web development. Showcasing creative projects, technical expertise, and digital solutions for modern businesses.",
       stats: [
-        { label: "STUDENTS", value: "1400+" },
-        { label: "INSTRUCTORS", value: "Google/BUET" }
+        { label: "ACHIVEMENT", value: "100+ Clients" },
+        { label: "Earn", value: "$10K+" }
       ],
       keyFeatures: [
-        "Skill-Based Courses: Competitive Programming, Android App Dev.",
-        "Upcoming CSE courses (DSA I, SPL, OOP, DM).",
-        "Instructors from top tech companies and universities.",
-        "Live classes and interactive problem-solving."
+        "Premium UI/UX with smooth interactive animations.",
+        "Seamless Bilingual Support (English & বাংলা)"
+        "Fully responsive across desktop, tablet, and mobile.",
+        "SEO & performance optimized for faster loading.",
+        "Professional showcase for design, branding, and web projects."
       ],
       galleryImages: [
-        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
-        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800"
+        "https://i.postimg.cc/7ZcG0nqC/Screenshot-(17).png",
+        "https://i.postimg.cc/908FVcMX/Screenshot-(18).png",
+        "https://i.postimg.cc/SRvq3VTj/Screenshot-(19).png"
       ],
-      links: [
-        { label: "www.codervai.com", url: "https://www.codervai.com", type: "web" },
-        { label: "cse.codervai.com", url: "https://cse.codervai.com", type: "web" },
-        { label: "cp.codervai.com", url: "https://cp.codervai.com", type: "web" },
-        { label: "android.codervai.com", url: "https://android.codervai.com", type: "android" }
-      ]
+links: [
+     {
+      label: "Live Demo",
+      url: "https://9t9.pro.bd",
+      type: "web"
+     }
+  ]
     },
     {
       id: "eco_2",

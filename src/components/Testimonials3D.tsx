@@ -596,7 +596,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         type="text"
                         value={newReview.company}
                         onChange={(e) => setNewReview({ ...newReview, company: e.target.value })}
-                        placeholder={language === 'bn' ? 'যেমন: Tech Bangla' : 'e.g. Tech Media'}
+                        placeholder={language === 'bn' ? 'যেমন: Parahin Academy' : 'e.g. Tech Media'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
