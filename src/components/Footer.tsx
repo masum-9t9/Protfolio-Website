@@ -33,7 +33,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
                 9T9
               </div>
               <div>
-                <span className="text-xl font-bold text-white tracking-tight block">মাসুম ৯টি৯ (Masum 9T9)</span>
+                <span className="text-xl font-bold text-white tracking-tight block">Masum 9T9</span>
                 <span className="text-[11px] text-[#3A86FF] font-medium flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   নতুন প্রজেক্টের জন্য এভেলেবল
