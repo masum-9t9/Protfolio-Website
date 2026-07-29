@@ -315,9 +315,9 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
   featuredEcosystem: [
     {
       id: "eco_1",
-      badge: "WEB PLATFORM",
-      title: "CoderVai Skills",
-      mainUrl: "https://www.codervai.com",
+      badge: "Protfolio",
+      title: "Protfolio Website",
+      mainUrl: "https://www.9t9.pro.bd",
       description: "A dedicated platform for nurturing technical talent with courses led by industry experts and interactive live problem solving.",
       stats: [
         { label: "STUDENTS", value: "1400+" },
