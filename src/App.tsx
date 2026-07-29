@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 import { loadPortfolioConfig, savePortfolioConfig } from './data/config';
 import { PortfolioConfig, PortfolioItem } from './types';
-import { subscribeTestimonials } from './firebase';
 
 import { NavigationDock } from './components/NavigationDock';
 import { Hero } from './components/Hero';
@@ -28,28 +27,6 @@ export default function App() {
   const [config, setConfig] = useState<PortfolioConfig>(loadPortfolioConfig());
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
   const [isConfigEditorOpen, setIsConfigEditorOpen] = useState<boolean>(false);
-
-  // Subscribe to Firebase Cloud Firestore for real-time global reviews
-  useEffect(() => {
-    const unsubscribe = subscribeTestimonials((firestoreReviews) => {
-      if (firestoreReviews && firestoreReviews.length > 0) {
-        setConfig((prevConfig) => {
-          const initialReviews = prevConfig.testimonials || [];
-          // Put firestore reviews first, filter out duplicates
-          const firestoreIds = new Set(firestoreReviews.map((f) => f.id));
-          const filteredInitial = initialReviews.filter((t) => !firestoreIds.has(t.id));
-          const combined = [...firestoreReviews, ...filteredInitial];
-          return {
-            ...prevConfig,
-            testimonials: combined,
-          };
-        });
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   const handleSaveConfig = (updatedConfig: PortfolioConfig) => {
     setConfig(updatedConfig);
     savePortfolioConfig(updatedConfig);

@@ -27,7 +27,6 @@ import {
   Sparkles
 } from 'lucide-react';
 import { TestimonialItem, ContactConfig } from '../types';
-import { addTestimonialToFirestore } from '../firebase';
 
 interface Testimonials3DProps {
   testimonials: TestimonialItem[];
@@ -214,24 +213,6 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
       designImageUrl: newReview.designImageUrl || undefined,
     };
 
-    // 1. Save to Firebase Cloud Firestore (Permanent Global Storage)
-    try {
-      const docId = await addTestimonialToFirestore({
-        name: createdItem.name,
-        role: createdItem.role,
-        company: createdItem.company,
-        comment: createdItem.comment,
-        rating: createdItem.rating,
-        avatarUrl: createdItem.avatarUrl,
-        projectType: createdItem.projectType,
-        designImageUrl: createdItem.designImageUrl,
-      });
-      if (docId) {
-        createdItem.id = docId;
-      }
-    } catch (err) {
-      console.error('Firestore save failed, falling back to local state:', err);
-    }
 
     // 2. Update local state & parent state
     setLocalTestimonials((prev) => [createdItem, ...prev.filter(i => i.id !== createdItem.id)]);
