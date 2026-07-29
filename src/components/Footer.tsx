@@ -1,13 +1,12 @@
 import React from 'react';
-import { ArrowUp, Code2, Facebook, Youtube, Send, PhoneCall, Heart } from 'lucide-react';
+import { ArrowUp, Facebook, Youtube, Send, PhoneCall } from 'lucide-react';
 import { SocialLinks } from '../types';
 
 interface FooterProps {
   socials: SocialLinks;
-  onOpenConfigEditor: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ socials, onOpenConfigEditor }) => {
+export const Footer: React.FC<FooterProps> = ({ socials }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -18,14 +17,14 @@ export const Footer: React.FC<FooterProps> = ({ socials, onOpenConfigEditor }) =
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-neutral-800">
           
           {/* Brand Col */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="md:col-span-7 space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-[#3A86FF] text-white flex items-center justify-center font-bold text-xs">
                 9T9
               </div>
               <span className="text-xl font-bold text-white tracking-tight">মাসুম ৯টি৯ (Masum 9T9)</span>
             </div>
-            <p className="text-xs text-neutral-400 leading-relaxed max-w-sm">
+            <p className="text-xs text-neutral-400 leading-relaxed max-w-md">
               প্রফেশনাল গ্রাফিক্স ডিজাইনার ও কন্টেন্ট ক্রিয়েটর। পোস্টার ডিজাইন, হাই-সিটিআর ইউটিউব থাম্বনেল, এডুকেশন ভিজ্যুয়াল এবং কাস্টম থিম ডিজাইনে বিশেষজ্ঞ।
             </p>
             <p className="text-xs text-[#3A86FF] font-medium">
@@ -34,31 +33,17 @@ export const Footer: React.FC<FooterProps> = ({ socials, onOpenConfigEditor }) =
           </div>
 
           {/* Quick Links */}
-          <div className="md:col-span-3 space-y-3">
+          <div className="md:col-span-5 space-y-3">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">দ্রুত নেভিগেশন</h4>
-            <ul className="space-y-2 text-xs text-neutral-400">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-neutral-400">
               <li><a href="#hero" className="hover:text-white transition-colors">হোম</a></li>
               <li><a href="#about" className="hover:text-white transition-colors">আমার সম্পর্কে</a></li>
               <li><a href="#skills" className="hover:text-white transition-colors">দক্ষতা</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">সেবা</a></li>
               <li><a href="#portfolio" className="hover:text-white transition-colors">প্রজেক্ট</a></li>
+              <li><a href="#ecosystem" className="hover:text-white transition-colors">ইকোসিস্টেম</a></li>
               <li><a href="#contact" className="hover:text-white transition-colors">যোগাযোগ</a></li>
             </ul>
-          </div>
-
-          {/* Blogger & Config Manager Tools */}
-          <div className="md:col-span-4 space-y-4">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">ডায়নামিক ম্যানেজমেন্ট</h4>
-            <p className="text-xs text-neutral-400 leading-relaxed">
-              ওয়েবসাইটের যেকোনো তথ্য (নাম, কন্টাক্ট, প্রজেক্ট) পরিবর্তন করুন অথবা Blogger-এর জন্য সম্পূর্ণ কোড এক্সপোর্ট করুন।
-            </p>
-            <button
-              onClick={onOpenConfigEditor}
-              className="px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-[#3A86FF]/50 text-xs text-neutral-200 hover:text-white font-semibold flex items-center gap-2 transition-all active:scale-95"
-            >
-              <Code2 className="w-4 h-4 text-[#3A86FF]" />
-              <span>ডাটা এডিটর ও Blogger এক্সপোর্টার</span>
-            </button>
           </div>
 
         </div>

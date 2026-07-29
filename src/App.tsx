@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { loadPortfolioConfig, savePortfolioConfig } from './data/config';
 import { PortfolioConfig, PortfolioItem } from './types';
+import { subscribeTestimonials } from './firebase';
 
 import { NavigationDock } from './components/NavigationDock';
 import { Hero } from './components/Hero';
@@ -21,16 +22,31 @@ import { FAQ } from './components/FAQ';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
-import { ConfigEditorModal } from './components/ConfigEditorModal';
 
 export default function App() {
   const [config, setConfig] = useState<PortfolioConfig>(loadPortfolioConfig());
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
-  const [isConfigEditorOpen, setIsConfigEditorOpen] = useState<boolean>(false);
-  const handleSaveConfig = (updatedConfig: PortfolioConfig) => {
-    setConfig(updatedConfig);
-    savePortfolioConfig(updatedConfig);
-  };
+
+  // Subscribe to Firebase Cloud Firestore for real-time global reviews
+  useEffect(() => {
+    const unsubscribe = subscribeTestimonials((firestoreReviews) => {
+      if (firestoreReviews && firestoreReviews.length > 0) {
+        setConfig((prevConfig) => {
+          const initialReviews = prevConfig.testimonials || [];
+          // Put firestore reviews first, filter out duplicates
+          const firestoreIds = new Set(firestoreReviews.map((f) => f.id));
+          const filteredInitial = initialReviews.filter((t) => !firestoreIds.has(t.id));
+          const combined = [...firestoreReviews, ...filteredInitial];
+          return {
+            ...prevConfig,
+            testimonials: combined,
+          };
+        });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleAddTestimonial = (newTestimonial: any) => {
     const updatedConfig = {
@@ -85,23 +101,12 @@ export default function App() {
       <Contact config={config.contact} socials={config.socials} />
 
       {/* Footer */}
-      <Footer
-        socials={config.socials}
-        onOpenConfigEditor={() => setIsConfigEditorOpen(true)}
-      />
+      <Footer socials={config.socials} />
 
       {/* Portfolio Item Detail Lightbox Modal */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
-      />
-
-      {/* Data Config & Blogger Exporter Modal */}
-      <ConfigEditorModal
-        isOpen={isConfigEditorOpen}
-        onClose={() => setIsConfigEditorOpen(false)}
-        config={config}
-        onSaveConfig={handleSaveConfig}
       />
 
     </div>
