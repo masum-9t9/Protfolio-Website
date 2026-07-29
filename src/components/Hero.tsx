@@ -15,12 +15,15 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
   const t = UI_TRANSLATIONS[language];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
 
+  const roles = data?.rotatingRoles || (data?.role ? [data.role] : ['Graphics Designer']);
+
   useEffect(() => {
+    if (!roles || roles.length === 0) return;
     const interval = setInterval(() => {
-      setCurrentRoleIndex((prev) => (prev + 1) % data.rotatingRoles.length);
+      setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [data.rotatingRoles]);
+  }, [roles]);
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -78,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#3A86FF] flex items-center gap-2"
             >
               <Sparkles className="w-5 h-5 text-[#3A86FF]" />
-              <span>{data.rotatingRoles[currentRoleIndex]}</span>
+              <span>{roles[currentRoleIndex] || data?.role || ''}</span>
             </motion.div>
           </div>
 

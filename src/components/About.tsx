@@ -45,7 +45,7 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
 
         {/* Highlights Stats Bar */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-          {data.highlights.map((item, idx) => {
+          {(data?.highlights || []).map((item, idx) => {
             let displayVal = item.value;
             if (item.label === 'রেটিং' || item.label === 'Rating') {
               displayVal = language === 'bn'

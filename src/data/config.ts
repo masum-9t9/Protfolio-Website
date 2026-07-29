@@ -509,7 +509,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     whatsappNumber: "+8801303623838",
     location: "সাতক্ষীরা, খুলনা, বাংলাদেশ",
     googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbybx_ey85GMFxDSMHXH3ljkaM4s4PRircG3XPOWVYjYkLTfwJJqFo85wnKzjsbR51FIfg/exec",
-    telegramBotToken: (import.meta as unknown as { env: Record<string, string> }).env?.VITE_TELEGRAM_BOT_TOKEN || "8833148612:AAHihj3OkapzuM0RemcOv29ahsUEhnRIhuc",
+    telegramBotToken: "8833148612:AAHihj3OkapzuM0RemcOv29ahsUEhnRIhuc",
     telegramChatId: "8634088852"
   }
 };
@@ -555,22 +555,43 @@ export function loadPortfolioConfig(): PortfolioConfig {
 import { ENGLISH_PORTFOLIO_CONFIG } from './translations';
 
 export function getLocalizedPortfolioConfig(baseConfig: PortfolioConfig, lang: 'bn' | 'en'): PortfolioConfig {
+  const safeBase = baseConfig || INITIAL_PORTFOLIO_CONFIG;
   if (lang === 'bn') {
-    return baseConfig;
+    return {
+      ...INITIAL_PORTFOLIO_CONFIG,
+      ...safeBase,
+      hero: { ...INITIAL_PORTFOLIO_CONFIG.hero, ...(safeBase.hero || {}) },
+      about: { ...INITIAL_PORTFOLIO_CONFIG.about, ...(safeBase.about || {}) },
+      skills: safeBase.skills || INITIAL_PORTFOLIO_CONFIG.skills,
+      services: safeBase.services || INITIAL_PORTFOLIO_CONFIG.services,
+      experiences: safeBase.experiences || INITIAL_PORTFOLIO_CONFIG.experiences,
+      portfolio: safeBase.portfolio || INITIAL_PORTFOLIO_CONFIG.portfolio,
+      featuredEcosystem: safeBase.featuredEcosystem || INITIAL_PORTFOLIO_CONFIG.featuredEcosystem,
+      testimonials: safeBase.testimonials || INITIAL_PORTFOLIO_CONFIG.testimonials,
+      achievements: safeBase.achievements || INITIAL_PORTFOLIO_CONFIG.achievements,
+      faqs: safeBase.faqs || INITIAL_PORTFOLIO_CONFIG.faqs,
+      socials: { ...INITIAL_PORTFOLIO_CONFIG.socials, ...(safeBase.socials || {}) },
+      contact: { ...INITIAL_PORTFOLIO_CONFIG.contact, ...(safeBase.contact || {}) },
+    };
   }
+
+  const eng = ENGLISH_PORTFOLIO_CONFIG || INITIAL_PORTFOLIO_CONFIG;
   return {
-    ...ENGLISH_PORTFOLIO_CONFIG,
-    socials: {
-      ...ENGLISH_PORTFOLIO_CONFIG.socials,
-      ...(baseConfig.socials || {})
-    },
-    contact: {
-      ...ENGLISH_PORTFOLIO_CONFIG.contact,
-      ...(baseConfig.contact || {})
-    },
-    testimonials: baseConfig.testimonials && baseConfig.testimonials.length > 0
-      ? baseConfig.testimonials
-      : ENGLISH_PORTFOLIO_CONFIG.testimonials
+    ...INITIAL_PORTFOLIO_CONFIG,
+    ...eng,
+    hero: { ...eng.hero, ...(safeBase.hero?.profileImage ? { profileImage: safeBase.hero.profileImage } : {}) },
+    socials: { ...eng.socials, ...(safeBase.socials || {}) },
+    contact: { ...eng.contact, ...(safeBase.contact || {}) },
+    skills: eng.skills || safeBase.skills || INITIAL_PORTFOLIO_CONFIG.skills,
+    services: eng.services || safeBase.services || INITIAL_PORTFOLIO_CONFIG.services,
+    experiences: eng.experiences || safeBase.experiences || INITIAL_PORTFOLIO_CONFIG.experiences,
+    portfolio: eng.portfolio || safeBase.portfolio || INITIAL_PORTFOLIO_CONFIG.portfolio,
+    featuredEcosystem: eng.featuredEcosystem || safeBase.featuredEcosystem || INITIAL_PORTFOLIO_CONFIG.featuredEcosystem,
+    testimonials: (safeBase.testimonials && safeBase.testimonials.length > 0)
+      ? safeBase.testimonials
+      : (eng.testimonials || INITIAL_PORTFOLIO_CONFIG.testimonials),
+    achievements: eng.achievements || safeBase.achievements || INITIAL_PORTFOLIO_CONFIG.achievements,
+    faqs: eng.faqs || safeBase.faqs || INITIAL_PORTFOLIO_CONFIG.faqs,
   };
 }
 
