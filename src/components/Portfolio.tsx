@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FolderKanban, ExternalLink, Eye, Github, Info, Trophy } from 'lucide-react';
+import { FolderKanban, ExternalLink, Eye, Github, Info, Trophy, Layers, Code2, Sparkles, CheckCircle2 } from 'lucide-react';
 import { PortfolioItem } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
@@ -145,6 +145,28 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                 {item.categoryLabel}
               </div>
 
+              {/* Design Version or Completion Progress Badge Overlay */}
+              {(() => {
+                const isCoding = item.category === 'custom_theme' || item.completionProgress !== undefined || item.technologies.some(t => ['HTML5', 'CSS3', 'Tailwind', 'JavaScript', 'React', 'TypeScript'].some(tech => t.toLowerCase().includes(tech.toLowerCase())));
+                if (isCoding) {
+                  const val = item.completionProgress ? (typeof item.completionProgress === 'number' ? item.completionProgress : parseInt(String(item.completionProgress))) : 100;
+                  return (
+                    <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-lg bg-neutral-950/90 backdrop-blur-md border border-emerald-500/40 text-[10px] font-extrabold text-emerald-400 shadow-md flex items-center gap-1.5 pointer-events-none">
+                      <Code2 className="w-3 h-3 text-emerald-400 shrink-0" />
+                      <span>{val}% Complete</span>
+                    </div>
+                  );
+                } else if (item.designVersion) {
+                  return (
+                    <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-lg bg-neutral-950/90 backdrop-blur-md border border-sky-400/40 text-[10px] font-extrabold text-sky-300 shadow-md flex items-center gap-1.5 pointer-events-none">
+                      <Layers className="w-3 h-3 text-sky-400 shrink-0" />
+                      <span>{item.designVersion}</span>
+                    </div>
+                  );
+                }
+                return null;
+              })()}
+
               {/* Smooth Overlay on Hover */}
               <div
                 className={`absolute inset-0 bg-neutral-950/70 backdrop-blur-[2px] transition-all duration-300 flex items-center justify-center p-4 z-20 ${
@@ -228,6 +250,51 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                 )}
               </div>
             )}
+
+            {/* Completion Progress Bar for Coding Projects OR Design Version Badge for Graphic Projects */}
+            {(() => {
+              const isCoding = item.category === 'custom_theme' || item.completionProgress !== undefined || item.technologies.some(t => ['HTML5', 'CSS3', 'Tailwind', 'JavaScript', 'React', 'TypeScript'].some(tech => t.toLowerCase().includes(tech.toLowerCase())));
+              if (isCoding) {
+                const val = item.completionProgress ? (typeof item.completionProgress === 'number' ? item.completionProgress : parseInt(String(item.completionProgress))) : 100;
+                return (
+                  <div className="mb-3.5 p-2.5 rounded-xl bg-neutral-950/90 border border-sky-500/20">
+                    <div className="flex items-center justify-between text-xs mb-1.5">
+                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-sky-400 flex items-center gap-1">
+                        <Code2 className="w-3.5 h-3.5 text-sky-400" />
+                        <span>{language === 'bn' ? 'কোডিং প্রগ্রেস' : 'Completion Progress'}</span>
+                      </span>
+                      <span className="text-xs font-black text-emerald-400 font-mono flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>{val}%</span>
+                      </span>
+                    </div>
+                    <div className="w-full h-1.5 bg-neutral-900 rounded-full overflow-hidden p-[1px] border border-white/10 relative">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${val}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, ease: 'easeOut' }}
+                        className="h-full rounded-full bg-gradient-to-r from-sky-500 via-blue-500 to-emerald-400 shadow-[0_0_8px_rgba(56,189,248,0.5)]"
+                      />
+                    </div>
+                  </div>
+                );
+              } else if (item.designVersion) {
+                return (
+                  <div className="mb-3.5 px-3 py-1.5 rounded-xl bg-neutral-950/80 border border-indigo-500/25 flex items-center justify-between text-xs">
+                    <span className="text-[10px] font-extrabold tracking-wider uppercase text-indigo-400 flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>{language === 'bn' ? 'ডিজাইন ভার্সন' : 'Design Version'}</span>
+                    </span>
+                    <span className="text-[11px] font-black text-sky-300 bg-sky-950/80 px-2 py-0.5 rounded-md border border-sky-400/30 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-sky-400" />
+                      <span>{item.designVersion}</span>
+                    </span>
+                  </div>
+                );
+              }
+              return null;
+            })()}
           </div>
 
           <div>
@@ -323,36 +390,36 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) 
   });
 
   return (
-    <section id="portfolio" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section id="portfolio" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#090E1A] bg-mesh-pattern border-t border-b border-white/5">
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#3A86FF]/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-sky-500/10 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-950/60 border border-sky-500/30 text-xs text-sky-400 font-bold mb-4 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
             <FolderKanban className="w-3.5 h-3.5" />
             <span>{t.portfolio.badge}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            {t.portfolio.title}
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+            <span className="text-gradient-cyan">{t.portfolio.title}</span>
           </h2>
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
+          <p className="text-neutral-300 text-sm sm:text-base font-normal max-w-xl mx-auto">
             {t.portfolio.subtitle}
           </p>
-          <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4 shadow-[0_0_10px_#3A86FF]" />
+          <div className="w-20 h-1.5 bg-gradient-to-r from-sky-400 to-indigo-500 mx-auto rounded-full mt-4" />
         </div>
 
         {/* Filter Navigation Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2.5 mb-12">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveTab(cat.id)}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-300 ${
                 activeTab === cat.id
-                  ? 'bg-[#3A86FF] text-white shadow-lg shadow-[#3A86FF]/30 scale-105 ring-1 ring-white/20'
-                  : 'bg-neutral-900/90 text-neutral-400 hover:text-white border border-neutral-800/80 hover:border-neutral-700'
+                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-lg shadow-sky-500/30 scale-105 ring-1 ring-white/30'
+                  : 'bg-neutral-900/80 text-neutral-300 hover:text-white border border-white/10 hover:border-sky-500/40 backdrop-blur-md'
               }`}
             >
               {cat.label}

@@ -17,6 +17,8 @@ import { FAQ } from './components/FAQ';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
+import { GlobalSearchModal } from './components/GlobalSearchModal';
+import { AnimatedVectorBG } from './components/AnimatedVectorBG';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -97,6 +99,7 @@ function MainContent() {
     }
   });
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   // Dynamically get English or Bengali config safely
   const activeConfig = getLocalizedPortfolioConfig(baseConfig || INITIAL_PORTFOLIO_CONFIG, language || 'bn');
@@ -112,10 +115,13 @@ function MainContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-[#3A86FF] selection:text-white relative">
+    <div className="min-h-screen bg-[#070A12] text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
       
+      {/* High-Performance Animated Vector Background */}
+      <AnimatedVectorBG />
+
       {/* Floating Apple macOS Dock Navigation */}
-      <NavigationDock />
+      <NavigationDock onOpenSearch={() => setIsSearchOpen(true)} />
 
       {/* Hero Section */}
       <Hero data={activeConfig.hero} socials={activeConfig.socials} />
@@ -161,6 +167,17 @@ function MainContent() {
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
+      />
+
+      {/* Global Project & Code Search Modal */}
+      <GlobalSearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        portfolioItems={activeConfig.portfolio}
+        ecosystemItems={activeConfig.featuredEcosystem}
+        servicesItems={activeConfig.services}
+        skillsItems={activeConfig.skills}
+        onSelectProject={setSelectedProject}
       />
 
     </div>

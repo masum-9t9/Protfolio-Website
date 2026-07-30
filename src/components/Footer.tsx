@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Facebook, Youtube, Send, MessageSquare, Heart, Sparkles, Mail, Phone, Github } from 'lucide-react';
+import { ArrowUp, Facebook, Youtube, Send, MessageSquare, Heart, Sparkles, Mail, Phone, Github, ExternalLink, ShieldCheck, Zap, Code2, Palette } from 'lucide-react';
 import { SocialLinks } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
@@ -20,90 +20,177 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
   const fiverrUrl = socials.fiverr || "https://www.fiverr.com/sellers/masum9t9/";
 
   return (
-    <footer className="relative bg-gradient-to-b from-[#090D16] via-neutral-950 to-black border-t border-neutral-800/80 pt-16 pb-8 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background Decorative Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-[#3A86FF]/5 blur-3xl pointer-events-none rounded-full" />
+    <footer className="relative bg-[#040711] border-t border-white/10 pt-20 pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden z-10">
+      
+      {/* Decorative Vector Light Rays (Static) */}
+      <div className="absolute -top-32 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 -right-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-neutral-800/80">
+        {/* Top Call To Action Vector Card */}
+        <div className="relative mb-16 p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-sky-950/60 via-neutral-900/80 to-indigo-950/60 border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_rgba(56,189,248,0.1)] overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
           
-          {/* Brand & Bio */}
-          <div className="md:col-span-6 space-y-4">
+          {/* Vector corner ornament */}
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-sky-500/15 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="space-y-3 text-center md:text-left relative z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-300 text-xs font-black uppercase tracking-wider">
+              <Zap className="w-3.5 h-3.5 text-sky-400 animate-pulse" />
+              <span>{language === 'bn' ? 'নতুন প্রজেক্ট বা ক্লায়েন্ট ডিল?' : 'Let\'s Create Something Iconic'}</span>
+            </div>
+            
+            <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              {language === 'bn' ? 'আপনার ব্র্যান্ড ও ওয়েবসাইটকে প্রফেশনাল লেভেলে নিয়ে যান' : 'Ready to Elevate Your Brand & Digital Web Product?'}
+            </h3>
+
+            <p className="text-xs sm:text-sm text-neutral-300 max-w-xl font-normal">
+              {language === 'bn'
+                ? 'গ্রাফিক ডিজাইন, ইউটিউব থাম্বনেইল, ব্র্যান্ডিং কিংবা আধুনিক ফুল-স্ট্যাক ওয়েবসাইট তৈরি করতে আজই সরাসরি যোগাযোগ করুন।'
+                : 'Available for freelance graphic design projects, YouTube thumbnails, logo branding, and full-stack web applications.'}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 relative z-10 shrink-0">
+            <a
+              href="#contact"
+              className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black text-xs sm:text-sm shadow-xl shadow-sky-500/25 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 border border-white/20"
+            >
+              <Sparkles className="w-4 h-4 text-sky-200" />
+              <span>{language === 'bn' ? 'মেসেজ পাঠান' : 'Start a Project'}</span>
+            </a>
+
+            <a
+              href={`https://wa.me/${socials.whatsapp ? socials.whatsapp.replace(/[^0-9]/g, '') : '8801303623838'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3.5 rounded-2xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 hover:text-white font-bold text-xs sm:text-sm transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+            >
+              <MessageSquare className="w-4 h-4 text-emerald-400" />
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        {/* 4-Column Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+          
+          {/* Column 1: Brand & Profile (lg:col-span-4) */}
+          <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#3A86FF] to-indigo-500 text-white flex items-center justify-center font-black text-sm shadow-lg shadow-[#3A86FF]/20 border border-white/10">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-400 via-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-xl shadow-sky-500/30 border border-white/20">
                 9T9
               </div>
               <div>
-                <span className="text-xl font-bold text-white tracking-tight block">Masum 9T9</span>
-                <span className="text-[11px] text-[#3A86FF] font-medium flex items-center gap-1.5 mt-0.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  {t.footer.availableForProjects}
+                <span className="text-2xl font-black text-white tracking-tight block">Masum 9T9</span>
+                <span className="text-xs text-sky-400 font-bold flex items-center gap-2 mt-0.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Pro UI/UX Designer & Programmer</span>
                 </span>
               </div>
             </div>
 
-            <p className="text-xs text-neutral-400 leading-relaxed max-w-md">
+            <p className="text-xs text-neutral-300 leading-relaxed font-normal pr-4">
               {t.footer.brandBio}
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <a 
-                href={`mailto:${socials.email || 'masum.9t9.gd@gmail.com'}`} 
-                className="px-3 py-1.5 rounded-lg bg-neutral-900/80 border border-neutral-800 hover:border-[#3A86FF]/40 text-neutral-300 hover:text-white text-xs font-medium flex items-center gap-2 transition-all"
-              >
-                <Mail className="w-3.5 h-3.5 text-[#3A86FF]" />
-                <span>{socials.email || 'masum.9t9.gd@gmail.com'}</span>
-              </a>
-              <a 
-                href={`tel:${socials.phone ? socials.phone.replace(/[^0-9]/g, '') : '01303623838'}`} 
-                className="px-3 py-1.5 rounded-lg bg-neutral-900/80 border border-neutral-800 hover:border-emerald-500/40 text-neutral-300 hover:text-white text-xs font-medium flex items-center gap-2 transition-all"
-              >
-                <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <span>{socials.phone || '01303-623838'}</span>
-              </a>
+            <div className="flex flex-wrap items-center gap-2 pt-2">
+              <div className="px-3 py-1.5 rounded-xl bg-neutral-900/90 border border-white/10 text-neutral-300 text-[11px] font-bold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
+                <span>{t.footer.availableForProjects}</span>
+              </div>
             </div>
           </div>
 
-          {/* Quick Links Navigation */}
-          <div className="md:col-span-6 space-y-4">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#3A86FF]" />
-              <span>{t.footer.quickNav}</span>
+          {/* Column 2: Design Services (lg:col-span-3) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs font-black text-sky-400 uppercase tracking-widest flex items-center gap-2">
+              <Palette className="w-3.5 h-3.5 text-sky-400" />
+              <span>{language === 'bn' ? 'ডিজাইন এক্সপার্টিজ' : 'Design Services'}</span>
             </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-neutral-400">
-              <a href="#hero" className="p-2 rounded-lg bg-neutral-900/40 border border-neutral-800/60 hover:bg-neutral-800/60 hover:text-white transition-all">🏠 {t.nav.home}</a>
-              <a href="#about" className="p-2 rounded-lg bg-neutral-900/40 border border-neutral-800/60 hover:bg-neutral-800/60 hover:text-white transition-all">👨‍💻 {t.nav.about}</a>
-              <a href="#skills" className="p-2 rounded-lg bg-neutral-900/40 border border-neutral-800/60 hover:bg-neutral-800/60 hover:text-white transition-all">🎨 {t.nav.skills}</a>
-              <a href="#services" className="p-2 rounded-lg bg-neutral-900/40 border border-neutral-800/60 hover:bg-neutral-800/60 hover:text-white transition-all">⚡ {t.nav.services}</a>
-              <a href="#portfolio" className="p-2 rounded-lg bg-neutral-900/40 border border-neutral-800/60 hover:bg-neutral-800/60 hover:text-white transition-all">🖼️ {t.nav.portfolio}</a>
-              <a href="#ecosystem" className="p-2 rounded-lg bg-neutral-900/40 border border-neutral-800/60 hover:bg-neutral-800/60 hover:text-white transition-all">🌐 {t.nav.ecosystem}</a>
-              <a href="#contact" className="p-2 rounded-lg bg-neutral-900/40 border border-neutral-800/60 hover:bg-neutral-800/60 hover:text-white transition-all col-span-2 sm:col-span-1">📩 {t.nav.contact}</a>
+            <ul className="space-y-2 text-xs font-medium text-neutral-300">
+              <li className="flex items-center gap-2 hover:text-sky-300 transition-colors">
+                <span className="text-sky-400 font-bold">•</span>
+                <span>YouTube Thumbnails (Pixellab/PS)</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-sky-300 transition-colors">
+                <span className="text-sky-400 font-bold">•</span>
+                <span>Social Media Posters & Banners</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-sky-300 transition-colors">
+                <span className="text-sky-400 font-bold">•</span>
+                <span>Logo & Brand Identity Design</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-sky-300 transition-colors">
+                <span className="text-sky-400 font-bold">•</span>
+                <span>Manipulations & Photo Editing</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Tech & Engineering (lg:col-span-3) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs font-black text-indigo-400 uppercase tracking-widest flex items-center gap-2">
+              <Code2 className="w-3.5 h-3.5 text-indigo-400" />
+              <span>{language === 'bn' ? 'প্রগ্রামিং ও ওয়েব' : 'Tech Stack & Engineering'}</span>
+            </h4>
+            <ul className="space-y-2 text-xs font-medium text-neutral-300">
+              <li className="flex items-center gap-2 hover:text-indigo-300 transition-colors">
+                <span className="text-indigo-400 font-bold">•</span>
+                <span>React 18 & Vite Web Apps</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-indigo-300 transition-colors">
+                <span className="text-indigo-400 font-bold">•</span>
+                <span>TypeScript & Express API Routes</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-indigo-300 transition-colors">
+                <span className="text-indigo-400 font-bold">•</span>
+                <span>Tailwind CSS Modern Cyber UI</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-indigo-300 transition-colors">
+                <span className="text-indigo-400 font-bold">•</span>
+                <span>Full-Stack App Architecture</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Quick Navigation & Contact (lg:col-span-2) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="text-xs font-black text-emerald-400 uppercase tracking-widest flex items-center gap-2">
+              <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{language === 'bn' ? 'কুইক লিংক' : 'Quick Nav'}</span>
+            </h4>
+            <div className="flex flex-col gap-1.5 text-xs font-semibold text-neutral-300">
+              <a href="#hero" className="hover:text-white hover:translate-x-1 transition-all">🏠 {t.nav.home}</a>
+              <a href="#about" className="hover:text-white hover:translate-x-1 transition-all">👨‍💻 {t.nav.about}</a>
+              <a href="#portfolio" className="hover:text-white hover:translate-x-1 transition-all">🎨 {t.nav.designProjects}</a>
+              <a href="#ecosystem" className="hover:text-white hover:translate-x-1 transition-all">💻 {t.nav.codingProjects}</a>
+              <a href="#services" className="hover:text-white hover:translate-x-1 transition-all">⚡ {t.nav.services}</a>
+              <a href="#contact" className="hover:text-white hover:translate-x-1 transition-all">📩 {t.nav.contact}</a>
             </div>
           </div>
 
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-400">
+        {/* Bottom Copyright & Social Icons Row */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-300">
           
           {/* Copyright Info */}
           <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
-            <span>© {new Date().getFullYear()} <strong className="text-white font-semibold">Masum 9T9</strong>. {t.footer.rightsReserved}</span>
-            <span className="hidden sm:inline text-neutral-700">•</span>
-            <span className="flex items-center gap-1 text-neutral-500">
-              crafted with <Heart className="w-3 h-3 text-rose-500 fill-rose-500 animate-pulse" /> for Design Excellence
+            <span>© {new Date().getFullYear()} <strong className="text-white font-black">Masum 9T9</strong>. {t.footer.rightsReserved}</span>
+            <span className="hidden sm:inline text-neutral-600">•</span>
+            <span className="flex items-center gap-1.5 text-neutral-400">
+              crafted with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 animate-pulse" /> for Design & Code Excellence
             </span>
           </div>
 
-          {/* Social Media Pills */}
+          {/* Social Media Pills & Scroll to top */}
           <div className="flex flex-wrap items-center justify-center gap-2.5">
             <a 
               href={socials.facebook} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-[#1877F2] hover:bg-[#1877F2]/10 hover:border-[#1877F2]/40 transition-all hover:scale-105 active:scale-95 group relative"
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-white/10 text-neutral-300 hover:text-[#1877F2] hover:bg-[#1877F2]/15 hover:border-[#1877F2]/40 transition-all hover:scale-110 active:scale-95 group relative shadow-md"
               title="Facebook Profile"
             >
               <Facebook className="w-4 h-4" />
@@ -113,7 +200,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               href={socials.youtube} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-red-500 hover:bg-red-500/10 hover:border-red-500/40 transition-all hover:scale-105 active:scale-95 group relative"
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-white/10 text-neutral-300 hover:text-red-500 hover:bg-red-500/15 hover:border-red-500/40 transition-all hover:scale-110 active:scale-95 group relative shadow-md"
               title="YouTube Channel"
             >
               <Youtube className="w-4 h-4" />
@@ -123,7 +210,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               href={socials.telegram} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-sky-400 hover:bg-sky-500/10 hover:border-sky-500/40 transition-all hover:scale-105 active:scale-95 group relative"
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-white/10 text-neutral-300 hover:text-sky-400 hover:bg-sky-500/15 hover:border-sky-500/40 transition-all hover:scale-110 active:scale-95 group relative shadow-md"
               title="Telegram"
             >
               <Send className="w-4 h-4" />
@@ -133,7 +220,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               href={socials.whatsapp} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/40 transition-all hover:scale-105 active:scale-95 group relative"
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-white/10 text-neutral-300 hover:text-emerald-400 hover:bg-emerald-500/15 hover:border-emerald-500/40 transition-all hover:scale-110 active:scale-95 group relative shadow-md"
               title="WhatsApp"
             >
               <MessageSquare className="w-4 h-4" />
@@ -143,7 +230,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               href={behanceUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-[#0535FF] hover:bg-[#0535FF]/10 hover:border-[#0535FF]/40 transition-all hover:scale-105 active:scale-95 group relative"
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-white/10 text-neutral-300 hover:text-[#0535FF] hover:bg-[#0535FF]/15 hover:border-[#0535FF]/40 transition-all hover:scale-110 active:scale-95 group relative shadow-md"
               title="Behance Portfolio"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -155,7 +242,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
               href={fiverrUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-neutral-400 hover:text-[#1DBF73] hover:bg-[#1DBF73]/10 hover:border-[#1DBF73]/40 transition-all hover:scale-105 active:scale-95 group relative flex items-center justify-center"
+              className="p-2.5 rounded-xl bg-neutral-900/90 border border-white/10 text-neutral-300 hover:text-[#1DBF73] hover:bg-[#1DBF73]/15 hover:border-[#1DBF73]/40 transition-all hover:scale-110 active:scale-95 group relative flex items-center justify-center shadow-md"
               title="Fiverr Profile"
             >
               <span className="font-extrabold text-xs tracking-tighter leading-none text-[#1DBF73] group-hover:brightness-125">
@@ -172,19 +259,19 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
             >
               <Github className="w-4 h-4" />
             </a>
-          </div>
 
-          {/* Scroll to Top Button */}
-          <button
-            onClick={scrollToTop}
-            className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 hover:border-[#3A86FF] text-neutral-300 hover:text-white transition-all shadow-lg hover:shadow-[#3A86FF]/20 active:scale-95 hover:-translate-y-0.5"
-            title={t.footer.scrollTop}
-          >
-            <span className="text-xs font-semibold">{t.footer.scrollTop}</span>
-            <div className="w-6 h-6 rounded-lg bg-neutral-800 group-hover:bg-[#3A86FF] text-neutral-400 group-hover:text-white flex items-center justify-center transition-colors">
-              <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
-            </div>
-          </button>
+            {/* Scroll to Top Button */}
+            <button
+              onClick={scrollToTop}
+              className="group flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-sky-500/10 border border-sky-400/30 hover:border-sky-400 text-sky-300 hover:text-white transition-all shadow-lg active:scale-95 hover:-translate-y-0.5 ml-2"
+              title={t.footer.scrollTop}
+            >
+              <span className="text-xs font-bold">{t.footer.scrollTop}</span>
+              <div className="w-5 h-5 rounded-lg bg-sky-500/20 group-hover:bg-sky-500 text-sky-300 group-hover:text-white flex items-center justify-center transition-colors">
+                <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
+              </div>
+            </button>
+          </div>
 
         </div>
 

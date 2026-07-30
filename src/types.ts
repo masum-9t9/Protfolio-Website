@@ -80,6 +80,8 @@ export interface PortfolioItem {
   liveUrl?: string;
   githubUrl?: string;
   featured?: boolean;
+  completionProgress?: number | string;
+  designVersion?: string;
 }
 
 export interface TestimonialItem {
@@ -152,6 +154,8 @@ export interface FeaturedEcosystemItem {
   keyFeatures: string[];
   galleryImages: string[];
   links: EcosystemLink[];
+  completionProgress?: number | string;
+  designVersion?: string;
 }
 
 export interface PortfolioConfig {

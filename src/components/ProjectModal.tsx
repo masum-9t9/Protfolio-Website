@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ExternalLink, Calendar, User, CheckCircle, Maximize2, ZoomIn, Eye, Trophy, Award, Sparkles } from 'lucide-react';
+import { X, ExternalLink, Calendar, User, CheckCircle, Maximize2, ZoomIn, Eye, Trophy, Award, Sparkles, Code2, Layers } from 'lucide-react';
 import { PortfolioItem } from '../types';
 
 interface ProjectModalProps {
@@ -121,7 +121,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             )}
 
             {/* Meta Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-4 rounded-2xl bg-neutral-950 border border-neutral-800/80 text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-neutral-950 border border-neutral-800/80 text-xs">
               {project.clientName && (
                 <div>
                   <p className="text-neutral-400 font-medium mb-1">ক্লায়েন্ট / চ্যানেল</p>
@@ -138,6 +138,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   <p className="font-bold text-white flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-[#3A86FF]" />
                     <span>{project.year}</span>
+                  </p>
+                </div>
+              )}
+
+              {project.designVersion && (
+                <div>
+                  <p className="text-neutral-400 font-medium mb-1">ডিজাইন ভার্সন</p>
+                  <p className="font-bold text-sky-300 flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-sky-400" />
+                    <span>{project.designVersion}</span>
                   </p>
                 </div>
               )}

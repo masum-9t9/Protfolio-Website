@@ -51,9 +51,10 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
   const ratingNum = Number(item.rating) || 5;
 
   return (
-    <div className="w-80 sm:w-[420px] bg-neutral-900/90 hover:bg-neutral-900 p-6 sm:p-7 rounded-2xl border border-neutral-800/90 hover:border-[#3A86FF]/60 flex flex-col justify-between shrink-0 hover:-translate-y-1.5 transition-all duration-300 shadow-2xl relative group">
+    <div className="w-80 sm:w-[420px] glass-card glass-card-hover p-6 sm:p-7 rounded-3xl border border-white/10 flex flex-col justify-between shrink-0 transition-all duration-300 shadow-2xl relative group overflow-hidden">
       {/* Background Subtle Watermark Quote */}
-      <Quote className="absolute top-5 right-5 w-8 h-8 text-white/5 pointer-events-none group-hover:text-[#3A86FF]/15 transition-colors duration-300" />
+      <Quote className="absolute top-5 right-5 w-8 h-8 text-white/5 pointer-events-none group-hover:text-sky-400/20 transition-colors duration-300" />
+      <div className="absolute top-0 right-0 w-28 h-28 bg-sky-500/10 rounded-full blur-xl group-hover:bg-sky-500/20 transition-all pointer-events-none" />
 
       <div>
         {/* Rating Stars & Badge */}
@@ -71,29 +72,29 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
                 }`}
               />
             ))}
-            <span className="text-xs text-neutral-200 font-extrabold ml-2 bg-neutral-950 px-2 py-0.5 rounded border border-neutral-800">
+            <span className="text-xs text-amber-300 font-extrabold ml-2 bg-neutral-950/80 px-2.5 py-0.5 rounded-full border border-amber-500/30">
               {ratingNum.toFixed(1)}
             </span>
           </div>
 
-          <span className="text-[10px] font-bold text-[#3A86FF] bg-[#3A86FF]/10 px-2.5 py-1 rounded-md border border-[#3A86FF]/20 shrink-0">
+          <span className="text-[10px] font-extrabold text-sky-400 bg-sky-500/15 px-3 py-1 rounded-full border border-sky-400/30 shrink-0">
             {item.projectType}
           </span>
         </div>
 
         {/* Client Feedback Text */}
-        <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium mb-4">
+        <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal mb-4">
           "{item.comment}"
         </p>
 
         {/* Designed Project Image Attachment if provided */}
         {item.designImageUrl ? (
-          <div className="mb-4 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950/80 p-2">
-            <p className="text-[10px] text-neutral-400 font-semibold mb-1.5 flex items-center gap-1">
-              <ImageIcon className="w-3 h-3 text-[#3A86FF]" />
+          <div className="mb-4 rounded-2xl overflow-hidden border border-white/10 bg-neutral-950/80 p-2">
+            <p className="text-[10px] text-neutral-300 font-semibold mb-1.5 flex items-center gap-1">
+              <ImageIcon className="w-3 h-3 text-sky-400" />
               <span>{language === 'bn' ? 'আমার জন্য করা ডিজাইন:' : 'Design for Client:'}</span>
             </p>
-            <div className="relative aspect-video rounded-lg overflow-hidden bg-neutral-900 border border-neutral-800/80">
+            <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-900 border border-white/10">
               <img
                 src={item.designImageUrl}
                 alt="Client Designed Project"
@@ -111,7 +112,7 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
       </div>
 
       {/* Client Profile Info */}
-      <div className="flex items-center gap-3.5 pt-4 border-t border-neutral-800/80">
+      <div className="flex items-center gap-3.5 pt-4 border-t border-white/10">
         <img
           src={item.avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(item.name)}`}
           alt={item.name}
@@ -122,13 +123,13 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
             e.currentTarget.onerror = null;
             e.currentTarget.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(item.name)}`;
           }}
-          className="w-11 h-11 rounded-full object-cover border border-neutral-700/80 shadow-md shrink-0 bg-neutral-950"
+          className="w-11 h-11 rounded-full object-cover border-2 border-sky-400/40 shadow-lg shrink-0 bg-neutral-950"
         />
         <div className="overflow-hidden">
-          <h4 className="text-sm font-extrabold text-white group-hover:text-[#3A86FF] transition-colors truncate">
+          <h4 className="text-sm font-extrabold text-white group-hover:text-sky-300 transition-colors truncate">
             {item.name}
           </h4>
-          <p className="text-[11px] text-neutral-400 font-medium truncate">
+          <p className="text-[11px] text-neutral-300 font-medium truncate">
             {item.role} {item.company ? `• ${item.company}` : ''}
           </p>
         </div>
@@ -380,30 +381,30 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
   };
 
   return (
-    <section id="testimonials" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-neutral-950/80 content-visibility-auto">
+    <section id="testimonials" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#070A12] bg-mesh-pattern border-t border-b border-white/5 content-visibility-auto">
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#3A86FF]/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 blur-[180px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto mb-10 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-950/60 border border-sky-500/30 text-xs text-sky-400 font-bold mb-4 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
             <MessageSquareQuote className="w-3.5 h-3.5" />
             <span>{t.testimonials.badge}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
-            {t.testimonials.title}
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-3">
+            <span className="text-gradient-cyan">{t.testimonials.title}</span>
           </h2>
 
           {/* Dynamic Calculated Rating Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-2xl bg-neutral-900/90 border border-amber-500/30 text-amber-400 font-bold text-xs sm:text-sm mb-4 shadow-lg shadow-amber-500/5">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-neutral-950/80 border border-amber-500/30 text-amber-300 font-bold text-xs sm:text-sm mb-4 shadow-xl backdrop-blur-md">
             <div className="flex items-center gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-3.5 h-3.5 ${
+                  className={`w-4 h-4 ${
                     i < Math.floor(avgRatingNum)
                       ? 'fill-amber-400 text-amber-400'
                       : 'fill-amber-400/30 text-amber-400/50'
@@ -421,16 +422,16 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
             </span>
           </div>
 
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed mb-6">
+          <p className="text-neutral-300 text-sm sm:text-base font-normal max-w-xl mx-auto mb-6">
             {t.testimonials.subtitle}
           </p>
 
           {/* Toolbar: Angle & Speed & Add Review Button */}
-          <div className="flex flex-wrap items-center justify-center gap-3 p-3 rounded-2xl bg-neutral-900/90 border border-neutral-800/90 backdrop-blur-md max-w-2xl mx-auto mb-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 p-3 rounded-2xl bg-neutral-900/80 border border-white/10 backdrop-blur-md max-w-2xl mx-auto mb-4 shadow-2xl">
             
             {/* Angle Selector Controls */}
-            <div className="flex items-center gap-1.5 bg-neutral-950 p-1 rounded-xl border border-neutral-800/80">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-[#3A86FF] ml-2" />
+            <div className="flex items-center gap-1.5 bg-neutral-950 p-1.5 rounded-xl border border-white/10">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-sky-400 ml-2" />
               <span className="text-[11px] font-bold text-neutral-400 mr-1 hidden sm:inline">
                 {language === 'bn' ? 'এঙ্গেল:' : 'Angle:'}
               </span>
@@ -441,8 +442,8 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                   onClick={() => setSelectedAngle(angle)}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-extrabold transition-all ${
                     selectedAngle === angle
-                      ? 'bg-[#3A86FF] text-white shadow-md'
-                      : 'text-neutral-400 hover:text-white'
+                      ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-md'
+                      : 'text-neutral-300 hover:text-white'
                   }`}
                 >
                   {angle === '25deg' && (language === 'bn' ? '২৫° এঙ্গেল' : '25° Tilt')}
@@ -454,13 +455,13 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
             </div>
 
             {/* Scroll Speed Controls */}
-            <div className="flex items-center gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800/80">
+            <div className="flex items-center gap-1 bg-neutral-950 p-1.5 rounded-xl border border-white/10">
               <Zap className="w-3.5 h-3.5 text-amber-400 ml-2" />
               {(['fast', 'normal', 'slow'] as ScrollSpeed[]).map((spd) => (
                 <button
                   key={spd}
                   onClick={() => setSelectedSpeed(spd)}
-                  className={`px-2 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
                     selectedSpeed === spd
                       ? 'bg-neutral-800 text-white'
                       : 'text-neutral-400 hover:text-white'
@@ -476,14 +477,14 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
             {/* Add Review Button */}
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-xl bg-[#3A86FF] hover:bg-[#2b75ed] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#3A86FF]/20 active:scale-95 transition-all"
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-lg shadow-sky-500/20 active:scale-95 transition-all"
             >
               <PlusCircle className="w-3.5 h-3.5" />
               <span>{t.testimonials.addReviewBtn}</span>
             </button>
           </div>
 
-          <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4" />
+          <div className="w-20 h-1.5 bg-gradient-to-r from-sky-400 to-indigo-500 mx-auto rounded-full mt-4" />
         </div>
 
       </div>
@@ -566,7 +567,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         required
                         value={newReview.name}
                         onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                        placeholder={language === 'bn' ? 'যেমন: মোঃ মাসুম বিল্লাহ' : 'e.g. Md. Masum Billah'}
+                        placeholder={language === 'bn' ? 'যেমন: তানভীর আহমেদ' : 'e.g. Tanvir Ahmed'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
@@ -596,7 +597,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         type="text"
                         value={newReview.company}
                         onChange={(e) => setNewReview({ ...newReview, company: e.target.value })}
-                        placeholder={language === 'bn' ? 'যেমন: Parahin Academy' : 'e.g. Tech Media'}
+                        placeholder={language === 'bn' ? 'যেমন: Tech Bangla' : 'e.g. Tech Media'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>

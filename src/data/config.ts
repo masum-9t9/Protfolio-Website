@@ -234,7 +234,8 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       technologies: ["Ibis Paint X", "Pixellab"],
       clientName: "Raad Multimedia",
       year: "২০২৫",
-      liveUrl: "https://youtu.be/RJniX0nZwNU?si=Lhq1jAD5VFn2aiOD"
+      liveUrl: "https://youtu.be/RJniX0nZwNU?si=Lhq1jAD5VFn2aiOD",
+      designVersion: "v3.2 Master"
     },
     {
       id: "port_2",
@@ -249,7 +250,8 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       technologies: ["Pixellab"],
       clientName: "Meo Entertantment",
       year: "২০২৫",
-      liveUrl: "https://youtu.be/CYm9tW22qLo?si=6XM_GbUiYTWSUNXw"
+      liveUrl: "https://youtu.be/CYm9tW22qLo?si=6XM_GbUiYTWSUNXw",
+      designVersion: "v2.5 High-CTR"
     },
     {
       id: "port_3",
@@ -264,7 +266,8 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       technologies: ["Pixellab", "Ibis Paint X"],
       clientName: "HulkenStein Infinity School",
       year: "২০২৫",
-      liveUrl: "https://youtu.be/3DhY3Fkm1YY?si=d-4Gzbuu__mekr4Q"
+      liveUrl: "https://youtu.be/3DhY3Fkm1YY?si=d-4Gzbuu__mekr4Q",
+      designVersion: "v1.8 Gold Edition"
     },
     {
       id: "port_4",
@@ -279,7 +282,9 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       technologies: ["HTML5", "CSS3", "Tailwind", "JavaScript"],
       clientName: "Masum 9T9",
       year: "২০২৬",
-      liveUrl: "https://9t9.pro.bd"
+      liveUrl: "https://9t9.pro.bd",
+      completionProgress: 100,
+      designVersion: "v4.0 Production"
     },
     {
       id: "port_5",
@@ -294,7 +299,8 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       technologies: ["Pixellab", "Ibis Paint X"],
       clientName: "HulkenStein Infinity School",
       year: "২০২৫",
-      liveUrl: "https://youtu.be/NEROv4rdatA?si=xJo7Pj2AEj0k7boo"
+      liveUrl: "https://youtu.be/NEROv4rdatA?si=xJo7Pj2AEj0k7boo",
+      designVersion: "v2.0 Clean"
     },
     {
       id: "port_6",
@@ -309,7 +315,8 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       technologies: ["Pixellab"],
       clientName: "Meo Entertainment",
       year: "২০২৫",
-      liveUrl: "https://youtu.be/CYm9tW22qLo?si=6XM_GbUiYTWSUNXw"
+      liveUrl: "https://youtu.be/CYm9tW22qLo?si=6XM_GbUiYTWSUNXw",
+      designVersion: "v3.0 Ultra HD"
     }
   ],
   featuredEcosystem: [
@@ -319,6 +326,8 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       title: "Portfolio Website",
       mainUrl: "https://www.9t9.pro.bd",
       description: "A professional portfolio featuring graphic design, branding, UI concepts, and AI-powered web development. Showcasing creative projects, technical expertise, and digital solutions for modern businesses.",
+      completionProgress: 100,
+      designVersion: "v4.5 Stable",
       stats: [
         { label: "ACHIEVEMENT", value: "100+ Clients" },
         { label: "Earn", value: "$10K+" }

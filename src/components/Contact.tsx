@@ -148,22 +148,22 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative">
+    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative bg-[#090E1A] bg-mesh-pattern border-t border-b border-white/5">
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-[#3A86FF] font-semibold mb-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-950/60 border border-sky-500/30 text-xs text-sky-400 font-bold mb-4 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
             <Mail className="w-3.5 h-3.5" />
             <span>{t.contact.badge}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">
-            {t.contact.title}
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+            <span className="text-gradient-cyan">{t.contact.title}</span>
           </h2>
-          <p className="text-neutral-400 text-sm sm:text-base">
+          <p className="text-neutral-300 text-sm sm:text-base font-normal max-w-xl mx-auto">
             {t.contact.subtitle}
           </p>
-          <div className="w-16 h-1 bg-[#3A86FF] mx-auto rounded-full mt-4" />
+          <div className="w-20 h-1.5 bg-gradient-to-r from-sky-400 to-indigo-500 mx-auto rounded-full mt-4" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -171,50 +171,50 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
           {/* Contact Details (Left Column - 5 Cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             
-            <div className="glass-card p-6 rounded-2xl border border-neutral-800 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#3A86FF]/10 text-[#3A86FF] flex items-center justify-center border border-[#3A86FF]/20 shrink-0">
+            <div className="glass-card glass-card-hover p-6 rounded-3xl border border-white/10 flex items-center gap-4 shadow-xl">
+              <div className="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-400/30 shrink-0 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
                 <Phone className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-neutral-400 font-medium">{t.contact.directCall}</p>
-                <a href={`tel:${config.phone}`} className="text-lg font-bold text-white hover:text-[#3A86FF] transition-colors">
+                <p className="text-xs text-neutral-300 font-semibold">{t.contact.directCall}</p>
+                <a href={`tel:${config.phone}`} className="text-lg font-extrabold text-white hover:text-sky-300 transition-colors">
                   {config.phone}
                 </a>
               </div>
             </div>
 
-            <div className="glass-card p-6 rounded-2xl border border-neutral-800 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#3A86FF]/10 text-[#3A86FF] flex items-center justify-center border border-[#3A86FF]/20 shrink-0">
+            <div className="glass-card glass-card-hover p-6 rounded-3xl border border-white/10 flex items-center gap-4 shadow-xl">
+              <div className="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-400/30 shrink-0 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
                 <Mail className="w-6 h-6" />
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs text-neutral-400 font-medium">{t.contact.officialEmail}</p>
-                <a href={`mailto:${config.emailPrimary}`} className="text-sm sm:text-base font-bold text-white hover:text-[#3A86FF] transition-colors block truncate">
+                <p className="text-xs text-neutral-300 font-semibold">{t.contact.officialEmail}</p>
+                <a href={`mailto:${config.emailPrimary}`} className="text-sm sm:text-base font-extrabold text-white hover:text-sky-300 transition-colors block truncate">
                   {config.emailPrimary}
                 </a>
-                <p className="text-xs text-neutral-400 mt-0.5">{config.emailSecondary}</p>
+                <p className="text-xs text-neutral-300 mt-0.5">{config.emailSecondary}</p>
               </div>
             </div>
 
-            <div className="glass-card p-6 rounded-2xl border border-neutral-800 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#3A86FF]/10 text-[#3A86FF] flex items-center justify-center border border-[#3A86FF]/20 shrink-0">
+            <div className="glass-card glass-card-hover p-6 rounded-3xl border border-white/10 flex items-center gap-4 shadow-xl">
+              <div className="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-400/30 shrink-0 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
                 <Send className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-neutral-400 font-medium">Telegram</p>
-                <a href={socials.telegram} target="_blank" rel="noopener noreferrer" className="text-base font-bold text-white hover:text-[#3A86FF] transition-colors">
+                <p className="text-xs text-neutral-300 font-semibold">Telegram</p>
+                <a href={socials.telegram} target="_blank" rel="noopener noreferrer" className="text-base font-extrabold text-white hover:text-sky-300 transition-colors">
                   {config.telegramUsername}
                 </a>
               </div>
             </div>
 
-            <div className="glass-card p-6 rounded-2xl border border-neutral-800 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#3A86FF]/10 text-[#3A86FF] flex items-center justify-center border border-[#3A86FF]/20 shrink-0">
+            <div className="glass-card glass-card-hover p-6 rounded-3xl border border-white/10 flex items-center gap-4 shadow-xl">
+              <div className="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-400/30 shrink-0 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
                 <MapPin className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-neutral-400 font-medium">{t.contact.locationLabel}</p>
-                <p className="text-base font-bold text-white">{config.location}</p>
+                <p className="text-xs text-neutral-300 font-semibold">{t.contact.locationLabel}</p>
+                <p className="text-base font-extrabold text-white">{config.location}</p>
               </div>
             </div>
 
@@ -222,18 +222,20 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
 
           {/* Glass Form (Right Column - 7 Cols) */}
           <div className="lg:col-span-7">
-            <div className="glass-card p-8 rounded-2xl border border-neutral-800">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <MessageSquare className="w-6 h-6 text-[#3A86FF]" />
+            <div className="glass-card p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-36 h-36 bg-sky-500/10 rounded-full blur-2xl pointer-events-none" />
+
+              <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-2.5">
+                <MessageSquare className="w-6 h-6 text-sky-400" />
                 <span>{t.contact.sendMessageHeading}</span>
               </h3>
 
               {status.type && (
                 <div
-                  className={`p-4 rounded-xl text-xs sm:text-sm mb-6 flex items-start gap-3 ${
+                  className={`p-4 rounded-2xl text-xs sm:text-sm mb-6 flex items-start gap-3 backdrop-blur-md ${
                     status.type === 'success'
-                      ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-300'
-                      : 'bg-rose-500/10 border border-rose-500/30 text-rose-300'
+                      ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-300'
+                      : 'bg-rose-500/15 border border-rose-500/30 text-rose-300'
                   }`}
                 >
                   {status.type === 'success' ? (
@@ -241,14 +243,14 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                   ) : (
                     <AlertCircle className="w-5 h-5 shrink-0 text-rose-400 mt-0.5" />
                   )}
-                  <span>{status.message}</span>
+                  <span className="font-medium">{status.message}</span>
                 </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 mb-2">
+                    <label className="block text-xs font-bold text-neutral-200 mb-2">
                       {t.contact.nameLabel} <span className="text-rose-400">*</span>
                     </label>
                     <input
@@ -256,13 +258,13 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={language === 'bn' ? 'যেমন: মোঃ মাসুম বিল্লাহ' : 'e.g. Md. Masum Billah'}
-                      className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
+                      placeholder={language === 'bn' ? 'যেমন: তানভীর হাসান' : 'e.g. Tanvir Hasan'}
+                      className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 mb-2">
+                    <label className="block text-xs font-bold text-neutral-200 mb-2">
                       {t.contact.phoneLabel} <span className="text-rose-400">*</span>
                     </label>
                     <input
@@ -271,14 +273,14 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder={language === 'bn' ? 'যেমন: 01700-000000' : 'e.g. +8801700-000000'}
-                      className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
+                      className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 mb-2">
+                    <label className="block text-xs font-bold text-neutral-200 mb-2">
                       {t.contact.emailLabel}
                     </label>
                     <input
@@ -286,18 +288,18 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="example@gmail.com"
-                      className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
+                      className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 mb-2">
+                    <label className="block text-xs font-bold text-neutral-200 mb-2">
                       {t.contact.serviceCategoryLabel}
                     </label>
                     <select
                       value={formData.service}
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
+                      className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                     >
                       <option value={language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}>
                         {language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}
@@ -316,7 +318,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-neutral-300 mb-2">
+                  <label className="block text-xs font-bold text-neutral-200 mb-2">
                     {t.contact.messageLabel} <span className="text-rose-400">*</span>
                   </label>
                   <textarea
@@ -325,14 +327,14 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder={language === 'bn' ? 'আপনার প্রজেক্ট সম্পর্কে কিছু লিখুন...' : 'Write details about your project...'}
-                    className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#3A86FF]"
+                    className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 rounded-xl bg-[#3A86FF] hover:bg-[#2b75ed] text-white font-bold text-sm shadow-lg shadow-[#3A86FF]/20 flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50 active:scale-95"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-extrabold text-sm shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 active:scale-95"
                 >
                   {loading ? (
                     <>
