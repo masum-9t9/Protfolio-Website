@@ -1,4 +1,4 @@
-import React, { useState, Component, ErrorInfo, ReactNode } from 'react';
+import React, { useState, useEffect, Component, ErrorInfo, ReactNode } from 'react';
 import { loadPortfolioConfig, savePortfolioConfig, getLocalizedPortfolioConfig, INITIAL_PORTFOLIO_CONFIG } from './data/config';
 import { PortfolioConfig, PortfolioItem } from './types';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
@@ -103,6 +103,18 @@ function MainContent() {
   // Dynamically get English or Bengali config safely
   const activeConfig = getLocalizedPortfolioConfig(baseConfig || INITIAL_PORTFOLIO_CONFIG, language || 'bn');
 
+  // Parse shareable project link on page load
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const projectId = params.get('project');
+    if (projectId && activeConfig?.portfolio) {
+      const match = activeConfig.portfolio.find((item) => item.id === projectId);
+      if (match) {
+        setSelectedProject(match);
+      }
+    }
+  }, [activeConfig.portfolio]);
+
   const handleAddTestimonial = (newTestimonial: any) => {
     const currentTestimonials = baseConfig?.testimonials || INITIAL_PORTFOLIO_CONFIG.testimonials || [];
     const updatedConfig = {
@@ -114,8 +126,9 @@ function MainContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070A12] text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#040711] text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
       
+
       {/* Floating Apple macOS Dock Navigation */}
       <NavigationDock onOpenSearch={() => setIsSearchOpen(true)} />
 

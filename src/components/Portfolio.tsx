@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FolderKanban, ExternalLink, Eye, Github, Info, Trophy, Layers, Code2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { FolderKanban, ExternalLink, Eye, Github, Info, Trophy, Layers, Code2, Sparkles, CheckCircle2, Copy, Check, Link2 } from 'lucide-react';
 import { PortfolioItem } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
+import { copyToClipboard, getProjectShareUrl } from '../utils/clipboard';
 
 interface PortfolioProps {
   items: PortfolioItem[];
@@ -24,8 +25,20 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
   const [rotateY, setRotateY] = useState(0);
   const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopyLink = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const url = getProjectShareUrl(item.id, item.liveUrl);
+    const success = await copyToClipboard(url);
+    if (success) {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2500);
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Disable heavy 3D calculations on touch/mobile screens to guarantee 60 FPS
     if (window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024)) return;
     if (!cardRef.current) return;
 
@@ -35,7 +48,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const rY = ((mouseX - width / 2) / (width / 2)) * 12;
+    const rY = ((mouseX - width / 2) / (width / 2)) * 12; // max 12deg tilt
     const rX = -((mouseY - height / 2) / (height / 2)) * 12;
 
     setRotateX(rX);
@@ -86,6 +99,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
             : 'shadow-lg shadow-black/50'
         }`}
       >
+        {/* Dynamic Glare & Gentle Glow Effect */}
         {glarePos.opacity > 0 && (
           <div
             className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-200"
@@ -95,18 +109,21 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
           />
         )}
 
+        {/* Card Header Image Container */}
         {(() => {
           const isPoster = (item.category || '').toLowerCase().includes('poster') || (item.categoryLabel || '').toLowerCase().includes('পোস্টার');
           return (
             <div className="relative overflow-hidden bg-neutral-950 border-b border-neutral-800/80 aspect-video flex items-center justify-center">
               {isPoster ? (
                 <>
+                  {/* Ambient blurred backdrop so poster fills 16:9 box gracefully without cropping */}
                   <img
                     src={item.imageUrl}
                     alt=""
                     aria-hidden="true"
                     className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 scale-125 pointer-events-none"
                   />
+                  {/* Full uncropped poster centered */}
                   <img
                     src={item.imageUrl}
                     alt={item.title}
@@ -135,10 +152,12 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                 />
               )}
 
+              {/* Category Badge overlay */}
               <div className="absolute top-3 left-3 z-20 px-3 py-1 rounded-lg bg-neutral-950/80 backdrop-blur-md border border-white/10 text-[11px] font-bold text-[#3A86FF] shadow-md pointer-events-none">
                 {item.categoryLabel}
               </div>
 
+              {/* Design Version or Completion Progress Badge Overlay */}
               {(() => {
                 const isCoding = item.category === 'custom_theme' || item.completionProgress !== undefined || item.technologies.some(t => ['HTML5', 'CSS3', 'Tailwind', 'JavaScript', 'React', 'TypeScript'].some(tech => t.toLowerCase().includes(tech.toLowerCase())));
                 if (isCoding) {
@@ -160,6 +179,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                 return null;
               })()}
 
+              {/* Smooth Overlay on Hover */}
               <div
                 className={`absolute inset-0 bg-neutral-950/70 backdrop-blur-[2px] transition-all duration-300 flex items-center justify-center p-4 z-20 ${
                   isHovered ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -200,12 +220,29 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
                   >
                     <Info className="w-4 h-4 text-[#3A86FF]" />
                   </button>
+
+                  <button
+                    onClick={handleCopyLink}
+                    className={`p-2 rounded-xl border text-xs font-semibold transition-all hover:scale-105 ${
+                      isCopied
+                        ? 'bg-emerald-950 border-emerald-500/50 text-emerald-400'
+                        : 'bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border-neutral-700'
+                    }`}
+                    title={isCopied ? (language === 'bn' ? 'কপি হয়েছে!' : 'Copied!') : (language === 'bn' ? 'লিংক কপি করুন' : 'Copy Link')}
+                  >
+                    {isCopied ? (
+                      <Check className="w-4 h-4 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-4 h-4 text-sky-400" />
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
           );
         })()}
 
+        {/* Card Body Details */}
         <div className="p-6 flex flex-col justify-between flex-grow space-y-4">
           <div>
             <div className="flex items-center justify-between gap-2 mb-1.5">
@@ -223,6 +260,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
               {item.description}
             </p>
 
+            {/* Achievements & Views Badge */}
             {(item.viewsCount || item.achievement) && (
               <div className="flex flex-wrap items-center gap-2 mb-3 px-3 py-1.5 rounded-xl bg-neutral-950 border border-neutral-800 text-xs">
                 {item.viewsCount && (
@@ -241,7 +279,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
               </div>
             )}
 
-            {/* Completion Progress Bar or Design Version */}
+            {/* Completion Progress Bar for Coding Projects OR Design Version Badge for Graphic Projects */}
             {(() => {
               const isCoding = item.category === 'custom_theme' || item.completionProgress !== undefined || item.technologies.some(t => ['HTML5', 'CSS3', 'Tailwind', 'JavaScript', 'React', 'TypeScript'].some(tech => t.toLowerCase().includes(tech.toLowerCase())));
               if (isCoding) {
@@ -288,6 +326,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
           </div>
 
           <div>
+            {/* Technologies Pills */}
             <div className="flex flex-wrap gap-1.5 pt-3 border-t border-neutral-800/80 mb-4">
               {item.technologies.map((tech, tIdx) => (
                 <span
@@ -299,6 +338,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
               ))}
             </div>
 
+            {/* Action Buttons: Live Preview, GitHub, Details */}
             <div className="grid grid-cols-3 gap-2 pt-2">
               <a
                 href={item.liveUrl || '#portfolio'}
@@ -379,9 +419,11 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) 
 
   return (
     <section id="portfolio" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#090E1A] bg-mesh-pattern border-t border-b border-white/5">
+      {/* Background Ambient Glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-sky-500/10 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-950/60 border border-sky-500/30 text-xs text-sky-400 font-bold mb-4 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
             <FolderKanban className="w-3.5 h-3.5" />
@@ -396,15 +438,16 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) 
           <div className="w-20 h-1.5 bg-gradient-to-r from-sky-400 to-indigo-500 mx-auto rounded-full mt-4" />
         </div>
 
+        {/* Filter Navigation Tabs */}
         <div className="flex flex-wrap justify-center gap-2.5 mb-12">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveTab(cat.id)}
-              className={`px-5 py-2.5 rounded-full text-xs font-extrabold transition-all duration-300 relative ${
+              className={`px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-300 ${
                 activeTab === cat.id
-                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-lg shadow-sky-500/25 scale-105'
-                  : 'bg-neutral-900/80 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800'
+                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-lg shadow-sky-500/30 scale-105 ring-1 ring-white/30'
+                  : 'bg-neutral-900/80 text-neutral-300 hover:text-white border border-white/10 hover:border-sky-500/40 backdrop-blur-md'
               }`}
             >
               {cat.label}
@@ -412,13 +455,26 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) 
           ))}
         </div>
 
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence mode="popLayout">
+        {/* Projects Grid with 3D Tilt Cards */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {filteredItems.map((item, index) => (
-              <TiltCard key={item.id} item={item} index={index} onSelectProject={onSelectProject} />
+              <TiltCard
+                key={item.id}
+                item={item}
+                index={index}
+                onSelectProject={onSelectProject}
+              />
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

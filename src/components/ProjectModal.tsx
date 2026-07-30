@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ExternalLink, Calendar, User, CheckCircle, Maximize2, ZoomIn, Eye, Trophy, Award, Sparkles, Code2, Layers } from 'lucide-react';
+import { X, ExternalLink, Calendar, User, CheckCircle, Maximize2, ZoomIn, Eye, Trophy, Award, Sparkles, Code2, Layers, Copy, Check, Share2, Link2 } from 'lucide-react';
 import { PortfolioItem } from '../types';
+import { copyToClipboard, getProjectShareUrl } from '../utils/clipboard';
 
 interface ProjectModalProps {
   project: PortfolioItem | null;
@@ -10,8 +11,18 @@ interface ProjectModalProps {
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   if (!project) return null;
+
+  const handleCopyLink = async () => {
+    const url = getProjectShareUrl(project.id, project.liveUrl);
+    const success = await copyToClipboard(url);
+    if (success) {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2500);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -23,14 +34,28 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
           className="bg-neutral-900 border border-neutral-800 rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl relative my-auto"
         >
-          {/* Top Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-neutral-950/80 border border-white/10 text-white hover:bg-neutral-800 transition-colors shadow-lg"
-            title="বন্ধ করুন"
-          >
-            <X className="w-5 h-5" />
-          </button>
+            {/* Top Right Controls: Copy Link & Close */}
+            <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+              <button
+                onClick={handleCopyLink}
+                className={`p-2.5 rounded-full backdrop-blur-md border transition-all shadow-lg flex items-center justify-center ${
+                  isCopied
+                    ? 'bg-emerald-950/90 border-emerald-500/50 text-emerald-400 scale-105'
+                    : 'bg-neutral-950/80 border-white/10 text-white hover:bg-neutral-800'
+                }`}
+                title={isCopied ? 'লিংক কপি হয়েছে!' : 'প্রজেক্ট লিংক কপি করুন'}
+              >
+                {isCopied ? <Check className="w-5 h-5 text-emerald-400 animate-bounce" /> : <Link2 className="w-5 h-5 text-sky-400" />}
+              </button>
+
+              <button
+                onClick={onClose}
+                className="p-2.5 rounded-full bg-neutral-950/80 border border-white/10 text-white hover:bg-neutral-800 transition-colors shadow-lg"
+                title="বন্ধ করুন"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
           {/* Project Showcase Image Container */}
           <div className="relative bg-neutral-950 flex flex-col items-center justify-center p-4 border-b border-neutral-800 group">
@@ -178,13 +203,37 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
             {/* Modal Actions */}
             <div className="pt-4 border-t border-neutral-800 flex flex-wrap items-center justify-between gap-3">
-              <button
-                onClick={() => setIsLightboxOpen(true)}
-                className="px-4 py-2.5 rounded-xl bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 text-xs font-semibold flex items-center gap-1.5"
-              >
-                <Eye className="w-4 h-4 text-[#3A86FF]" />
-                <span>ফুল সাইজ দেখুন</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsLightboxOpen(true)}
+                  className="px-4 py-2.5 rounded-xl bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                >
+                  <Eye className="w-4 h-4 text-[#3A86FF]" />
+                  <span>ফুল সাইজ দেখুন</span>
+                </button>
+
+                {/* Copy Link Action Button */}
+                <button
+                  onClick={handleCopyLink}
+                  className={`px-4 py-2.5 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all active:scale-95 ${
+                    isCopied
+                      ? 'bg-emerald-950/90 border-emerald-500/50 text-emerald-400 font-bold shadow-lg shadow-emerald-500/20'
+                      : 'bg-neutral-950 hover:bg-neutral-800 border-neutral-700 text-neutral-200 hover:text-white'
+                  }`}
+                >
+                  {isCopied ? (
+                    <>
+                      <Check className="w-4 h-4 text-emerald-400 animate-pulse" />
+                      <span>লিংক কপি হয়েছে!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4 text-sky-400" />
+                      <span>লিংক কপি করুন</span>
+                    </>
+                  )}
+                </button>
+              </div>
 
               <div className="flex items-center gap-2">
                 <button
@@ -196,7 +245,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 <a
                   href="#contact"
                   onClick={onClose}
-                  className="px-6 py-2.5 rounded-xl bg-[#3A86FF] hover:bg-[#2b75ed] text-white text-xs font-bold flex items-center gap-2"
+                  className="px-6 py-2.5 rounded-xl bg-[#3A86FF] hover:bg-[#2b75ed] text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-[#3A86FF]/20"
                 >
                   <span>এই ধরণের প্রজেক্ট অর্ডার করুন</span>
                   <ExternalLink className="w-3.5 h-3.5" />
