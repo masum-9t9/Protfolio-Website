@@ -179,7 +179,7 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
                   {language === 'bn' ? 'অফিশিয়াল জীবনবৃত্তান্ত' : 'Official Resume'}
                 </p>
                 <h3 className="text-2xl font-black text-white mt-1">Masum 9T9 — Resume</h3>
-                <p className="text-xs text-neutral-400 mt-1 font-medium">Professional Graphics Designer & Content Creator</p>
+                <p className="text-xs text-neutral-400 mt-1 font-medium">Professional Graphics Designer, Web Developer & Content Creator</p>
               </div>
 
               <div className="space-y-6 text-sm text-neutral-300">

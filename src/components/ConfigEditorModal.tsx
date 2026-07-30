@@ -19,13 +19,20 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
           {/* Brand Col */}
           <div className="md:col-span-7 space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#3A86FF] text-white flex items-center justify-center font-bold text-xs">
-                9T9
-              </div>
-              <span className="text-xl font-bold text-white tracking-tight">মাসুম ৯টি৯ (Masum 9T9)</span>
+
+             <div className="w-8 h-8 rounded-lg bg-[#3A86FF] text-white flex items-center justify-center font-bold text-xs overflow-hidden">
+                 <img 
+                  src="https://postimg.cc" 
+                  alt="Profile pic" 
+                  className="w-full h-full object-cover"
+                  />
+             </div>
+
+
+              <span className="text-xl font-bold text-white tracking-tight">Masum 9T9</span>
             </div>
             <p className="text-xs text-neutral-400 leading-relaxed max-w-md">
-              প্রফেশনাল গ্রাফিক্স ডিজাইনার ও কন্টেন্ট ক্রিয়েটর। পোস্টার ডিজাইন, হাই-সিটিআর ইউটিউব থাম্বনেল, এডুকেশন ভিজ্যুয়াল এবং কাস্টম থিম ডিজাইনে বিশেষজ্ঞ।
+              প্রফেশনাল গ্রাফিক্স ডিজাইনার, ওয়েব ডেভেলপার ও কন্টেন্ট ক্রিয়েটর। পোস্টার ডিজাইন, হাই-সিটিআর ইউটিউব থাম্বনেল, এডুকেশন ভিজ্যুয়াল এবং কাস্টম থিম ডিজাইনে বিশেষজ্ঞ।
             </p>
             <p className="text-xs text-[#3A86FF] font-medium">
               ফোন: 01303-623838 | ইমেইল: masum.9t9.gd@gmail.com
@@ -50,7 +57,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
-          <p>© {new Date().getFullYear()} Masum 9T9. সর্বস্বত্ব সংরক্ষিত।</p>
+          <p>© {new Date().getFullYear()} Masum 9T9. All rights reserved.</p>
 
           <div className="flex items-center gap-4">
             <a href={socials.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-[#3A86FF] transition-colors"><Facebook className="w-4 h-4" /></a>

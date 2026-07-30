@@ -273,8 +273,8 @@ export const UI_TRANSLATIONS = {
     footer: {
       roleTag: 'Available for New Projects',
       availableForProjects: 'Available for New Projects',
-      bio: 'Professional Graphics Designer & Content Creator. Specialized in poster design, high-CTR YouTube thumbnails, educational visuals, and custom theme designs.',
-      brandBio: 'Professional Graphics Designer & Content Creator. Specialized in poster design, high-CTR YouTube thumbnails, educational visuals, and custom theme designs.',
+      bio: 'Professional Graphics Designer, Web Developer & Content Creator. Specialized in poster design, high-CTR YouTube thumbnails, educational visuals, and custom theme designs.',
+      brandBio: 'Professional Graphics Designer, Web Developer & Content Creator. Specialized in poster design, high-CTR YouTube thumbnails, educational visuals, and custom theme designs.',
       quickNav: 'Quick Navigation',
       copyright: 'All rights reserved.',
       rightsReserved: 'All rights reserved.',
@@ -289,11 +289,15 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
   hero: {
     greeting: "Hello, I'm",
     name: "Masum 9T9",
-    role: "Professional Graphics Designer & Content Creator",
+    rotatingRoles: [
+      "Graphics Designer",
+      "Web Developer",
+      "Content Creator"
+    ],
     rotatingRoles: [
       "Poster Design Specialist",
       "YouTube Thumbnail Creator",
-      "Education Graphics Artist",
+      "Web Developer",
       "Custom Theme Designer",
       "Brand Visual Creator"
     ],

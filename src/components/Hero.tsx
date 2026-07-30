@@ -278,11 +278,16 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
                   />
                 ) : null}
                 <div 
-                  className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-md border border-white/20"
-                  style={{ display: data.logoImage ? 'none' : 'flex' }}
-                >
-                  9T9
-                </div>
+             className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-md border border-white/20 overflow-hidden"
+  style={{ display: data.logoImage ? 'none' : 'flex' }}
+>
+              <img 
+               src="https://i.postimg.cc/gJT7B3XX/Profile-pic.png" 
+             alt="Profile pic" 
+              className="w-full h-full object-cover" 
+            />
+            </div>
+
               </div>
 
             </div>
@@ -294,7 +299,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               </div>
               <div>
                 <p className="text-xs text-neutral-400 font-medium">{language === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</p>
-                <p className="text-sm font-extrabold text-white">{language === 'bn' ? '৫+ বছর' : '5+ Years'}</p>
+                <p className="text-sm font-extrabold text-white">{language === 'bn' ? '৩+ বছর' : '3+ Years'}</p>
               </div>
             </div>
 
