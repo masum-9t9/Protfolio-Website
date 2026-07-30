@@ -4,13 +4,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
   hero: {
     greeting: "হ্যালো, আমি",
     name: "Masum 9T9",
-    role: "",
-    rotatingRoles: [
-      "গ্রাফিক্স ডিজাইনার",
-      "ওয়েব ডেভেলপার",
-      "কন্টেন্ট ক্রিয়েটর"
-    ],
-    
+    role: "ডেভেলপার ও ডিজাইনার",
     rotatingRoles: [
       "পোস্টার ডিজাইন স্পেশালিস্ট",
       "ইউটিউব থাম্বনেল ক্রিয়েটর",
