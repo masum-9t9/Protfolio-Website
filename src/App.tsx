@@ -19,7 +19,6 @@ import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { CreatorProfileModal } from './components/CreatorProfileModal';
-import { AnimatedVectorBG } from './components/AnimatedVectorBG';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -153,8 +152,6 @@ function MainContent() {
   return (
     <div className={`min-h-screen text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden transition-colors duration-500 ${isCreatorModalOpen ? 'bg-black' : 'bg-[#040711]'}`}>
       
-      {/* High-Performance Animated Vector Background */}
-      <AnimatedVectorBG />
 
       {/* Floating Apple macOS Dock Navigation */}
       <NavigationDock onOpenSearch={() => setIsSearchOpen(true)} />
