@@ -174,6 +174,23 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
               <span className="font-mono text-[10px] bg-black/50 px-1 rounded text-sky-300 border border-sky-400/30 font-extrabold">F</span>
             </button>
 
+            <div className="w-[1px] h-3.5 bg-white/20" />
+
+            {/* Quick Contact trigger in collapsed pill */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                scrollToSection('contact');
+              }}
+              className="px-2 py-0.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-300 hover:text-white transition-all flex items-center gap-1 text-[11px] font-bold"
+              title={language === 'bn' ? 'যোগাযোগ করুন' : 'Contact Me'}
+            >
+              <i className="fa-solid fa-paper-plane text-xs text-emerald-400" />
+              <span className="hidden xs:inline">{language === 'bn' ? 'যোগাযোগ' : 'Contact'}</span>
+            </button>
+
+            <div className="w-[1px] h-3.5 bg-white/20" />
+
             <span className="text-[10px] text-neutral-400 font-bold group-hover:text-white flex items-center gap-1">
               <span>Menu</span>
               <i className="fa-solid fa-chevron-down text-[9px] group-hover:translate-y-0.5 transition-transform" />

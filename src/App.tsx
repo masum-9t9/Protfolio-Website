@@ -18,6 +18,7 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
+import { CreatorProfileModal } from './components/CreatorProfileModal';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -99,6 +100,7 @@ function MainContent() {
   });
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCreatorModalOpen, setIsCreatorModalOpen] = useState(false);
 
   // Dynamically get English or Bengali config safely
   const activeConfig = getLocalizedPortfolioConfig(baseConfig || INITIAL_PORTFOLIO_CONFIG, language || 'bn');
@@ -126,7 +128,7 @@ function MainContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#040711] text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
+    <div className={`min-h-screen text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden transition-colors duration-500 ${isCreatorModalOpen ? 'bg-black' : 'bg-[#212121]'}`}>
       
 
       {/* Floating Apple macOS Dock Navigation */}
@@ -142,10 +144,17 @@ function MainContent() {
       <Services services={activeConfig.services} />
 
       {/* Portfolio Showcase Grid (Design Projects) */}
-      <Portfolio items={activeConfig.portfolio} onSelectProject={setSelectedProject} />
+      <Portfolio
+        items={activeConfig.portfolio}
+        onSelectProject={setSelectedProject}
+        onOpenCreatorProfile={() => setIsCreatorModalOpen(true)}
+      />
 
       {/* Featured Web Platform & Ecosystem Showcase (Coding Projects) */}
-      <FeaturedEcosystem items={activeConfig.featuredEcosystem} />
+      <FeaturedEcosystem
+        items={activeConfig.featuredEcosystem}
+        onOpenCreatorProfile={() => setIsCreatorModalOpen(true)}
+      />
 
       {/* Skills Section */}
       <Skills skills={activeConfig.skills} />
@@ -176,6 +185,15 @@ function MainContent() {
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
+        onOpenCreatorProfile={() => setIsCreatorModalOpen(true)}
+      />
+
+      {/* Creator Contact & Social Links Modal (Black BG) */}
+      <CreatorProfileModal
+        isOpen={isCreatorModalOpen}
+        onClose={() => setIsCreatorModalOpen(false)}
+        socials={activeConfig.socials}
+        contact={activeConfig.contact}
       />
 
       {/* Global Project & Code Search Modal */}

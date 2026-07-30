@@ -7,9 +7,10 @@ import { copyToClipboard, getProjectShareUrl } from '../utils/clipboard';
 interface ProjectModalProps {
   project: PortfolioItem | null;
   onClose: () => void;
+  onOpenCreatorProfile?: () => void;
 }
 
-export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onOpenCreatorProfile }) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
@@ -82,8 +83,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           <div className="p-6 sm:p-8 space-y-6">
             <div>
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#3A86FF]/10 text-[#3A86FF] text-xs font-bold border border-[#3A86FF]/20">
-                  {project.categoryLabel}
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#3A86FF]/10 text-[#3A86FF] text-xs font-bold border border-[#3A86FF]/20">
+                    {project.categoryLabel}
+                  </div>
+
+                  <button
+                    onClick={onOpenCreatorProfile}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-sky-950/80 hover:bg-sky-900 border border-sky-400/30 text-sky-300 text-xs font-bold transition-all hover:scale-105 group"
+                    title="ক্রিয়েটর প্রোফাইল লিংক ও সোশ্যাল মিডিয়া খুলুন"
+                  >
+                    <User className="w-3.5 h-3.5 text-sky-400 group-hover:scale-110 transition-transform" />
+                    <span>Designer: <strong className="text-white underline">{project.designerName || "Masum 9T9"}</strong></span>
+                  </button>
                 </div>
                 
                 <button

@@ -1,28 +1,41 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ExternalLink, Layers, Link2, Globe, Smartphone, Sparkles, Code2, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Layers, Link2, Globe, Smartphone, Sparkles, Code2, CheckCircle2, Copy, Check, User } from 'lucide-react';
 import { FeaturedEcosystemItem } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
+import { copyToClipboard, getProjectShareUrl } from '../utils/clipboard';
 
 interface FeaturedEcosystemProps {
   items?: FeaturedEcosystemItem[];
+  onOpenCreatorProfile?: () => void;
 }
 
 interface EcosystemCardProps {
   item: FeaturedEcosystemItem;
   isReversed?: boolean;
+  onOpenCreatorProfile?: () => void;
 }
 
-const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false }) => {
+const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false, onOpenCreatorProfile }) => {
   const { language } = useLanguage();
   const t = UI_TRANSLATIONS[language];
+  const [isCopied, setIsCopied] = useState(false);
 
   const gallery = item.galleryImages && item.galleryImages.length > 0
     ? item.galleryImages
     : ["https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200"];
 
   const [activeImage, setActiveImage] = useState<string>(gallery[0]);
+
+  const handleCopyLink = async () => {
+    const url = getProjectShareUrl(item.id, item.mainUrl);
+    const success = await copyToClipboard(url);
+    if (success) {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2500);
+    }
+  };
 
   return (
     <motion.div
@@ -171,9 +184,9 @@ const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false 
 
         {/* Content Details Box */}
         <div className={`lg:col-span-6 space-y-6 ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
-          {/* Header Row: Badge & External Link */}
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
+          {/* Header Row: Badge, Creator Credits & Action Buttons */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-extrabold tracking-wider text-[#3A86FF] uppercase">
                 {item.badge}
               </span>
@@ -185,17 +198,53 @@ const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false 
               )}
             </div>
 
-            {item.mainUrl && (
-              <a
-                href={item.mainUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-neutral-900/90 hover:bg-[#3A86FF] text-neutral-300 hover:text-white border border-neutral-800 hover:border-[#3A86FF] transition-all duration-200 shadow-md hover:scale-110"
-                title={t.ecosystem.visitWebsite}
+            <div className="flex items-center gap-2">
+              {/* Copy Link Button */}
+              <button
+                onClick={handleCopyLink}
+                className={`p-2.5 rounded-full border transition-all shadow-md flex items-center justify-center ${
+                  isCopied
+                    ? 'bg-emerald-950 border-emerald-500 text-emerald-400 scale-105'
+                    : 'bg-neutral-900/90 hover:bg-neutral-800 text-neutral-300 hover:text-white border-neutral-800'
+                }`}
+                title={isCopied ? (language === 'bn' ? 'কপি হয়েছে!' : 'Copied!') : (language === 'bn' ? 'প্রজেক্ট লিংক কপি করুন' : 'Copy Project Link')}
               >
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            )}
+                {isCopied ? <Check className="w-4 h-4 text-emerald-400 animate-bounce" /> : <Copy className="w-4 h-4 text-sky-400" />}
+              </button>
+
+              {item.mainUrl && (
+                <a
+                  href={item.mainUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-full bg-neutral-900/90 hover:bg-[#3A86FF] text-neutral-300 hover:text-white border border-neutral-800 hover:border-[#3A86FF] transition-all duration-200 shadow-md hover:scale-110"
+                  title={t.ecosystem.visitWebsite}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Dual Editable Creator Credit Badges */}
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <button
+              onClick={onOpenCreatorProfile}
+              className="px-3 py-1 rounded-xl bg-neutral-950 hover:bg-sky-950/80 border border-neutral-800 hover:border-sky-500/40 text-[11px] font-semibold text-neutral-300 hover:text-white transition-all flex items-center gap-1.5 shadow-sm group"
+            >
+              <User className="w-3.5 h-3.5 text-sky-400 group-hover:scale-110 transition-transform" />
+              <span>UI-UX Designer:</span>
+              <strong className="text-sky-300 group-hover:underline font-bold">{item.uiuxDesignerName || 'Masum 9T9'}</strong>
+            </button>
+
+            <button
+              onClick={onOpenCreatorProfile}
+              className="px-3 py-1 rounded-xl bg-neutral-950 hover:bg-indigo-950/80 border border-neutral-800 hover:border-indigo-500/40 text-[11px] font-semibold text-neutral-300 hover:text-white transition-all flex items-center gap-1.5 shadow-sm group"
+            >
+              <Code2 className="w-3.5 h-3.5 text-indigo-400 group-hover:scale-110 transition-transform" />
+              <span>Developer:</span>
+              <strong className="text-indigo-300 group-hover:underline font-bold">{item.developerName || 'Masum 9T9'}</strong>
+            </button>
           </div>
 
           {/* Completion Progress Bar */}
@@ -303,7 +352,7 @@ const EcosystemCard: React.FC<EcosystemCardProps> = ({ item, isReversed = false 
   );
 };
 
-export const FeaturedEcosystem: React.FC<FeaturedEcosystemProps> = ({ items }) => {
+export const FeaturedEcosystem: React.FC<FeaturedEcosystemProps> = ({ items, onOpenCreatorProfile }) => {
   const { language } = useLanguage();
   const t = UI_TRANSLATIONS[language];
 
@@ -333,7 +382,7 @@ export const FeaturedEcosystem: React.FC<FeaturedEcosystemProps> = ({ items }) =
         {/* Ecosystem Platform Cards */}
         <div className="space-y-10">
           {items.map((item, index) => (
-            <EcosystemCard key={item.id} item={item} isReversed={index % 2 !== 0} />
+            <EcosystemCard key={item.id} item={item} isReversed={index % 2 !== 0} onOpenCreatorProfile={onOpenCreatorProfile} />
           ))}
         </div>
       </div>

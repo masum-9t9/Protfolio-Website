@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FolderKanban, ExternalLink, Eye, Github, Info, Trophy, Layers, Code2, Sparkles, CheckCircle2, Copy, Check, Link2 } from 'lucide-react';
+import { FolderKanban, ExternalLink, Eye, Github, Info, Trophy, Layers, Code2, Sparkles, CheckCircle2, Copy, Check, Link2, User } from 'lucide-react';
 import { PortfolioItem } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
@@ -9,15 +9,17 @@ import { copyToClipboard, getProjectShareUrl } from '../utils/clipboard';
 interface PortfolioProps {
   items: PortfolioItem[];
   onSelectProject: (item: PortfolioItem) => void;
+  onOpenCreatorProfile?: () => void;
 }
 
 interface TiltCardProps {
   item: PortfolioItem;
   index: number;
   onSelectProject: (item: PortfolioItem) => void;
+  onOpenCreatorProfile?: () => void;
 }
 
-const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => {
+const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject, onOpenCreatorProfile }) => {
   const { language } = useLanguage();
   const t = UI_TRANSLATIONS[language];
   const cardRef = useRef<HTMLDivElement>(null);
@@ -245,6 +247,26 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
         {/* Card Body Details */}
         <div className="p-6 flex flex-col justify-between flex-grow space-y-4">
           <div>
+            {/* Category & Designer Credit Row */}
+            <div className="flex items-center justify-between gap-2 mb-2.5">
+              <span className="px-2.5 py-0.5 rounded-full bg-neutral-950 border border-neutral-800 text-[10px] font-bold text-[#3A86FF] uppercase tracking-wide">
+                {item.categoryLabel}
+              </span>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onOpenCreatorProfile) onOpenCreatorProfile();
+                }}
+                className="px-2.5 py-0.5 rounded-full bg-sky-950/80 hover:bg-sky-900 border border-sky-400/30 text-sky-300 text-[10px] font-bold flex items-center gap-1 transition-all hover:scale-105 group"
+                title="ক্রিয়েটর প্রোফাইল দেখুন"
+              >
+                <User className="w-3 h-3 text-sky-400 group-hover:scale-110 transition-transform" />
+                <span>Designer:</span>
+                <strong className="text-white underline">{item.designerName || "Masum 9T9"}</strong>
+              </button>
+            </div>
+
             <div className="flex items-center justify-between gap-2 mb-1.5">
               <h3 className="text-xl font-extrabold text-white group-hover:text-[#3A86FF] transition-colors leading-snug">
                 {item.title}
@@ -386,7 +408,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject }) => 
   );
 };
 
-export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) => {
+export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject, onOpenCreatorProfile }) => {
   const { language } = useLanguage();
   const t = UI_TRANSLATIONS[language];
   const [activeTab, setActiveTab] = useState<string>('all');
@@ -471,6 +493,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject }) 
                 item={item}
                 index={index}
                 onSelectProject={onSelectProject}
+                onOpenCreatorProfile={onOpenCreatorProfile}
               />
             ))}
           </motion.div>

@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 @layer base {
-  html {
+  html, body {
+    background-color: #212121;
+    color: #f5f5f5;
     font-family: 'Inter', 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
 }

@@ -82,6 +82,8 @@ export interface PortfolioItem {
   featured?: boolean;
   completionProgress?: number | string;
   designVersion?: string;
+  designerName?: string;
+  designerUrl?: string;
 }
 
 export interface TestimonialItem {
@@ -156,6 +158,10 @@ export interface FeaturedEcosystemItem {
   links: EcosystemLink[];
   completionProgress?: number | string;
   designVersion?: string;
+  uiuxDesignerName?: string;
+  uiuxDesignerUrl?: string;
+  developerName?: string;
+  developerUrl?: string;
 }
 
 export interface PortfolioConfig {
