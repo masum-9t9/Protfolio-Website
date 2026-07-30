@@ -123,22 +123,22 @@ function MainContent() {
       {/* About Section */}
       <About data={activeConfig.about} testimonials={activeConfig.testimonials} />
 
-      {/* Skills Section */}
-      <Skills skills={activeConfig.skills} />
-
       {/* Services Section */}
       <Services services={activeConfig.services} />
+
+      {/* Portfolio Showcase Grid (Design Projects) */}
+      <Portfolio items={activeConfig.portfolio} onSelectProject={setSelectedProject} />
+
+      {/* Featured Web Platform & Ecosystem Showcase (Coding Projects) */}
+      <FeaturedEcosystem items={activeConfig.featuredEcosystem} />
+
+      {/* Skills Section */}
+      <Skills skills={activeConfig.skills} />
 
       {/* Experience Timeline */}
       <Experience experiences={activeConfig.experiences} />
 
-      {/* Portfolio Showcase Grid */}
-      <Portfolio items={activeConfig.portfolio} onSelectProject={setSelectedProject} />
-
-      {/* Featured Web Platform & Ecosystem Showcase */}
-      <FeaturedEcosystem items={activeConfig.featuredEcosystem} />
-
-      {/* 25-30 Degree Angled Side-by-Side Scrolling Testimonials */}
+      {/* 25-30 Degree Angled Side-by-Side Scrolling Testimonials (Reviews) */}
       <Testimonials3D
         testimonials={activeConfig.testimonials}
         onAddTestimonial={handleAddTestimonial}

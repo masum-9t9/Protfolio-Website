@@ -13,11 +13,11 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { id: 'hero', faIconClass: 'fa-solid fa-house', labelKey: 'hero' },
   { id: 'about', faIconClass: 'fa-solid fa-user', labelKey: 'about' },
-  { id: 'skills', faIconClass: 'fa-solid fa-code', labelKey: 'skills' },
   { id: 'services', faIconClass: 'fa-solid fa-briefcase', labelKey: 'services' },
-  { id: 'experience', faIconClass: 'fa-solid fa-clock-rotate-left', labelKey: 'experience' },
   { id: 'portfolio', faIconClass: 'fa-solid fa-palette', labelKey: 'designProjects' },
   { id: 'ecosystem', faIconClass: 'fa-solid fa-laptop-code', labelKey: 'codingProjects' },
+  { id: 'skills', faIconClass: 'fa-solid fa-code', labelKey: 'skills' },
+  { id: 'experience', faIconClass: 'fa-solid fa-clock-rotate-left', labelKey: 'experience' },
   { id: 'testimonials', faIconClass: 'fa-solid fa-comment-dots', labelKey: 'testimonials' },
   { id: 'contact', faIconClass: 'fa-solid fa-envelope', labelKey: 'contact' },
 ];
