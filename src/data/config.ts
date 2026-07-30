@@ -324,8 +324,8 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       id: "eco_1",
       badge: "Portfolio",
       title: "Portfolio Website",
-      technologies: ["React", "TypeScript", "Tailwind CSS"],
       mainUrl: "https://www.9t9.pro.bd",
+      imageUrl: "https://i.postimg.cc/rsFF9mFd/fbd8b403-9dba-42c1-a984-1293f50492cd.jpg",
       description: "A professional portfolio featuring graphic design, branding, UI concepts, and AI-powered web development. Showcasing creative projects, technical expertise, and digital solutions for modern businesses.",
       completionProgress: 100,
       designVersion: "v4.5 Stable",
@@ -341,9 +341,9 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
         "Professional showcase for design, branding, and web projects."
       ],
       galleryImages: [
-        "https://i.postimg.cc/7ZcG0nqC/Screenshot-(17).png",
-        "https://i.postimg.cc/908FVcMX/Screenshot-(18).png",
-        "https://i.postimg.cc/SRvq3VTj/Screenshot-(19).png"
+        "https://i.postimg.cc/rsFF9mFd/fbd8b403-9dba-42c1-a984-1293f50492cd.jpg",
+        "https://i.postimg.cc/j28Vv1VJ/Songsar-er-bondhon.jpg",
+        "https://i.postimg.cc/wTv3H8BY/Hayre-Kopal.jpg"
       ],
       links: [
         {

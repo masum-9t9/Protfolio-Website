@@ -62,9 +62,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
           <div className="relative bg-neutral-950 flex flex-col items-center justify-center p-4 border-b border-neutral-800 group">
             <div className="relative max-h-[65vh] w-full flex items-center justify-center overflow-hidden rounded-xl">
               <img
-                src={project.imageUrl}
+                src={project.imageUrl || 'https://i.postimg.cc/rsFF9mFd/fbd8b403-9dba-42c1-a984-1293f50492cd.jpg'}
                 alt={project.title}
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "https://i.postimg.cc/rsFF9mFd/fbd8b403-9dba-42c1-a984-1293f50492cd.jpg";
+                }}
                 className="max-h-[65vh] w-auto max-w-full object-contain rounded-xl shadow-2xl"
               />
               
@@ -202,7 +206,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
             <div>
               <h4 className="text-xs font-bold text-neutral-300 mb-2 uppercase tracking-wider">ব্যবহৃত সফটওয়্যার ও প্রযুক্তি</h4>
               <div className="flex flex-wrap gap-2">
-                {project.technologies?.map((tech, idx) => (
+                {project.technologies.map((tech, idx) => (
                   <span
                     key={idx}
                     className="px-3 py-1 rounded-lg bg-neutral-950 text-neutral-300 text-xs font-medium border border-neutral-800"
