@@ -289,7 +289,7 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
   hero: {
     greeting: "Hello, I'm",
     name: "Masum 9T9",
-    role: "Developer & Designer",
+    role: "Web Developer, Content Creator & Designer",
     rotatingRoles: [
       "Poster Design Specialist",
       "YouTube Thumbnail Creator",
