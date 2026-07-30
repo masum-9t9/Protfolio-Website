@@ -105,17 +105,24 @@ function MainContent() {
   // Dynamically get English or Bengali config safely
   const activeConfig = getLocalizedPortfolioConfig(baseConfig || INITIAL_PORTFOLIO_CONFIG, language || 'bn');
 
-  // Parse shareable project link on page load
+// Parse shareable project link on page load
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const projectId = params.get('project');
-    if (projectId && activeConfig?.portfolio) {
-      const match = activeConfig.portfolio.find((item) => item.id === projectId);
+
+    if (projectId && activeConfig) {
+      // portfolio এবং featuredEcosystem (বা ecosystem) দুটো অ্যারে মিলিয়ে একসাথে সার্চ করবে
+      const allProjects = [
+        ...(activeConfig.portfolio || []),
+        ...(activeConfig.featuredEcosystem || activeConfig.ecosystem || [])
+      ];
+
+      const match = allProjects.find((item) => item.id === projectId);
       if (match) {
         setSelectedProject(match);
       }
     }
-  }, [activeConfig.portfolio]);
+  }, [activeConfig]);
 
   const handleAddTestimonial = (newTestimonial: any) => {
     const currentTestimonials = baseConfig?.testimonials || INITIAL_PORTFOLIO_CONFIG.testimonials || [];
