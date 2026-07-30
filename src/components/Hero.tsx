@@ -26,9 +26,9 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
   }, [roles]);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#040711] bg-mesh-pattern">
-      {/* Concentric Orbital Vector Rings (Subtle Cyber Arc lines as seen in reference image) */}
-      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] pointer-events-none opacity-25 select-none z-0">
+<section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#040711] bg-mesh-pattern">
+      {/* Concentric Orbital Vector Rings (সাইবার সার্কেলগুলোকে বাম পাশের আলোর উৎসের সাথে মেলানো হয়েছে) */}
+      <div className="absolute top-1/2 left-[-10%] -translate-y-1/2 w-[900px] h-[900px] pointer-events-none opacity-20 select-none z-0">
         <svg className="w-full h-full" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="450" cy="450" r="180" stroke="#38BDF8" strokeWidth="1" strokeDasharray="6 6" className="animate-spin-slower origin-center" />
           <circle cx="450" cy="450" r="280" stroke="#818CF8" strokeWidth="1" opacity="0.6" />
@@ -42,10 +42,10 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
         </svg>
       </div>
 
-      {/* Background Subtle Ambient Glowing Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] rounded-full bg-sky-500/15 blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] rounded-full bg-indigo-500/15 blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 right-10 w-80 h-80 rounded-full bg-blue-600/10 blur-[120px] pointer-events-none" />
+      {/* Background Subtle Ambient Glowing Orbs (স্ক্রিনশটের মতো বাম পাশে ডার্ক ব্লু গ্রেডিয়েন্ট আভা) */}
+      <div className="absolute top-[-15%] left-[-25%] w-[850px] h-[850px] rounded-full bg-blue-600/15 blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-500/10 blur-[150px] pointer-events-none" />
+
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
