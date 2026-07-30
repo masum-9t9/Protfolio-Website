@@ -202,7 +202,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, on
             <div>
               <h4 className="text-xs font-bold text-neutral-300 mb-2 uppercase tracking-wider">ব্যবহৃত সফটওয়্যার ও প্রযুক্তি</h4>
               <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, idx) => (
+                {project.technologies?.map((tech, idx) => (
                   <span
                     key={idx}
                     className="px-3 py-1 rounded-lg bg-neutral-950 text-neutral-300 text-xs font-medium border border-neutral-800"

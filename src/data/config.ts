@@ -324,6 +324,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       id: "eco_1",
       badge: "Portfolio",
       title: "Portfolio Website",
+      technologies: ["React", "TypeScript", "Tailwind CSS"],
       mainUrl: "https://www.9t9.pro.bd",
       description: "A professional portfolio featuring graphic design, branding, UI concepts, and AI-powered web development. Showcasing creative projects, technical expertise, and digital solutions for modern businesses.",
       completionProgress: 100,
