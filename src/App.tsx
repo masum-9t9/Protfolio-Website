@@ -116,9 +116,6 @@ function MainContent() {
   return (
     <div className="min-h-screen bg-[#070A12] text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
       
-      {/* High-Performance Animated Vector Background */}
-      <AnimatedVectorBG />
-
       {/* Floating Apple macOS Dock Navigation */}
       <NavigationDock onOpenSearch={() => setIsSearchOpen(true)} />
 
