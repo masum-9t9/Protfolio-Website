@@ -18,7 +18,6 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
-import { AnimatedVectorBG } from './components/AnimatedVectorBG';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
