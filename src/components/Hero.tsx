@@ -26,7 +26,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
   }, [roles]);
 
   return (
-<section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#030712]">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[radial-gradient(circle_at_25%_40%,#0d1e36_0%,#070b12_70%)]">
       {/* Concentric Orbital Vector Rings (স্ক্রিনশটের মতো নিখুঁতভাবে বাম পাশের আলোর সাথে অ্যালাইন করা) */}
       <div className="absolute top-[45%] left-[-15%] -translate-y-1/2 w-[1000px] h-[1000px] pointer-events-none opacity-[0.12] select-none z-0">
         <svg className="w-full h-full" viewBox="0 0 900 900" fill="none" xmlns="http://w3.org">
@@ -41,10 +41,6 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
           <circle cx="170" cy="450" r="3" fill="#38BDF8" />
         </svg>
       </div>
-
-      {/* Background Subtle Ambient Glowing Orbs (স্ক্রিনশটের সেই নির্দিষ্ট ডার্ক-ব্লু সফট গ্রেডিয়েন্ট) */}
-      <div className="absolute top-[-10%] left-[-20%] w-[900px] h-[900px] rounded-full bg-blue-900/20 blur-[150px] pointer-events-none" />
-      <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-slate-800/15 blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
@@ -64,7 +60,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             </span>
             <span className="tracking-wide font-semibold">{data.statusBadge}</span>
           </motion.div>
-
+          
           {/* Greeting */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
