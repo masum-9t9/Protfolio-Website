@@ -148,6 +148,7 @@ export interface FeaturedEcosystemItem {
   badge: string;
   title: string;
   mainUrl?: string;
+  imageUrl?: string;
   description: string;
   stats: {
     label: string;

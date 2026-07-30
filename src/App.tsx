@@ -19,6 +19,7 @@ import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { CreatorProfileModal } from './components/CreatorProfileModal';
+import { AnimatedVectorBG } from './components/AnimatedVectorBG';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -105,24 +106,39 @@ function MainContent() {
   // Dynamically get English or Bengali config safely
   const activeConfig = getLocalizedPortfolioConfig(baseConfig || INITIAL_PORTFOLIO_CONFIG, language || 'bn');
 
-// Parse shareable project link on page load
+  // Parse shareable project link on page load
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const projectId = params.get('project');
-
     if (projectId && activeConfig) {
-      // portfolio এবং featuredEcosystem (বা ecosystem) দুটো অ্যারে মিলিয়ে একসাথে সার্চ করবে
-      const allProjects = [
-        ...(activeConfig.portfolio || []),
-        ...(activeConfig.featuredEcosystem || activeConfig.ecosystem || [])
-      ];
-
-      const match = allProjects.find((item) => item.id === projectId);
+      const match = activeConfig.portfolio?.find((item) => item.id === projectId);
       if (match) {
         setSelectedProject(match);
+      } else {
+        const ecoMatch = activeConfig.featuredEcosystem?.find((item) => item.id === projectId);
+        if (ecoMatch) {
+          const converted: PortfolioItem = {
+            id: ecoMatch.id,
+            title: ecoMatch.title,
+            category: 'custom_theme',
+            categoryLabel: ecoMatch.badge || 'Portfolio Website',
+            imageUrl: ecoMatch.imageUrl || ecoMatch.galleryImages?.[0] || 'https://i.postimg.cc/rsFF9mFd/fbd8b403-9dba-42c1-a984-1293f50492cd.jpg',
+            description: ecoMatch.description,
+            longDescription: ecoMatch.description + '\n\n' + (ecoMatch.keyFeatures ? 'Key Features:\n• ' + ecoMatch.keyFeatures.join('\n• ') : ''),
+            viewsCount: ecoMatch.stats?.[0] ? `${ecoMatch.stats[0].label}: ${ecoMatch.stats[0].value}` : undefined,
+            achievement: ecoMatch.stats?.[1] ? `${ecoMatch.stats[1].label}: ${ecoMatch.stats[1].value}` : undefined,
+            technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+            clientName: 'Masum 9T9',
+            year: '2026',
+            liveUrl: ecoMatch.mainUrl,
+            designVersion: ecoMatch.designVersion || 'v4.5',
+            designerName: ecoMatch.uiuxDesignerName || 'Masum 9T9'
+          };
+          setSelectedProject(converted);
+        }
       }
     }
-  }, [activeConfig]);
+  }, [activeConfig.portfolio, activeConfig.featuredEcosystem]);
 
   const handleAddTestimonial = (newTestimonial: any) => {
     const currentTestimonials = baseConfig?.testimonials || INITIAL_PORTFOLIO_CONFIG.testimonials || [];
@@ -135,8 +151,10 @@ function MainContent() {
   };
 
   return (
-    <div className={`min-h-screen text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden transition-colors duration-500 ${isCreatorModalOpen ? 'bg-black' : 'bg-[#212121]'}`}>
+    <div className={`min-h-screen text-neutral-100 font-['Inter','Hind_Siliguri',sans-serif] selection:bg-sky-500 selection:text-white relative overflow-x-hidden transition-colors duration-500 ${isCreatorModalOpen ? 'bg-black' : 'bg-[#040711]'}`}>
       
+      {/* High-Performance Animated Vector Background */}
+      <AnimatedVectorBG />
 
       {/* Floating Apple macOS Dock Navigation */}
       <NavigationDock onOpenSearch={() => setIsSearchOpen(true)} />

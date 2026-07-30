@@ -86,7 +86,7 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
                 <span>{data.storyHeading}</span>
               </h3>
               <div className="space-y-4 text-neutral-300 text-base leading-relaxed font-normal">
-                {data.storyParagraphs.map((paragraph, i) => (
+                {(data?.storyParagraphs || []).map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
               </div>
@@ -135,7 +135,7 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
               </h3>
 
               <div className="space-y-6 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-white/10">
-                {data.education.map((edu, idx) => (
+                {(data?.education || []).map((edu, idx) => (
                   <div key={idx} className="relative pl-8">
                     <div className="absolute left-1.5 top-1.5 w-4 h-4 rounded-full bg-sky-400 ring-4 ring-neutral-950 flex items-center justify-center shadow-[0_0_10px_#38BDF8]">
                       <div className="w-1.5 h-1.5 bg-white rounded-full" />

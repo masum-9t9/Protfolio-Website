@@ -206,6 +206,27 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     } else if (resultItem.type === 'coding') {
+      if (onSelectProject) {
+        const ecoMatch = resultItem.rawItem as FeaturedEcosystemItem;
+        const converted: PortfolioItem = {
+          id: ecoMatch.id,
+          title: ecoMatch.title,
+          category: 'custom_theme',
+          categoryLabel: ecoMatch.badge || 'Portfolio Website',
+          imageUrl: ecoMatch.imageUrl || ecoMatch.galleryImages?.[0] || 'https://i.postimg.cc/rsFF9mFd/fbd8b403-9dba-42c1-a984-1293f50492cd.jpg',
+          description: ecoMatch.description,
+          longDescription: ecoMatch.description + '\n\n' + (ecoMatch.keyFeatures ? 'Key Features:\n• ' + ecoMatch.keyFeatures.join('\n• ') : ''),
+          viewsCount: ecoMatch.stats?.[0] ? `${ecoMatch.stats[0].label}: ${ecoMatch.stats[0].value}` : undefined,
+          achievement: ecoMatch.stats?.[1] ? `${ecoMatch.stats[1].label}: ${ecoMatch.stats[1].value}` : undefined,
+          technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+          clientName: 'Masum 9T9',
+          year: '2026',
+          liveUrl: ecoMatch.mainUrl,
+          designVersion: ecoMatch.designVersion || 'v4.5',
+          designerName: ecoMatch.uiuxDesignerName || 'Masum 9T9'
+        };
+        onSelectProject(converted);
+      }
       const el = document.getElementById('ecosystem');
       if (el) {
         const yOffset = -80;
@@ -394,9 +415,9 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                         </p>
 
                         {/* Tags */}
-                        {item.tags.length > 0 && (
+                        {item.tags && item.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1 mt-1.5">
-                            {item.tags.slice(0, 3).map((tag, tIdx) => (
+                            {(item.tags || []).slice(0, 3).map((tag, tIdx) => (
                               <span
                                 key={tIdx}
                                 className="text-[10px] font-semibold text-neutral-300 bg-neutral-950/80 px-2 py-0.5 rounded-md border border-white/10"

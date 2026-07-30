@@ -19,6 +19,30 @@ interface TiltCardProps {
   onOpenCreatorProfile?: () => void;
 }
 
+const cardContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const cardItemVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
 const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject, onOpenCreatorProfile }) => {
   const { language } = useLanguage();
   const t = UI_TRANSLATIONS[language];
@@ -74,9 +98,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject, onOpe
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
+      variants={cardItemVariants}
       className="perspective-1000 group will-change-transform"
     >
       <div
@@ -350,7 +372,7 @@ const TiltCard: React.FC<TiltCardProps> = ({ item, index, onSelectProject, onOpe
           <div>
             {/* Technologies Pills */}
             <div className="flex flex-wrap gap-1.5 pt-3 border-t border-neutral-800/80 mb-4">
-              {item.technologies.map((tech, tIdx) => (
+              {(item.technologies || []).map((tech, tIdx) => (
                 <span
                   key={tIdx}
                   className="text-[11px] font-medium text-neutral-300 bg-neutral-950 px-2.5 py-1 rounded-md border border-neutral-800/80"
@@ -477,14 +499,15 @@ export const Portfolio: React.FC<PortfolioProps> = ({ items, onSelectProject, on
           ))}
         </div>
 
-        {/* Projects Grid with 3D Tilt Cards */}
+        {/* Projects Grid with Staggered Entrance Animation */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            variants={cardContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             {filteredItems.map((item, index) => (

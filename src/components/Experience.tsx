@@ -78,7 +78,7 @@ export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
 
                     {/* Key Highlights */}
                     <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/10">
-                      {exp.keyProjects.map((proj, pIdx) => (
+                      {(exp.keyProjects || []).map((proj, pIdx) => (
                         <span
                           key={pIdx}
                           className="text-[11px] font-semibold text-neutral-200 bg-neutral-950/90 px-3 py-1 rounded-lg border border-white/10"

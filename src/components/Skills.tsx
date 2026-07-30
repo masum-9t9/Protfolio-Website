@@ -140,7 +140,7 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
 
                   {/* Skill Tags */}
                   <div className="flex flex-wrap gap-1.5">
-                    {skill.tags.map((tag, idx) => (
+                    {(skill.tags || []).map((tag, idx) => (
                       <span
                         key={idx}
                         className="text-[11px] font-semibold text-neutral-300 bg-neutral-950/90 px-2.5 py-1 rounded-lg border border-white/10"

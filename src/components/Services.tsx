@@ -70,7 +70,7 @@ export const Services: React.FC<ServicesProps> = ({ services }) => {
 
                   {/* Features List */}
                   <div className="space-y-3 mb-8 border-t border-b border-white/10 py-5">
-                    {service.features.map((feature, fIdx) => (
+                    {(service.features || []).map((feature, fIdx) => (
                       <div key={fIdx} className="flex items-start gap-3 text-xs text-neutral-200 font-medium">
                         <div className="p-0.5 rounded-full bg-sky-500/20 text-sky-400 mt-0.5 shrink-0">
                           <Check className="w-3.5 h-3.5" />
