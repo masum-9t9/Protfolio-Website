@@ -26,10 +26,10 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
   }, [roles]);
 
   return (
-<section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#040711] bg-mesh-pattern">
-      {/* Concentric Orbital Vector Rings (সাইবার সার্কেলগুলোকে বাম পাশের আলোর উৎসের সাথে মেলানো হয়েছে) */}
-      <div className="absolute top-1/2 left-[-10%] -translate-y-1/2 w-[900px] h-[900px] pointer-events-none opacity-20 select-none z-0">
-        <svg className="w-full h-full" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+<section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#030712]">
+      {/* Concentric Orbital Vector Rings (স্ক্রিনশটের মতো নিখুঁতভাবে বাম পাশের আলোর সাথে অ্যালাইন করা) */}
+      <div className="absolute top-[45%] left-[-15%] -translate-y-1/2 w-[1000px] h-[1000px] pointer-events-none opacity-[0.12] select-none z-0">
+        <svg className="w-full h-full" viewBox="0 0 900 900" fill="none" xmlns="http://w3.org">
           <circle cx="450" cy="450" r="180" stroke="#38BDF8" strokeWidth="1" strokeDasharray="6 6" className="animate-spin-slower origin-center" />
           <circle cx="450" cy="450" r="280" stroke="#818CF8" strokeWidth="1" opacity="0.6" />
           <circle cx="450" cy="450" r="390" stroke="#38BDF8" strokeWidth="1" strokeDasharray="12 8" opacity="0.5" />
@@ -42,10 +42,9 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
         </svg>
       </div>
 
-      {/* Background Subtle Ambient Glowing Orbs (স্ক্রিনশটের মতো বাম পাশে ডার্ক ব্লু গ্রেডিয়েন্ট আভা) */}
-      <div className="absolute top-[-15%] left-[-25%] w-[850px] h-[850px] rounded-full bg-blue-600/15 blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-500/10 blur-[150px] pointer-events-none" />
-
+      {/* Background Subtle Ambient Glowing Orbs (স্ক্রিনশটের সেই নির্দিষ্ট ডার্ক-ব্লু সফট গ্রেডিয়েন্ট) */}
+      <div className="absolute top-[-10%] left-[-20%] w-[900px] h-[900px] rounded-full bg-blue-900/20 blur-[150px] pointer-events-none" />
+      <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-slate-800/15 blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
