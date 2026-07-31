@@ -1,6 +1,3 @@
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-
 /**
  * Handles Viewing and Downloading Masum 9T9's Official Resume / CV
  * Supports both English and Bangla versions.
@@ -61,7 +58,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
         <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 11.5px; color: #374151;">
           <div>📞 <strong>Phone:</strong> +8801303-623838</div>
           <div>✉️ <strong>Email:</strong> masum.9t9.gd@gmail.com</div>
-          <div>📍 <strong>Location:</strong> Satkhira, Khulna, Bangladesh</div>
+          <div>📍 <strong>Location:</strong> Dhaka / Satkhira, Bangladesh</div>
         </div>
       </div>
 
@@ -113,7 +110,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">1. Personal Portfolio (9t9.pro.bd)</div>
           <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Tech Stack:
-React • TypeScript • Tailwind CSS • Vite</div>
+                                                                             React • TypeScript • Tailwind CSS • Vite</div>
         </div>
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">2. Premium YouTube Thumbnails</div>
@@ -159,10 +156,10 @@ React • TypeScript • Tailwind CSS • Vite</div>
         </h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; color: #374151; font-family: monospace;">
           <div>🌐 <strong>Website:</strong> https://9t9.pro.bd</div>
-          <div>ⓕ <strong>Facebook:</strong> www.facebook.com/masum.9t9.official</div>
+          <div>📘 <strong>Facebook:</strong> www.facebook.com/masum.9t9.official</div>
           <div>🎨 <strong>Behance:</strong> www.behance.net/masum_9t9_official</div>
           <div>🐙 <strong>GitHub:</strong> github.com/masum-9t9/</div>
-          <div>▶ <strong>YouTube:</strong> www.youtube.com/@ParahinAcademy</div>
+          <div>▶️ <strong>YouTube:</strong> www.youtube.com/@ParahinAcademy</div>
           <div>🟢 <strong>Fiverr:</strong> www.fiverr.com/sellers/masum9t9/</div>
         </div>
       </div>
@@ -185,6 +182,12 @@ React • TypeScript • Tailwind CSS • Vite</div>
   document.body.appendChild(container);
 
   try {
+    const html2canvasModule = await import('html2canvas');
+    const html2canvas = html2canvasModule.default;
+
+    const jsPDFModule = await import('jspdf');
+    const jsPDF = jsPDFModule.jsPDF || jsPDFModule.default;
+
     const canvas = await html2canvas(container, {
       scale: 2,
       useCORS: true,
