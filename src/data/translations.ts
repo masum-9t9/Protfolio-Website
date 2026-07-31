@@ -334,7 +334,7 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
     ],
     highlights: [
       { label: "Experience", value: "3+ Years" },
-      { label: "Completed Projects", value: "500+" },
+      { label: "Completed Projects", value: "100+" },
       { label: "Happy Clients", value: "50+" },
       { label: "Rating", value: "4.9 / 5.0" }
     ]

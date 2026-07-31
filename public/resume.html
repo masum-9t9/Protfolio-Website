@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masum 9T9 — Resume & CV | Graphic Designer • Web Developer • Content Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-accent: #3A86FF;
+      --primary-hover: #2563eb;
+      --bg-dark: #090a0f;
+      --card-bg: #11131a;
+      --card-border: #222634;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-sub: #d1d5db;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 30px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .resume-container {
+      max-width: 920px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 38px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    /* Top Control Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      background: #1a1d29;
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--primary-accent);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(58, 134, 255, 0.4);
+    }
+
+    .print-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: rgba(58, 134, 255, 0.12);
+      border: 1px solid rgba(58, 134, 255, 0.35);
+      color: var(--primary-accent);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: var(--primary-accent);
+      color: #ffffff;
+    }
+
+    /* Hero Header */
+    .hero-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .profile-photo {
+      width: 110px;
+      height: 110px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 3px solid var(--primary-accent);
+      box-shadow: 0 0 24px rgba(58, 134, 255, 0.35);
+      flex-shrink: 0;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .hero-name {
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-accent);
+      margin-top: 4px;
+      letter-spacing: 0.2px;
+    }
+
+    .hero-tagline {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Contact Grid */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      background: #181b26;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 28px;
+      font-size: 13.5px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-sub);
+    }
+
+    .contact-item span.icon {
+      color: var(--primary-accent);
+      font-weight: bold;
+    }
+
+    .contact-item a {
+      color: var(--text-sub);
+      text-decoration: none;
+    }
+
+    .contact-item a:hover {
+      color: var(--primary-accent);
+      text-decoration: underline;
+    }
+
+    /* Section Block */
+    .section-block {
+      margin-bottom: 28px;
+    }
+
+    .section-heading {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-heading::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 19px;
+      background: var(--primary-accent);
+      border-radius: 4px;
+      box-shadow: 0 0 10px var(--primary-accent);
+    }
+
+    .summary-text {
+      font-size: 14.5px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    /* Skills Container */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      background: #181b26;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .skill-tag:hover {
+      border-color: var(--primary-accent);
+    }
+
+    .skill-tag.highlight {
+      border-color: rgba(58, 134, 255, 0.45);
+      background: rgba(58, 134, 255, 0.09);
+      color: var(--primary-accent);
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .project-card {
+      background: #181b26;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--primary-accent);
+      transform: translateY(-2px);
+    }
+
+    .project-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .project-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--primary-accent);
+      background: rgba(58, 134, 255, 0.12);
+      border: 1px solid rgba(58, 134, 255, 0.25);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Timeline Cards */
+    .timeline-card {
+      background: #181b26;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+      gap: 10px;
+    }
+
+    .role-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .role-period {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-accent);
+      background: rgba(58, 134, 255, 0.12);
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .role-details {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    /* Social Links Bar */
+    .social-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .social-pill {
+      background: #181b26;
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .social-pill:hover {
+      background: var(--primary-accent);
+      color: #ffffff;
+      border-color: var(--primary-accent);
+      box-shadow: 0 4px 12px rgba(58, 134, 255, 0.35);
+    }
+
+    /* Footer & QR Section */
+    .resume-footer {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .qr-block {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #181b26;
+      border: 1px solid var(--card-border);
+      padding: 10px 16px;
+      border-radius: 14px;
+    }
+
+    .qr-code-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 3px;
+    }
+
+    .qr-text h5 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .qr-text p {
+      font-size: 12px;
+      color: var(--primary-accent);
+      font-weight: 600;
+    }
+
+    .verify-badge {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* ATS Print Media Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+        padding: 0 !important;
+      }
+
+      .resume-container {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #111827 !important;
+        max-width: 100% !important;
+      }
+
+      .top-bar {
+        display: none !important;
+      }
+
+      .profile-photo {
+        border-color: #3A86FF !important;
+      }
+
+      .hero-name {
+        color: #111827 !important;
+      }
+
+      .hero-title {
+        color: #2563eb !important;
+      }
+
+      .contact-grid {
+        background: #f3f4f6 !important;
+        border-color: #e5e7eb !important;
+        color: #1f2937 !important;
+      }
+
+      .contact-item, .contact-item a {
+        color: #1f2937 !important;
+      }
+
+      .section-heading {
+        color: #111827 !important;
+      }
+
+      .summary-text, .role-details, .project-desc {
+        color: #374151 !important;
+      }
+
+      .skill-tag, .project-card, .timeline-card, .social-pill, .qr-block, .offline-links-footer {
+        background: #f9fafb !important;
+        border-color: #e5e7eb !important;
+        color: #111827 !important;
+      }
+
+      .role-title, .project-title, .qr-text h5, #hdr-offline-links {
+        color: #111827 !important;
+      }
+
+      .social-pill {
+        color: #1f2937 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="resume-container">
+    <!-- Top Control Bar -->
+    <div class="top-bar">
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-bn" onclick="setLanguage('bn')">🇧🇩 বাংলা ভার্সন</button>
+        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">🇬🇧 English Version</button>
+      </div>
+
+      <div class="print-actions">
+        <button class="action-btn" onclick="window.print()">
+          🖨️ <span id="lbl-print">Print / Save PDF</span>
+        </button>
+        <a href="https://9t9.pro.bd" target="_blank" class="action-btn">
+          🌐 <span id="lbl-site">Live Portfolio</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero Header -->
+    <div class="hero-header">
+      <img src="https://i.postimg.cc/gJT7B3XX/Profile-pic.png" alt="Masum 9T9 Profile Photo" class="profile-photo" id="img-profile" onerror="this.src='/masum_profile.jpg'">
+      
+      <div class="hero-text">
+        <h1 class="hero-name">
+          Masum 9T9
+          <span style="font-size:18px; color:#3A86FF;" title="Verified Profile">✓</span>
+        </h1>
+        <div class="hero-title" id="txt-title">
+          Graphic Designer • Web Developer • Content Creator
+        </div>
+        <div class="hero-tagline" id="txt-tagline">
+          Crafting High-CTR Visuals, Modern Web Applications & Educational Content
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Grid -->
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="icon">📱</span>
+        <span><strong>Phone:</strong> +8801303-623838</span>
+      </div>
+      <div class="contact-item">
+        <span class="icon">✉️</span>
+        <span><strong>Email:</strong> <a href="mailto:masum.9t9.gd@gmail.com">masum.9t9.gd@gmail.com</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="icon">🌐</span>
+        <span><strong>Website:</strong> <a href="https://9t9.pro.bd" target="_blank">9t9.pro.bd</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="icon">📍</span>
+        <span><strong>Location:</strong> Dhaka / Satkhira, Bangladesh</span>
+      </div>
+    </div>
+
+    <!-- Professional Summary / About -->
+    <div class="section-block">
+      <div class="section-heading" id="hdr-summary">About / Professional Summary</div>
+      <p class="summary-text" id="txt-summary">
+        Multi-disciplinary creative working across Graphic Design, Web Development, and Content Creation over the past 3+ years. Experienced in building responsive React & TypeScript web applications, designing high-converting YouTube thumbnails and photorealistic posters, and creating educational tutorials for 10,000+ online learners via Parahin Academy.
+      </p>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="section-block">
+      <div class="section-heading" id="hdr-skills">Skills & Expertise</div>
+      <div class="skills-container" id="box-skills">
+        <span class="skill-tag highlight">Graphic Design</span>
+        <span class="skill-tag highlight">UI/UX Design</span>
+        <span class="skill-tag highlight">Branding & Visual Identity</span>
+        <span class="skill-tag highlight">React & TypeScript</span>
+        <span class="skill-tag highlight">Tailwind CSS</span>
+        <span class="skill-tag">HTML5 & CSS3</span>
+        <span class="skill-tag">JavaScript (ES6+)</span>
+        <span class="skill-tag">Responsive Web Design</span>
+        <span class="skill-tag">Git & GitHub</span>
+        <span class="skill-tag">YouTube High-CTR Visuals</span>
+        <span class="skill-tag">Poster Compositing</span>
+        <span class="skill-tag">Content Creation</span>
+      </div>
+    </div>
+
+    <!-- Tools Section -->
+    <div class="section-block">
+      <div class="section-heading" id="hdr-tools">Software & Tools</div>
+      <div class="skills-container" id="box-tools">
+        <span class="skill-tag highlight">Adobe Photoshop</span>
+        <span class="skill-tag highlight">Adobe Illustrator</span>
+        <span class="skill-tag highlight">Figma</span>
+        <span class="skill-tag highlight">VS Code</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Pixellab</span>
+        <span class="skill-tag">Ibis Paint X</span>
+      </div>
+    </div>
+
+    <!-- Featured Projects -->
+    <div class="section-block">
+      <div class="section-heading" id="hdr-projects">Featured Projects</div>
+      <div class="projects-grid" id="box-projects">
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-title">
+            <span id="p1-title">Personal Portfolio Website</span>
+            <span class="project-badge">Web Dev</span>
+          </div>
+          <div class="project-desc" id="p1-desc">
+            Interactive, responsive portfolio (9t9.pro.bd) built with React, TypeScript, and Tailwind CSS featuring dark/light themes and instant search.
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-title">
+            <span id="p2-title">Modern Web Applications</span>
+            <span class="project-badge">Full-Stack</span>
+          </div>
+          <div class="project-desc" id="p2-desc">
+            Clean web utilities and web apps with modern component architectures, state management, and API integrations.
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <div class="project-title">
+            <span id="p3-title">Premium YouTube Thumbnails</span>
+            <span class="project-badge">Design</span>
+          </div>
+          <div class="project-desc" id="p3-desc">
+            100+ custom high-CTR thumbnails crafted for Parahin Academy and content creators, significantly boosting engagement.
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card">
+          <div class="project-title">
+            <span id="p4-title">Poster & Social Media Design</span>
+            <span class="project-badge">Compositing</span>
+          </div>
+          <div class="project-desc" id="p4-desc">
+            Photorealistic composite art, banner design, and photo manipulation using Adobe Photoshop & Illustrator.
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card">
+          <div class="project-title">
+            <span id="p5-title">Branding & Visual Identity</span>
+            <span class="project-badge">Branding</span>
+          </div>
+          <div class="project-desc" id="p5-desc">
+            Logos, social media brand kits, and vector graphics tailored for educational and digital platforms.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Work Experience & Education -->
+    <div class="section-block">
+      <div class="section-heading" id="hdr-exp">Experience & Education</div>
+      
+      <div class="timeline-card">
+        <div class="timeline-top">
+          <div class="role-title" id="exp1-title">Graphic Designer, Web Developer & Content Creator</div>
+          <div class="role-period">2023 - Present</div>
+        </div>
+        <div class="role-details" id="exp1-desc">
+          Building web applications and creating 100+ high-quality graphic assets for local and international clients.
+        </div>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-top">
+          <div class="role-title" id="exp2-title">Founder & Lead Instructor — Parahin Academy</div>
+          <div class="role-period">2024 - Present</div>
+        </div>
+        <div class="role-details" id="exp2-desc">
+          Creating educational video content and graphic design masterclasses for 10,000+ online learners.
+        </div>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-top">
+          <div class="role-title" id="exp3-title">Diploma in Graphics & Digital Media</div>
+          <div class="role-period">2026</div>
+        </div>
+        <div class="role-details" id="exp3-desc">
+          Parahin Academy — Advanced Photoshop compositing, visual design hierarchy, and digital art.
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Links -->
+    <div class="section-block">
+      <div class="section-heading" id="hdr-socials">Social Profiles & Portfolios</div>
+      <div class="social-bar">
+        <a href="https://9t9.pro.bd" target="_blank" class="social-pill">
+          🌐 <span>Website (9t9.pro.bd)</span>
+        </a>
+        <a href="https://www.behance.net/masum_9t9_official" target="_blank" class="social-pill">
+          🎨 <span>Behance</span>
+        </a>
+        <a href="https://www.facebook.com/masum.9t9.official" target="_blank" class="social-pill">
+          📘 <span>Facebook</span>
+        </a>
+        <a href="https://github.com/masum-9t9/" target="_blank" class="social-pill">
+          🐙 <span>GitHub</span>
+        </a>
+        <a href="https://www.youtube.com/@ParahinAcademy" target="_blank" class="social-pill">
+          ▶️ <span>YouTube</span>
+        </a>
+        <a href="https://www.fiverr.com/sellers/masum9t9/" target="_blank" class="social-pill">
+          🟢 <span>Fiverr</span>
+        </a>
+      </div>
+
+      <!-- Offline Text-Based Footer with Full URLs for PDF/Print -->
+      <div class="offline-links-footer" style="margin-top: 16px; padding: 14px 18px; background: #181b26; border: 1px solid var(--card-border); border-radius: 12px; font-size: 12.5px; line-height: 1.7; color: var(--text-sub);">
+        <div style="font-weight: 700; color: #ffffff; margin-bottom: 8px; font-size: 13px;" id="hdr-offline-links">
+          🌐 Direct URLs for Offline & Print Reference
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 6px 16px; word-break: break-all; font-family: monospace, sans-serif;">
+          <div>• <strong>Website:</strong> https://9t9.pro.bd</div>
+          <div>• <strong>Facebook:</strong> https://www.facebook.com/masum.9t9.official</div>
+          <div>• <strong>Behance:</strong> https://www.behance.net/masum_9t9_official</div>
+          <div>• <strong>GitHub:</strong> https://github.com/masum-9t9/</div>
+          <div>• <strong>YouTube:</strong> https://www.youtube.com/@ParahinAcademy</div>
+          <div>• <strong>Fiverr:</strong> https://www.fiverr.com/sellers/masum9t9/</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer & QR Code -->
+    <div class="resume-footer">
+      <div class="qr-block">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://9t9.pro.bd" alt="Scan QR Code to visit https://9t9.pro.bd" class="qr-code-img">
+        <div class="qr-text">
+          <h5 id="qr-title">Scan QR for Live Portfolio</h5>
+          <p>https://9t9.pro.bd</p>
+        </div>
+      </div>
+
+      <div class="verify-badge">
+        <p><strong>Masum 9T9 — Official Resume</strong></p>
+        <p style="font-size: 11px; margin-top:2px;" id="lbl-verified">Verified Identity • Updated 2026</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Language Switcher Logic -->
+  <script>
+    const translations = {
+      en: {
+        title: "Graphic Designer • Web Developer • Content Creator",
+        tagline: "Crafting High-CTR Visuals, Modern Web Applications & Educational Content",
+        print: "Print / Save PDF",
+        site: "Live Portfolio",
+        hdrSummary: "About / Professional Summary",
+        txtSummary: "Multi-disciplinary creative working across Graphic Design, Web Development, and Content Creation over the past 3+ years. Experienced in building responsive React & TypeScript web applications, designing high-converting YouTube thumbnails and photorealistic posters, and creating educational tutorials for 10,000+ online learners via Parahin Academy.",
+        hdrSkills: "Skills & Expertise",
+        hdrTools: "Software & Tools",
+        hdrProjects: "Featured Projects",
+        p1Title: "Personal Portfolio Website",
+        p1Desc: "Interactive, responsive portfolio (9t9.pro.bd) built with React, TypeScript, and Tailwind CSS featuring dark/light themes and instant search.",
+        p2Title: "Modern Web Applications",
+        p2Desc: "Clean web utilities and web apps with modern component architectures, state management, and API integrations.",
+        p3Title: "Premium YouTube Thumbnails",
+        p3Desc: "100+ custom high-CTR thumbnails crafted for Parahin Academy and content creators, significantly boosting engagement.",
+        p4Title: "Poster & Social Media Design",
+        p4Desc: "Photorealistic composite art, banner design, and photo manipulation using Adobe Photoshop & Illustrator.",
+        p5Title: "Branding & Visual Identity",
+        p5Desc: "Logos, social media brand kits, and vector graphics tailored for educational and digital platforms.",
+        hdrExp: "Experience & Education",
+        exp1Title: "Graphic Designer, Web Developer & Content Creator",
+        exp1Desc: "Building web applications and creating 100+ high-quality graphic assets for local and international clients.",
+        exp2Title: "Founder & Lead Instructor — Parahin Academy",
+        exp2Desc: "Creating educational video content and graphic design masterclasses for 10,000+ online learners.",
+        exp3Title: "Diploma in Graphics & Digital Media",
+        exp3Desc: "Parahin Academy — Advanced Photoshop compositing, visual design hierarchy, and digital art.",
+        hdrSocials: "Social Profiles & Portfolios",
+        hdrOfflineLinks: "🌐 Direct URLs for Offline & Print Reference",
+        qrTitle: "Scan QR for Live Portfolio",
+        lblVerified: "Verified Identity • Updated 2026"
+      },
+      bn: {
+        title: "গ্রাফিক্স ডিজাইনার • ওয়েব ডেভেলপার • কন্টেন্ট ক্রিয়েটর",
+        tagline: "হাই-সিটিআর ভিজ্যুয়াল, আধুনিক ওয়েব অ্যাপ্লিকেশন ও এডুকেশনাল কন্টেন্ট মেকার",
+        print: "প্রিন্ট / সেভ PDF",
+        site: "লাইভ পোর্টফোলিও",
+        hdrSummary: "আমার সম্পর্কে (Professional Summary)",
+        txtSummary: "গত ৩ বছরের বেশি সময় ধরে আমি একজন গ্রাফিক্স ডিজাইনার, ওয়েব ডেভেলপার এবং কন্টেন্ট ক্রিয়েটর হিসেবে কাজ করছি। React ও TypeScript দিয়ে ফাস্ট ওয়েব অ্যাপ্লিকেশন বিল্ড করার পাশাপাশি Photoshop ও Illustrator দিয়ে প্রিমিয়াম পোস্টার ও হাই-সিটিআর ইউটিউব থাম্বনেল ডিজাইন করি। এছাড়াও 'পাড়াহীন একাডেমি'র মাধ্যমে ১০,০০০+ লার্নারদের অনলাইন টেকনিক্যাল ও ডিজাইন গাইডলাইন প্রদান করছি।",
+        hdrSkills: "মূল দক্ষতা (Skills & Expertise)",
+        hdrTools: "সফটওয়্যার ও টুলস (Software & Tools)",
+        hdrProjects: "ফিচার্ড প্রজেক্টসমূহ (Featured Projects)",
+        p1Title: "পার্সোনাল পোর্টফোলিও ওয়েবসাইট",
+        p1Desc: "React, TypeScript ও Tailwind CSS দিয়ে তৈরি রেসপন্সিভ পোর্টফোলিও (9t9.pro.bd) - ডার্ক/লাইট থিম ও গ্লোবাল সার্চ সহ।",
+        p2Title: "আধুনিক ওয়েব অ্যাপ্লিকেশনসমূহ",
+        p2Desc: "ক্লিন আর্কিটেকচার, স্টেট ম্যানেজমেন্ট এবং API ইন্টিগ্রেশন সমৃদ্ধ বিভিন্ন ওয়েব টুলস ও অ্যাপ্লিকেশন।",
+        p3Title: "প্রিমিয়াম ইউটিউব থাম্বনেল",
+        p3Desc: "পাড়াহীন একাডেমি ও অন্যান্য ক্রিয়েটরদের জন্য ১০০+ হাই-সিটিআর থাম্বনেল ডিজাইন, যা অডিয়েন্স রিটেনশন বৃদ্ধি করেছে।",
+        p4Title: "পোস্টার ও সোশ্যাল মিডিয়া ডিজাইন",
+        p4Desc: "Adobe Photoshop & Illustrator দিয়ে ফটো-রিয়ালিস্টিক কম্পোজিটিং আর্ট, ব্যানার ও ফটো ম্যানিপুলেশন।",
+        p5Title: "ব্র্যান্ডিং ও ভিজ্যুয়াল আইডেন্টিটি",
+        p5Desc: "এডুকেশনাল ও ক্রিয়েটর ব্র্যান্ডের জন্য লোগো, সোশ্যাল মিডিয়া কিট এবং কাস্টম ভেক্টর গ্রাফিক্স।",
+        hdrExp: "অভিজ্ঞতা ও শিক্ষা (Experience & Education)",
+        exp1Title: "গ্রাফিক্স ডিজাইনার, ওয়েব ডেভেলপার ও কন্টেন্ট ক্রিয়েটর",
+        exp1Desc: "বাংলাদেশি ও আন্তর্জাতিক ক্লায়েন্টদের জন্য ওয়েব অ্যাপ্লিকেশন বিল্ড এবং ১০০+ প্রিমিয়াম গ্রাফিক্স ডিজাইন প্রদান।",
+        exp2Title: "ফাউন্ডার ও প্রধান প্রশিক্ষক — পাড়াহীন একাডেমি",
+        exp2Desc: "অনলাইন এডুকেশনাল ভিডিও টিউটোরিয়াল এবং গ্রাফিক্স গাইডলাইনের মাধ্যমে ১০,০০০+ শিক্ষার্থীদের দিকনির্দেশনা প্রদান।",
+        exp3Title: "গ্রাফিক্স ও ডিজিটাল মিডিয়া ডিপ্লোমা",
+        exp3Desc: "পাড়াহীন একাডেমি — অ্যাডভান্সড ফটোশপ কম্পোজিটিং, ভিজ্যুয়াল হায়ারার্কি ও ডিজিটাল আর্ট।",
+        hdrSocials: "সোশ্যাল প্রোফাইল ও পোর্টফোলিও",
+        hdrOfflineLinks: "🌐 অফলাইন ও প্রিন্ট রেফারেন্সের জন্য সরাসরি URL সমূহ",
+        qrTitle: "স্ক্যান করে পোর্টফোলিও দেখুন",
+        lblVerified: "যাচাইকৃত ডিজিটাল আইডি • আপডেট ২০২৬"
+      }
+    };
+
+    function setLanguage(lang) {
+      document.getElementById('btn-bn').classList.toggle('active', lang === 'bn');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+      const t = translations[lang] || translations['bn'];
+      document.getElementById('txt-title').innerHTML = t.title;
+      document.getElementById('txt-tagline').innerHTML = t.tagline;
+      document.getElementById('lbl-print').innerHTML = t.print;
+      document.getElementById('lbl-site').innerHTML = t.site;
+      document.getElementById('hdr-summary').innerHTML = t.hdrSummary;
+      document.getElementById('txt-summary').innerHTML = t.txtSummary;
+      document.getElementById('hdr-skills').innerHTML = t.hdrSkills;
+      document.getElementById('hdr-tools').innerHTML = t.hdrTools;
+      document.getElementById('hdr-projects').innerHTML = t.hdrProjects;
+      document.getElementById('p1-title').innerHTML = t.p1Title;
+      document.getElementById('p1-desc').innerHTML = t.p1Desc;
+      document.getElementById('p2-title').innerHTML = t.p2Title;
+      document.getElementById('p2-desc').innerHTML = t.p2Desc;
+      document.getElementById('p3-title').innerHTML = t.p3Title;
+      document.getElementById('p3-desc').innerHTML = t.p3Desc;
+      document.getElementById('p4-title').innerHTML = t.p4Title;
+      document.getElementById('p4-desc').innerHTML = t.p4Desc;
+      document.getElementById('p5-title').innerHTML = t.p5Title;
+      document.getElementById('p5-desc').innerHTML = t.p5Desc;
+      document.getElementById('hdr-exp').innerHTML = t.hdrExp;
+      document.getElementById('exp1-title').innerHTML = t.exp1Title;
+      document.getElementById('exp1-desc').innerHTML = t.exp1Desc;
+      document.getElementById('exp2-title').innerHTML = t.exp2Title;
+      document.getElementById('exp2-desc').innerHTML = t.exp2Desc;
+      document.getElementById('exp3-title').innerHTML = t.exp3Title;
+      document.getElementById('exp3-desc').innerHTML = t.exp3Desc;
+      document.getElementById('hdr-socials').innerHTML = t.hdrSocials;
+      if (document.getElementById('hdr-offline-links')) {
+        document.getElementById('hdr-offline-links').innerHTML = t.hdrOfflineLinks;
+      }
+      document.getElementById('qr-title').innerHTML = t.qrTitle;
+      document.getElementById('lbl-verified').innerHTML = t.lblVerified;
+
+      // Update URL search parameter
+      const url = new URL(window.location);
+      url.searchParams.set('lang', lang);
+      window.history.replaceState({}, '', url);
+    }
+
+    // Auto-detect language parameter or default to 'bn'
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialLang = urlParams.get('lang') === 'en' ? 'en' : 'bn';
+    setLanguage(initialLang);
+  </script>
+</body>
+</html>

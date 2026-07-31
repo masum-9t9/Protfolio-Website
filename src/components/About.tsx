@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, Target, Compass, Award, GraduationCap, Download, FileText, CheckCircle, X, Sparkles } from 'lucide-react';
+import { User, Target, Compass, Award, GraduationCap, Download, FileText, CheckCircle, X, Sparkles, Eye, Loader2 } from 'lucide-react';
 import { AboutData, TestimonialItem } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_TRANSLATIONS } from '../data/translations';
+import { viewResume, downloadResume } from '../utils/resume';
 
 interface AboutProps {
   data: AboutData;
@@ -19,6 +20,17 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
   const { language } = useLanguage();
   const t = UI_TRANSLATIONS[language];
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const [downloadingLang, setDownloadingLang] = useState<'bn' | 'en' | null>(null);
+
+  const handleDownload = (lang: 'bn' | 'en') => {
+    setDownloadingLang(lang);
+    setTimeout(() => {
+      downloadResume(lang);
+      setTimeout(() => {
+        setDownloadingLang(null);
+      }, 700);
+    }, 150);
+  };
 
   // Dynamic average rating from all reviews
   const dynamicAvgRating = React.useMemo(() => {
@@ -111,16 +123,57 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
               </div>
             </div>
 
-            {/* Resume Button */}
-            <div>
-              <button
-                onClick={() => setShowResumeModal(true)}
-                className="px-7 py-4 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 text-white font-bold text-sm border border-white/15 hover:border-sky-500/40 flex items-center gap-3 transition-all duration-300 shadow-xl active:scale-95"
-              >
-                <FileText className="w-4 h-4 text-sky-400" />
-                <span>{t.about.downloadCv}</span>
-                <Download className="w-4 h-4 text-neutral-400" />
-              </button>
+            {/* Resume Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 bg-neutral-900/90 p-1.5 rounded-xl border border-white/15 shadow-xl">
+                <span className="text-xs font-bold text-neutral-300 px-2 flex items-center gap-1.5">
+                  <Eye className="w-4 h-4 text-[#3A86FF]" />
+                  <span>👁 View:</span>
+                </span>
+                <button
+                  onClick={() => viewResume('bn')}
+                  className="px-3.5 py-2 rounded-lg bg-neutral-800 hover:bg-[#3A86FF] text-white text-xs font-bold border border-white/10 transition-colors"
+                  title="View Bangla Resume in a new tab"
+                >
+                  🇧🇩 বাংলা
+                </button>
+                <button
+                  onClick={() => viewResume('en')}
+                  className="px-3.5 py-2 rounded-lg bg-neutral-800 hover:bg-[#3A86FF] text-white text-xs font-bold border border-white/10 transition-colors"
+                  title="View English Resume in a new tab"
+                >
+                  🇬🇧 English
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 bg-gradient-to-r from-[#3A86FF] to-blue-600 p-1.5 rounded-xl shadow-lg shadow-blue-500/20">
+                <span className="text-xs font-bold text-white px-2 flex items-center gap-1.5">
+                  <Download className="w-4 h-4 text-white" />
+                  <span>⬇ Download:</span>
+                </span>
+                <button
+                  onClick={() => handleDownload('bn')}
+                  disabled={downloadingLang === 'bn'}
+                  className="px-3.5 py-2 rounded-lg bg-black/25 hover:bg-black/40 text-white text-xs font-bold transition-all border border-white/10 flex items-center gap-1.5 disabled:opacity-80 cursor-pointer disabled:cursor-wait"
+                  title="Download Bangla Resume"
+                >
+                  {downloadingLang === 'bn' ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-sky-300" />
+                  ) : null}
+                  <span>🇧🇩 বাংলা</span>
+                </button>
+                <button
+                  onClick={() => handleDownload('en')}
+                  disabled={downloadingLang === 'en'}
+                  className="px-3.5 py-2 rounded-lg bg-black/25 hover:bg-black/40 text-white text-xs font-bold transition-all border border-white/10 flex items-center gap-1.5 disabled:opacity-80 cursor-pointer disabled:cursor-wait"
+                  title="Download English Resume"
+                >
+                  {downloadingLang === 'en' ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-sky-300" />
+                  ) : null}
+                  <span>🇬🇧 English</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -179,7 +232,7 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
                   {language === 'bn' ? 'অফিশিয়াল জীবনবৃত্তান্ত' : 'Official Resume'}
                 </p>
                 <h3 className="text-2xl font-black text-white mt-1">Masum 9T9 — Resume</h3>
-                <p className="text-xs text-neutral-400 mt-1 font-medium">Professional Graphics Designer, Web Developer & Content Creator</p>
+                <p className="text-xs text-neutral-400 mt-1 font-medium">Professional Graphics Designer & Content Creator</p>
               </div>
 
               <div className="space-y-6 text-sm text-neutral-300">
@@ -198,8 +251,8 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
                   </h4>
                   <p className="text-neutral-300 leading-relaxed">
                     {language === 'bn'
-                      ? '৩+ বছর ধরে ৫০০+ সাকসেসফুল ডিজাইন প্রজেক্ট সম্পন্ন করেছি। বাংলাদেশ ও আন্তর্জাতিক বিভিন্ন ক্রিয়েটরদের সাথে কাজ করার অভিজ্ঞতা।'
-                      : 'Completed 500+ successful design projects over 3+ years. Experienced in working with Bangladeshi and international content creators.'}
+                      ? '৩+ বছর ধরে ১০০+ সাকসেসফুল ডিজাইন প্রজেক্ট সম্পন্ন করেছি। বাংলাদেশ ও আন্তর্জাতিক বিভিন্ন ক্রিয়েটরদের সাথে কাজ করার অভিজ্ঞতা।'
+                      : 'Completed 100+ successful design projects over 3+ years. Experienced in working with Bangladeshi and international content creators.'}
                   </p>
                 </div>
 
@@ -212,20 +265,53 @@ export const About: React.FC<AboutProps> = ({ data, testimonials }) => {
                 </div>
               </div>
 
-              <div className="mt-8 flex justify-end gap-3 pt-4 border-t border-white/10">
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
                 <button
                   onClick={() => setShowResumeModal(false)}
                   className="px-5 py-2.5 rounded-xl bg-neutral-900 text-neutral-300 text-xs font-bold hover:bg-neutral-800 border border-white/10"
                 >
                   {language === 'bn' ? 'বন্ধ করুন' : 'Close'}
                 </button>
-                <a
-                  href="mailto:masum.9t9.gd@gmail.com?subject=Requesting%20Full%20Resume%20PDF"
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white text-xs font-bold hover:from-sky-400 hover:to-blue-500 flex items-center gap-2 shadow-lg shadow-sky-500/20"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{language === 'bn' ? 'রেজুমি রিকোয়েস্ট করুন' : 'Request Full Resume'}</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => viewResume('bn')}
+                    className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-[#3A86FF] text-white text-xs font-bold border border-white/15 flex items-center gap-1.5 transition-colors"
+                  >
+                    <Eye className="w-3.5 h-3.5 text-sky-400" />
+                    <span>👁 View 🇧🇩</span>
+                  </button>
+                  <button
+                    onClick={() => viewResume('en')}
+                    className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-[#3A86FF] text-white text-xs font-bold border border-white/15 flex items-center gap-1.5 transition-colors"
+                  >
+                    <Eye className="w-3.5 h-3.5 text-sky-400" />
+                    <span>👁 View 🇬🇧</span>
+                  </button>
+                  <button
+                    onClick={() => handleDownload('bn')}
+                    disabled={downloadingLang === 'bn'}
+                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#3A86FF] to-blue-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-blue-500/20 disabled:opacity-80 cursor-pointer disabled:cursor-wait"
+                  >
+                    {downloadingLang === 'bn' ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
+                    ) : (
+                      <Download className="w-3.5 h-3.5" />
+                    )}
+                    <span>{downloadingLang === 'bn' ? 'ডাউনলোড হচ্ছে...' : '⬇ Download 🇧🇩'}</span>
+                  </button>
+                  <button
+                    onClick={() => handleDownload('en')}
+                    disabled={downloadingLang === 'en'}
+                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#3A86FF] to-blue-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-blue-500/20 disabled:opacity-80 cursor-pointer disabled:cursor-wait"
+                  >
+                    {downloadingLang === 'en' ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
+                    ) : (
+                      <Download className="w-3.5 h-3.5" />
+                    )}
+                    <span>{downloadingLang === 'en' ? 'Downloading...' : '⬇ Download 🇬🇧'}</span>
+                  </button>
+                </div>
               </div>
             </motion.div>
           </div>
