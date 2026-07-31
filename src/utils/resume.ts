@@ -1,10 +1,21 @@
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-
 /**
  * Handles Viewing and Downloading Masum 9T9's Official Resume / CV
  * Supports both English and Bangla versions.
  */
+
+const loadScript = (src: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => resolve();
+    script.onerror = (e) => reject(e);
+    document.body.appendChild(script);
+  });
+};
 
 export const viewResume = (lang: 'bn' | 'en' = 'bn') => {
   window.open(`/resume.html?lang=${lang}`, '_blank', 'noopener,noreferrer');
@@ -61,7 +72,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
         <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 11.5px; color: #374151;">
           <div>📞 <strong>Phone:</strong> +8801303-623838</div>
           <div>✉️ <strong>Email:</strong> masum.9t9.gd@gmail.com</div>
-          <div>📍 <strong>Location:</strong> Dhaka / Satkhira, Bangladesh</div>
+          <div>📍 <strong>Location:</strong> Satkhira, Khulna, Bangladesh</div>
         </div>
       </div>
 
@@ -137,14 +148,14 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
       <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span style="font-size: 12.5px; font-weight: 700; color: #111827;">Graphic Designer, Web Developer & Content Creator</span>
-          <span style="font-size: 11px; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 4px;">2023 - Present</span>
+          <span style="font-size: 11px; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 4px;">2024 - 2025</span>
         </div>
         <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Delivered web apps and 100+ design assets for local and international clients.</div>
       </div>
       <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span style="font-size: 12.5px; font-weight: 700; color: #111827;">Founder & Lead Instructor — Parahin Academy</span>
-          <span style="font-size: 11px; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 4px;">2024 - Present</span>
+          <span style="font-size: 11px; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 4px;">2026 - Present</span>
         </div>
         <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Creating tech/design video masterclasses for 10,000+ online students.</div>
       </div>
@@ -184,6 +195,20 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
   document.body.appendChild(container);
 
   try {
+    await Promise.all([
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
+    ]);
+
+    const html2canvas = (window as any).html2canvas;
+    const jsPDFModule = (window as any).jspdf;
+    const PDFClass = jsPDFModule ? jsPDFModule.jsPDF : null;
+
+    if (!html2canvas || !PDFClass) {
+      window.open(`/resume.html?lang=${lang}`, '_blank');
+      return;
+    }
+
     const canvas = await html2canvas(container, {
       scale: 2,
       useCORS: true,
@@ -192,8 +217,6 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
     });
 
     const imgData = canvas.toDataURL('image/jpeg', 0.98);
-    // Handle both default export and named export formats across bundlers
-    const PDFClass = typeof jsPDF === 'function' ? jsPDF : (jsPDF as any).jsPDF || (jsPDF as any).default;
     const pdf = new PDFClass('p', 'mm', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
@@ -202,6 +225,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
     pdf.save(fileName);
   } catch (err) {
     console.error('Failed to generate PDF:', err);
+    window.open(`/resume.html?lang=${lang}`, '_blank');
   } finally {
     document.body.removeChild(container);
   }
