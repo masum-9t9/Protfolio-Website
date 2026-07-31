@@ -409,37 +409,37 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
   achievements: [
     {
       id: "ach_1",
-      number: 500,
+      number: 100,
       suffix: "+",
       label: "সম্পন্ন প্রজেক্ট",
       iconName: "CheckCircle2"
     },
     {
       id: "ach_2",
-      number: 350,
+      number: 50,
       suffix: "+",
       label: "সন্তুষ্ট ক্লায়েন্ট",
       iconName: "Smile"
     },
     {
       id: "ach_3",
-      number: 5,
+      number: 3,
       suffix: "+ বছর",
       label: "কাজের অভিজ্ঞতা",
       iconName: "Award"
     },
     {
       id: "ach_4",
-      number: 1000,
+      number: 150,
       suffix: "+",
       label: "কাস্টম আর্ট অ্যাসেট",
       iconName: "Layers"
     },
     {
       id: "ach_5",
-      number: 1200,
+      number: 525,
       suffix: "+",
-      label: "কাপ কফি ☕",
+      label: "কাপ দুধ চা ☕",
       iconName: "Coffee"
     }
   ],

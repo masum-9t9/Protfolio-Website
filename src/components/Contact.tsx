@@ -258,7 +258,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={language === 'bn' ? 'যেমন: তানভীর হাসান' : 'e.g. Tanvir Hasan'}
+                      placeholder={language === 'bn' ? 'যেমন: মো. মাসুম বিল্লাহ' : 'e.g. Md. Masum Billah'}
                       className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                     />
                   </div>
@@ -301,17 +301,14 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                       className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                     >
-                      <option value={language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}>
-                        {language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}
+                      <option value={language === 'bn' ? 'গ্রাফিক্স ডিজাইন' : 'Graphics Design'}>
+                        {language === 'bn' ? 'গ্রাফিক্স ডিজাইন' : 'Graphics Design'}
                       </option>
-                      <option value={language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}>
-                        {language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}
+                      <option value={language === 'bn' ? 'UI-UX ডিজাইন' : 'UI-UX Design'}>
+                        {language === 'bn' ? 'UI-UX ডিজাইন' : 'UI-UX Design'}
                       </option>
-                      <option value={language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}>
-                        {language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}
-                      </option>
-                      <option value={language === 'bn' ? 'কাস্টম থিম ডিজাইন' : 'Custom Theme Design'}>
-                        {language === 'bn' ? 'কাস্টম থিম ডিজাইন' : 'Custom Theme Design'}
+                      <option value={language === 'bn' ? 'ওয়েব ডেভেলপমেন্টে' : 'Web Development'}>
+                        {language === 'bn' ? 'ওয়েব ডেভেলপমেন্টে' : 'Web Development'}
                       </option>
                     </select>
                   </div>

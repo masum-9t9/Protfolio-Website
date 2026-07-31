@@ -567,7 +567,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         required
                         value={newReview.name}
                         onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                        placeholder={language === 'bn' ? 'যেমন: তানভীর আহমেদ' : 'e.g. Tanvir Ahmed'}
+                        placeholder={language === 'bn' ? 'যেমন: মো. মাসুম বিল্লাহ' : 'e.g. Md. Masum Billah'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
@@ -597,7 +597,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         type="text"
                         value={newReview.company}
                         onChange={(e) => setNewReview({ ...newReview, company: e.target.value })}
-                        placeholder={language === 'bn' ? 'যেমন: Tech Bangla' : 'e.g. Tech Media'}
+                        placeholder={language === 'bn' ? 'যেমন: Parahin Academy' : 'e.g. Parahin Academy'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
@@ -611,17 +611,14 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         onChange={(e) => setNewReview({ ...newReview, projectType: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       >
-                        <option value={language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}>
-                          {language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}
+                        <option value={language === 'bn' ? 'গ্রাফিক্স ডিজাইন' : 'Graphics Design'}>
+                          {language === 'bn' ? 'গ্রাফিক্স ডিজাইন' : 'Graphics Design'}
                         </option>
-                        <option value={language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}>
-                          {language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}
+                        <option value={language === 'bn' ? 'UI-UX ডিজাইন' : 'UI-UX Design'}>
+                          {language === 'bn' ? 'UI-UX ডিজাইন' : 'UI-UX Design'}
                         </option>
-                        <option value={language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}>
-                          {language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}
-                        </option>
-                        <option value={language === 'bn' ? 'ব্র্যান্ডিং প্যাকেজ' : 'Branding Package'}>
-                          {language === 'bn' ? 'ব্র্যান্ডিং প্যাকেজ' : 'Branding Package'}
+                        <option value={language === 'bn' ? 'ওয়েব ডেভেলপমেন্ট' : 'Web Development'}>
+                          {language === 'bn' ? 'ওয়েব ডেভেলপমেন্টে' : 'Web Development'}
                         </option>
                       </select>
                     </div>

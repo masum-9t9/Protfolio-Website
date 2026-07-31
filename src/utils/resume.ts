@@ -123,7 +123,8 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">1. Personal Portfolio (9t9.pro.bd)</div>
-          <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">React, TypeScript & Tailwind CSS interactive bilingual portfolio app.</div>
+          <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Tech Stack:
+                                                                             React • TypeScript • Tailwind CSS • Vite</div>
         </div>
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">2. Premium YouTube Thumbnails</div>
@@ -170,7 +171,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; color: #374151; font-family: monospace;">
           <div>🌐 <strong>Website:</strong> https://9t9.pro.bd</div>
           <div>📘 <strong>Facebook:</strong> www.facebook.com/masum.9t9.official</div>
-          <div>🎨 <strong>Behance:</strong> www.behance.net/masum_9t9_official</div>
+          <div>🎨 <strong>Behance:</strong> behance.net/masum_9t9_official</div>
           <div>🐙 <strong>GitHub:</strong> github.com/masum-9t9/</div>
           <div>▶️ <strong>YouTube:</strong> www.youtube.com/@ParahinAcademy</div>
           <div>🟢 <strong>Fiverr:</strong> www.fiverr.com/sellers/masum9t9/</div>

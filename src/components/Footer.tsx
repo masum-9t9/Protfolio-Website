@@ -78,14 +78,18 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
           {/* Column 1: Brand & Profile (lg:col-span-4) */}
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-400 via-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-xl shadow-sky-500/30 border border-white/20">
-                9T9
-              </div>
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-400 via-blue-600 to-indigo-600 flex items-center justify-center shadow-xl shadow-sky-500/30 border border-white/20 p-2 shrink-0">
+              <img 
+                  src="https://i.postimg.cc/gJT7B3XX/Profile-pic.png" 
+                  alt="Logo" 
+                  className="w-full h-full object-contain" 
+               />
+             </div>
               <div>
                 <span className="text-2xl font-black text-white tracking-tight block">Masum 9T9</span>
                 <span className="text-xs text-sky-400 font-bold flex items-center gap-2 mt-0.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Pro UI/UX Designer & Programmer</span>
+                  <span>Graphics Designer • Web Developer • Content Creator</span>
                 </span>
               </div>
             </div>
