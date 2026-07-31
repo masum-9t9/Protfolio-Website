@@ -52,7 +52,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-sky-950/60 border border-sky-500/30 text-xs sm:text-sm text-sky-300 font-medium mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(56,189,248,0.2)]"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-950/60 border border-sky-500/30 text-xs sm:text-sm text-sky-300 font-medium mb-4 sm:mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(56,189,248,0.2)]"
           >
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -60,13 +60,13 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             </span>
             <span className="tracking-wide font-semibold">{data.statusBadge}</span>
           </motion.div>
-          
+
           {/* Greeting */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-neutral-400 text-lg sm:text-xl font-medium tracking-wide mb-2 flex items-center gap-2"
+            className="text-neutral-400 text-base sm:text-xl font-medium tracking-wide mb-1.5 flex items-center gap-2"
           >
             <span>{data.greeting}</span>
             <span className="inline-block animate-bounce">👋</span>
@@ -77,23 +77,23 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] mb-4"
+            className="text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] mb-3 sm:mb-4"
           >
             <span className="text-gradient-cyan">{data.name}</span>
           </motion.h1>
 
           {/* Rotating Role Text */}
-          <div className="h-10 sm:h-12 overflow-hidden mb-6">
+          <div className="h-9 sm:h-12 overflow-hidden mb-4 sm:mb-6">
             <motion.div
               key={currentRoleIndex}
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -30, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-sky-400 flex items-center gap-2.5"
+              className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-extrabold text-sky-400 flex items-center gap-2"
             >
               <div className="p-1 rounded-lg bg-sky-500/20 border border-sky-400/30">
-                <Sparkles className="w-5 h-5 text-sky-400 animate-pulse" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-sky-400 animate-pulse" />
               </div>
               <span className="bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300 bg-clip-text text-transparent">
                 {roles[currentRoleIndex] || data?.role || ''}
@@ -106,7 +106,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-neutral-300 text-base sm:text-lg leading-relaxed max-w-2xl mb-8 font-normal"
+            className="text-neutral-300 text-sm sm:text-lg leading-relaxed max-w-2xl mb-6 sm:mb-8 font-normal"
           >
             {data.bio}
           </motion.p>
@@ -116,11 +116,11 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-4 mb-10"
+            className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 sm:gap-4 mb-8 sm:mb-10 w-full xs:w-auto"
           >
             <a
               href="#portfolio"
-              className="glow-button px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-sm tracking-wide transition-all duration-300 flex items-center gap-2.5 shadow-[0_10px_30px_rgba(56,189,248,0.35)] active:scale-95 group"
+              className="glow-button px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_10px_30px_rgba(56,189,248,0.35)] active:scale-95 group text-center"
             >
               <span>{data.ctaPrimaryText}</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -128,7 +128,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
 
             <a
               href="#contact"
-              className="px-8 py-4 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 text-neutral-200 border border-white/15 hover:border-sky-500/40 font-bold text-sm transition-all duration-300 flex items-center gap-2.5 active:scale-95 shadow-lg backdrop-blur-md"
+              className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 text-neutral-200 border border-white/15 hover:border-sky-500/40 font-bold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-2.5 active:scale-95 shadow-lg backdrop-blur-md text-center"
             >
               <MessageCircle className="w-4 h-4 text-sky-400" />
               <span>{data.ctaSecondaryText}</span>
@@ -140,9 +140,9 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="flex items-center gap-3 pt-5 border-t border-white/10 w-full max-w-xl"
+            className="flex flex-wrap items-center gap-2 sm:gap-3 pt-4 sm:pt-5 border-t border-white/10 w-full max-w-xl"
           >
-            <span className="text-xs text-neutral-400 font-semibold uppercase tracking-wider mr-2">
+            <span className="text-xs text-neutral-400 font-semibold uppercase tracking-wider mr-1 w-full sm:w-auto mb-1 sm:mb-0">
               {language === 'bn' ? 'সোশ্যাল লিংকসমূহ:' : 'Social Links:'}
             </span>
             
@@ -150,7 +150,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               href={socials.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-sky-400 hover:border-sky-500/50 hover:bg-sky-500/10 transition-all duration-300 shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-sky-400 hover:border-sky-500/50 hover:bg-sky-500/10 transition-all duration-300 shadow-md"
               title="Facebook"
             >
               <Facebook className="w-4 h-4" />
@@ -160,7 +160,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               href={socials.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all duration-300 shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all duration-300 shadow-md"
               title="WhatsApp"
             >
               <PhoneCall className="w-4 h-4" />
@@ -170,7 +170,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               href={socials.telegram}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-300 shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-300 shadow-md"
               title="Telegram"
             >
               <Send className="w-4 h-4" />
@@ -180,7 +180,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               href={socials.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-rose-500 hover:border-rose-500/50 hover:bg-rose-500/10 transition-all duration-300 shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-rose-500 hover:border-rose-500/50 hover:bg-rose-500/10 transition-all duration-300 shadow-md"
               title="YouTube"
             >
               <Youtube className="w-4 h-4" />
@@ -190,7 +190,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               href={socials.behance || "https://www.behance.net/masum_9t9_official"}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300 shadow-md"
               title="Behance Portfolio"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -202,7 +202,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               href={socials.fiverr || "https://www.fiverr.com/sellers/masum9t9/"}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all duration-300 shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all duration-300 shadow-md"
               title="Fiverr Profile"
             >
               <span className="font-extrabold text-xs tracking-tighter leading-none text-[#1DBF73]">
@@ -214,7 +214,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               href={socials.github || "https://github.com/masum-9t9/"}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all duration-300 shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all duration-300 shadow-md"
               title="GitHub Profile"
             >
               <Github className="w-4 h-4" />
@@ -287,7 +287,6 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
               className="w-full h-full object-cover" 
             />
             </div>
-
               </div>
 
             </div>

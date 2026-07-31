@@ -35,8 +35,19 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isNavHidden, setIsNavHidden] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Auto-hide on scroll down, reveal on scroll up or top mouse hover
+  // Check window width for mobile responsiveness
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-hide on scroll down for desktop, reveal on scroll up or top mouse hover
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
@@ -44,13 +55,16 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 30);
 
-      // Scroll Direction Detection
-      if (currentScrollY > lastScrollY && currentScrollY > 150) {
-        // Scrolling DOWN -> Auto hide / shrink
-        setIsNavHidden(true);
-      } else if (currentScrollY < lastScrollY - 8 || currentScrollY <= 80) {
-        // Scrolling UP or at top -> Reveal
+      // On mobile view, NEVER hide the navigation dock!
+      if (window.innerWidth < 640) {
         setIsNavHidden(false);
+      } else {
+        // Scroll Direction Detection for Desktop/Tablet
+        if (currentScrollY > lastScrollY && currentScrollY > 150) {
+          setIsNavHidden(true);
+        } else if (currentScrollY < lastScrollY - 8 || currentScrollY <= 80) {
+          setIsNavHidden(false);
+        }
       }
 
       lastScrollY = currentScrollY;
@@ -118,17 +132,17 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
     return 1;
   };
 
-  const isCollapsed = isNavHidden && !isHovered;
+  const isCollapsed = !isMobile && isNavHidden && !isHovered;
   const activeItemObj = NAV_ITEMS.find((item) => item.id === activeSection) || NAV_ITEMS[0];
   const activeLabel = t.nav[activeItemObj.labelKey] || activeItemObj.id;
 
   return (
-    <header className="fixed top-2 sm:top-4 left-0 right-0 z-[100] flex justify-center pointer-events-none px-1.5 xs:px-3 sm:px-4">
+    <header className="fixed top-1.5 sm:top-4 left-0 right-0 z-[100] flex justify-center pointer-events-none px-1 xs:px-2 sm:px-4">
       
       <motion.div
         onMouseEnter={() => {
           setIsHovered(true);
-          setIsNavHidden(false);
+          if (!isMobile) setIsNavHidden(false);
         }}
         onMouseLeave={() => {
           setIsHovered(false);
@@ -140,10 +154,10 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
           opacity: 1,
         }}
         transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-        className="pointer-events-auto flex items-center justify-center"
+        className="pointer-events-auto flex items-center justify-center max-w-full"
       >
         {isCollapsed ? (
-          /* Sleek Collapsed Minimal Capsule State */
+          /* Sleek Collapsed Minimal Capsule State (Desktop only) */
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -161,21 +175,6 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
 
             <div className="w-[1px] h-3.5 bg-white/20" />
 
-            {/* Quick Search trigger in collapsed pill */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                if (onOpenSearch) onOpenSearch();
-              }}
-              className="px-2 py-0.5 rounded-full bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 transition-all flex items-center gap-1 text-[11px] font-bold"
-              title={language === 'bn' ? 'সার্চ (F / ⌘K)' : 'Search (F / ⌘K)'}
-            >
-              <i className="fa-solid fa-magnifying-glass text-xs" />
-              <span className="font-mono text-[10px] bg-black/50 px-1 rounded text-sky-300 border border-sky-400/30 font-extrabold">F</span>
-            </button>
-
-            <div className="w-[1px] h-3.5 bg-white/20" />
-
             {/* Quick Contact trigger in collapsed pill */}
             <button
               onClick={(e) => {
@@ -186,7 +185,7 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
               title={language === 'bn' ? 'যোগাযোগ করুন' : 'Contact Me'}
             >
               <i className="fa-solid fa-paper-plane text-xs text-emerald-400" />
-              <span className="hidden xs:inline">{language === 'bn' ? 'যোগাযোগ' : 'Contact'}</span>
+              <span>{language === 'bn' ? 'যোগাযোগ' : 'Contact'}</span>
             </button>
 
             <div className="w-[1px] h-3.5 bg-white/20" />
@@ -197,22 +196,22 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
             </span>
           </motion.div>
         ) : (
-          /* Full Expanded Floating Dock */
+          /* Full Expanded Floating Dock - Always visible on Mobile & Responsive on all screens */
           <motion.nav
             initial={{ y: -60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-            className={`glass-dock flex items-center gap-0.5 xs:gap-1 sm:gap-1.5 px-1.5 xs:px-2.5 sm:px-3.5 py-1 xs:py-1.5 rounded-full backdrop-blur-2xl border transition-all duration-300 max-w-[99vw] sm:max-w-max overflow-x-auto no-scrollbar ${
+            className={`glass-dock flex items-center gap-0.5 xs:gap-1 sm:gap-1.5 px-1 xs:px-2 sm:px-3.5 py-1 xs:py-1.5 rounded-full backdrop-blur-2xl border transition-all duration-300 max-w-[98vw] sm:max-w-max overflow-x-auto no-scrollbar ${
               isScrolled
-                ? 'bg-neutral-950/90 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.85),0_1px_0_rgba(255,255,255,0.2)_inset]'
-                : 'bg-neutral-950/75 border-white/15 shadow-[0_10px_35px_rgba(0,0,0,0.65),0_1px_0_rgba(255,255,255,0.15)_inset]'
+                ? 'bg-neutral-950/95 border-white/25 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_1px_0_rgba(255,255,255,0.2)_inset]'
+                : 'bg-neutral-950/85 border-white/20 shadow-[0_10px_35px_rgba(0,0,0,0.75),0_1px_0_rgba(255,255,255,0.15)_inset]'
             }`}
             role="navigation"
             aria-label="Top Navigation Header"
           >
             {NAV_ITEMS.map((item, index) => {
               const isActive = activeSection === item.id;
-              const scale = getScale(index);
+              const scale = isMobile ? 1 : getScale(index);
               const label = t.nav[item.labelKey] || item.id;
 
               return (
@@ -230,27 +229,26 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
                       damping: 28,
                       mass: 0.6,
                     }}
-                    className={`relative flex items-center justify-center gap-1 xs:gap-1.5 p-1.5 xs:p-2 sm:p-2.5 lg:px-3 lg:py-1.5 xl:px-3.5 xl:py-2 rounded-full text-xs sm:text-sm font-semibold select-none shrink-0 dock-icon-anim ${
+                    className={`relative flex items-center justify-center gap-1 xs:gap-1.5 p-1 xs:p-1.5 sm:p-2.5 lg:px-3 lg:py-1.5 xl:px-3.5 xl:py-2 rounded-full text-xs sm:text-sm font-semibold select-none shrink-0 ${
                       isActive
                         ? 'text-white'
                         : 'text-neutral-400 hover:text-white hover:bg-white/10'
                     }`}
-                    style={{ animationDelay: `${index * 0.22}s` }}
                     title={label}
                   >
                     {/* Sliding Active Background Pill */}
                     {isActive && (
                       <motion.div
                         layoutId="activeDockPill"
-                        className="absolute inset-0 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-full shadow-[0_0_20px_rgba(56,189,248,0.5)] ring-1 ring-white/40 -z-10"
+                        className="absolute inset-0 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)] ring-1 ring-white/40 -z-10"
                         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                       />
                     )}
 
                     {/* Font Awesome Icon */}
                     <i
-                      className={`${item.faIconClass} text-xs xs:text-sm sm:text-base relative z-10 transition-transform duration-200 ${
-                        isActive ? 'scale-110 text-white' : 'group-hover:scale-110'
+                      className={`${item.faIconClass} text-[13px] xs:text-sm sm:text-base relative z-10 transition-transform duration-200 ${
+                        isActive ? 'scale-105 text-white' : 'group-hover:scale-110'
                       }`}
                       aria-hidden="true"
                     />
@@ -270,7 +268,7 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
                     )}
                   </motion.button>
 
-                  {/* Mobile / Compact Tooltip */}
+                  {/* Desktop Tooltip */}
                   <div className="absolute top-full mt-2.5 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-neutral-950/95 border border-white/20 text-white text-[11px] font-extrabold rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none lg:hidden whitespace-nowrap z-50 shadow-2xl backdrop-blur-xl">
                     <span>{label}</span>
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-950 border-t border-l border-white/20 rotate-45" />
@@ -279,24 +277,24 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({ onOpenSearch }) 
               );
             })}
 
-            {/* Vertical Separator */}
-            <div className="w-[1px] h-4 xs:h-5 bg-white/20 mx-0.5 xs:mx-1 shrink-0" />
-
-            {/* Global Project Search Trigger Button */}
-            <button
-              id="global-search-trigger"
-              onClick={onOpenSearch}
-              className="relative flex items-center gap-1.5 px-2 xs:px-2.5 py-1 xs:py-1.5 rounded-full bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/40 text-sky-300 hover:text-white text-xs font-bold transition-all shrink-0 active:scale-95 group shadow-[0_0_12px_rgba(56,189,248,0.25)]"
-              title={language === 'bn' ? 'প্রজেক্ট ও কোডিং সার্চ করুন (F / ⌘K)' : 'Search Projects & Skills (F / ⌘K)'}
-            >
-              <i className="fa-solid fa-magnifying-glass text-xs xs:text-sm text-sky-400 group-hover:scale-110 transition-transform" />
-              <span className="hidden sm:inline whitespace-nowrap text-xs font-bold">
-                {language === 'bn' ? 'সার্চ' : 'Search'}
-              </span>
-              <span className="inline-flex items-center text-[10px] bg-black/60 text-sky-300 font-mono px-1.5 py-0.5 rounded border border-sky-400/30 font-extrabold">
-                F
-              </span>
-            </button>
+            {/* Global Project Search Trigger Button - Hidden on mobile view */}
+            <div className="hidden sm:flex items-center">
+              <div className="w-[1px] h-4 xs:h-5 bg-white/20 mx-1 shrink-0" />
+              <button
+                id="global-search-trigger"
+                onClick={onOpenSearch}
+                className="relative flex items-center gap-1.5 px-2 xs:px-2.5 py-1 xs:py-1.5 rounded-full bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/40 text-sky-300 hover:text-white text-xs font-bold transition-all shrink-0 active:scale-95 group shadow-[0_0_12px_rgba(56,189,248,0.25)] ml-0.5"
+                title={language === 'bn' ? 'প্রজেক্ট ও কোডিং সার্চ করুন (F / ⌘K)' : 'Search Projects & Skills (F / ⌘K)'}
+              >
+                <i className="fa-solid fa-magnifying-glass text-xs xs:text-sm text-sky-400 group-hover:scale-110 transition-transform" />
+                <span className="whitespace-nowrap text-xs font-bold">
+                  {language === 'bn' ? 'সার্চ' : 'Search'}
+                </span>
+                <span className="inline-flex items-center text-[10px] bg-black/60 text-sky-300 font-mono px-1.5 py-0.5 rounded border border-sky-400/30 font-extrabold">
+                  F
+                </span>
+              </button>
+            </div>
 
             {/* Vertical Separator */}
             <div className="w-[1px] h-4 xs:h-5 bg-white/20 mx-0.5 xs:mx-1 shrink-0" />
