@@ -430,7 +430,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     },
     {
       id: "ach_4",
-      number: 150+,
+      number: 150,
       suffix: "+",
       label: "কাস্টম আর্ট অ্যাসেট",
       iconName: "Layers"
