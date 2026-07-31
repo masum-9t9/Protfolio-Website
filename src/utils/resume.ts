@@ -35,8 +35,8 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
 
   const summaryHdr = isBangla ? "আমার সম্পর্কে (Professional Summary)" : "About / Professional Summary";
   const summaryTxt = isBangla
-    ? "গত ৩ বছরের বেশি সময় ধরে আমি একজন গ্রাফিক্স ডিজাইনার, ওয়েব ডেভেলপার এবং কন্টেন্ট ক্রিয়েটর হিসেবে কাজ করছি। React ও TypeScript দিয়ে ফাস্ট ওয়েব অ্যাপ্লিকেশন বিল্ড করার পাশাপাশি Photoshop ও Illustrator দিয়ে প্রিমিয়াম পোস্টার ও হাই-সিটিআর ইউটিউব থাম্বনেল ডিজাইন করি। এছাড়াও 'পাড়াহীন একাডেমি'র মাধ্যমে ১০,০০০+ লার্নারদের অনলাইন টেকনিক্যাল ও ডিজাইন গাইডলাইন প্রদান করছি।"
-    : "Multi-disciplinary creative working across Graphic Design, Web Development, and Content Creation over the past 3+ years. Experienced in building responsive React & TypeScript web applications, designing high-converting YouTube thumbnails and photorealistic posters, and creating educational tutorials for 10,000+ online learners via Parahin Academy.";
+    ? "গ্রাফিক ডিজাইন, ওয়েব ডেভেলপমেন্ট এবং কন্টেন্ট তৈরির ক্ষেত্রে বিশেষ পারদর্শী একজন সৃজনশীল পেশাজীবী। দৃষ্টিনন্দন ব্র্যান্ড ডিজাইন, আধুনিক ও রেসপন্সিভ ওয়েবসাইট তৈরি এবং শিক্ষামূলক ডিজিটাল কন্টেন্ট তৈরির বিষয়ে আমি অত্যন্ত আগ্রহী। সৃজনশীলতা ও প্রযুক্তির সমন্বয়ে পরিচ্ছন্ন, ব্যবহারকারী-বান্ধব এবং প্রভাবশালী ডিজিটাল অভিজ্ঞতা প্রদানে আমি নিবেদিত।"
+    : "Creative professional specializing in Graphic Design, Web Development, and Content Creation. Passionate about designing visually engaging brands, building modern responsive websites, and creating educational digital content. Focused on delivering clean, user-friendly, and impactful digital experiences through creativity and technology.";
 
   const skillsHdr = isBangla ? "মূল দক্ষতা ও সফটওয়্যার (Skills & Tools)" : "Skills & Tools";
   const expHdr = isBangla ? "অভিজ্ঞতা ও শিক্ষা (Experience & Education)" : "Experience & Education";
@@ -123,8 +123,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">1. Personal Portfolio (9t9.pro.bd)</div>
-          <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Tech Stack:
-                                                                             React • TypeScript • Tailwind CSS • Vite</div>
+          <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Modern bilingual portfolio showcasing graphic design, web development, featured projects and professional services.</div>
         </div>
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">2. Premium YouTube Thumbnails</div>
@@ -151,7 +150,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
           <span style="font-size: 12.5px; font-weight: 700; color: #111827;">Graphic Designer, Web Developer & Content Creator</span>
           <span style="font-size: 11px; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 4px;">2024 - 2025</span>
         </div>
-        <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Delivered web apps and 100+ design assets for local and international clients.</div>
+        <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Delivered modern web solutions, branding, posters and digital design projects for clients and personal initiatives.</div>
       </div>
       <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
