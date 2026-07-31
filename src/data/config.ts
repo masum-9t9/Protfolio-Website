@@ -51,7 +51,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
       { label: "অভিজ্ঞতা", value: "৩+ বছর" },
       { label: "সম্পন্ন প্রজেক্ট", value: "১০০+" },
       { label: "হ্যাপি ক্লায়েন্ট", value: "৫০+" },
-      { label: "রেটিং", value: "৪.৯ / ৫.০" }
+      { label: "রেটিং", value: "৫.০ / ৫.০" }
     ]
   },
   skills: [
@@ -430,7 +430,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     },
     {
       id: "ach_4",
-      number: 150,
+      number: 150+,
       suffix: "+",
       label: "কাস্টম আর্ট অ্যাসেট",
       iconName: "Layers"
@@ -541,7 +541,10 @@ import { ENGLISH_PORTFOLIO_CONFIG } from './translations';
 
 export function getLocalizedPortfolioConfig(baseConfig: PortfolioConfig, lang: 'bn' | 'en'): PortfolioConfig {
   const safeBase = baseConfig || INITIAL_PORTFOLIO_CONFIG;
+  const customTestimonials = (safeBase.testimonials || []).filter((item) => item.id.startsWith('test-custom-'));
+
   if (lang === 'bn') {
+    const bnDefaultTestimonials = INITIAL_PORTFOLIO_CONFIG.testimonials || [];
     return {
       ...INITIAL_PORTFOLIO_CONFIG,
       ...safeBase,
@@ -552,7 +555,7 @@ export function getLocalizedPortfolioConfig(baseConfig: PortfolioConfig, lang: '
       experiences: safeBase.experiences || INITIAL_PORTFOLIO_CONFIG.experiences,
       portfolio: safeBase.portfolio || INITIAL_PORTFOLIO_CONFIG.portfolio,
       featuredEcosystem: safeBase.featuredEcosystem || INITIAL_PORTFOLIO_CONFIG.featuredEcosystem,
-      testimonials: safeBase.testimonials || INITIAL_PORTFOLIO_CONFIG.testimonials,
+      testimonials: [...bnDefaultTestimonials, ...customTestimonials],
       achievements: safeBase.achievements || INITIAL_PORTFOLIO_CONFIG.achievements,
       faqs: safeBase.faqs || INITIAL_PORTFOLIO_CONFIG.faqs,
       socials: { ...INITIAL_PORTFOLIO_CONFIG.socials, ...(safeBase.socials || {}) },
@@ -561,6 +564,7 @@ export function getLocalizedPortfolioConfig(baseConfig: PortfolioConfig, lang: '
   }
 
   const eng = ENGLISH_PORTFOLIO_CONFIG || INITIAL_PORTFOLIO_CONFIG;
+  const engDefaultTestimonials = eng.testimonials || [];
   return {
     ...INITIAL_PORTFOLIO_CONFIG,
     ...eng,
@@ -572,9 +576,7 @@ export function getLocalizedPortfolioConfig(baseConfig: PortfolioConfig, lang: '
     experiences: eng.experiences || safeBase.experiences || INITIAL_PORTFOLIO_CONFIG.experiences,
     portfolio: eng.portfolio || safeBase.portfolio || INITIAL_PORTFOLIO_CONFIG.portfolio,
     featuredEcosystem: eng.featuredEcosystem || safeBase.featuredEcosystem || INITIAL_PORTFOLIO_CONFIG.featuredEcosystem,
-    testimonials: (safeBase.testimonials && safeBase.testimonials.length > 0)
-      ? safeBase.testimonials
-      : (eng.testimonials || INITIAL_PORTFOLIO_CONFIG.testimonials),
+    testimonials: [...engDefaultTestimonials, ...customTestimonials],
     achievements: eng.achievements || safeBase.achievements || INITIAL_PORTFOLIO_CONFIG.achievements,
     faqs: eng.faqs || safeBase.faqs || INITIAL_PORTFOLIO_CONFIG.faqs,
   };

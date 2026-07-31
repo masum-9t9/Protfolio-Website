@@ -8,6 +8,7 @@ export const UI_TRANSLATIONS = {
       about: 'আমার সম্পর্কে',
       skills: 'দক্ষতা',
       services: 'সেবা',
+      projects: 'প্রজেক্ট',
       designProjects: 'ডিজাইন প্রজেক্ট',
       codingProjects: 'কোডিং প্রজেক্ট',
       portfolio: 'ডিজাইন প্রজেক্ট',
@@ -25,7 +26,7 @@ export const UI_TRANSLATIONS = {
     },
     about: {
       title: 'আমার সম্পর্কে',
-      subtitle: 'প্যাশনেট ভিজ্যুয়াল স্টোরিটেলার ও গ্রাফিক্স ডিজাইনার',
+      subtitle: 'গ্রাফিক ডিজাইনার • ফ্রন্ট-এন্ড ওয়েব ডেভেলপার • কন্টেন্ট ক্রিয়েটর',
       storyHeading: 'ডিজিটাল ক্রিয়েটিভিটির যাত্রাপথ',
       visionHeading: 'আমার লক্ষ্য ও ভিশন',
       careerGoalsHeading: 'ক্যারিয়ার গোলস',
@@ -113,8 +114,8 @@ export const UI_TRANSLATIONS = {
       subjectLabel: 'বিষয়',
       serviceCategoryLabel: 'প্রজেক্টের ক্যাটাগরি',
       subjectPlaceholder: 'প্রজেক্টের ধরণ (যেমন: থাম্বনেল ডিজাইন)',
-      messageLabel: 'প্রজেক্ট বিবরণ',
-      messagePlaceholder: 'আপনার প্রজেক্টের উদ্দেশ্য, প্রয়োজনীয় ফিচার, পছন্দের ডিজাইন, রেফারেন্স লিংক এবং অন্যান্য গুরুত্বপূর্ণ তথ্য লিখুন...',
+      messageLabel: 'মেসেজ বা প্রজেক্ট বিবরণ',
+      messagePlaceholder: 'আপনার প্রজেক্টের বিস্তারিত লিখুন...',
       sendButton: 'মেসেজ সাবমিট করুন',
       submitBtn: 'মেসেজ সাবমিট করুন',
       sendingButton: 'পাঠানো হচ্ছে...',
@@ -149,6 +150,7 @@ export const UI_TRANSLATIONS = {
       about: 'About',
       skills: 'Skills',
       services: 'Services',
+      projects: 'Projects',
       designProjects: 'Design Projects',
       codingProjects: 'Coding Projects',
       portfolio: 'Design Projects',
@@ -254,8 +256,8 @@ export const UI_TRANSLATIONS = {
       subjectLabel: 'Subject',
       serviceCategoryLabel: 'Project Category',
       subjectPlaceholder: 'Project Type (e.g. Thumbnail Design)',
-      messageLabel: 'Project Details',
-      messagePlaceholder: 'Describe your project, goals, required features, preferred design style, reference links, and any additional details...',
+      messageLabel: 'Message or Project Details',
+      messagePlaceholder: 'Tell me about your project details...',
       sendButton: 'Submit Message',
       submitBtn: 'Submit Message',
       sendingButton: 'Sending...',
@@ -289,11 +291,11 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
   hero: {
     greeting: "Hello, I'm",
     name: "Masum 9T9",
-    role: "Developer, Content Creator & Designer",
+    role: "Developer & Designer",
     rotatingRoles: [
       "Poster Design Specialist",
       "YouTube Thumbnail Creator",
-      "Web Developer",
+      "Education Graphics Artist",
       "Custom Theme Designer",
       "Brand Visual Creator"
     ],
@@ -306,7 +308,7 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
   },
   about: {
     title: "About Me",
-    subtitle: "Passionate Visual Storyteller & Graphics Designer",
+    subtitle: "Graphic Designer • Frontend Web Developer • Content Creator",
     storyHeading: "The Journey of Digital Creativity",
     storyParagraphs: [
       "For over 3 years, I have been passionately creating digital graphic art and thumbnail designs. Transforming ordinary visuals into compelling artwork is my core mission.",
@@ -336,7 +338,7 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
       { label: "Experience", value: "3+ Years" },
       { label: "Completed Projects", value: "100+" },
       { label: "Happy Clients", value: "50+" },
-      { label: "Rating", value: "4.9 / 5.0" }
+      { label: "Rating", value: "5.0 / 5.0" }
     ]
   },
   skills: [
@@ -684,37 +686,37 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
   achievements: [
     {
       id: "ach_1",
-      number: 500,
+      number: 100,
       suffix: "+",
       label: "Completed Projects",
       iconName: "CheckCircle2"
     },
     {
       id: "ach_2",
-      number: 350,
+      number: 50,
       suffix: "+",
       label: "Satisfied Clients",
       iconName: "Smile"
     },
     {
       id: "ach_3",
-      number: 5,
+      number: 3,
       suffix: "+ Years",
       label: "Work Experience",
       iconName: "Award"
     },
     {
       id: "ach_4",
-      number: 1000,
+      number: 150,
       suffix: "+",
       label: "Custom Art Assets",
       iconName: "Layers"
     },
     {
       id: "ach_5",
-      number: 1200,
+      number: 525,
       suffix: "+",
-      label: "Cups of Coffee ☕",
+      label: "Cup of milk tea ☕",
       iconName: "Coffee"
     }
   ],

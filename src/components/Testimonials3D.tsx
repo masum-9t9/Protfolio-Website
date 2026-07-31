@@ -51,19 +51,19 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
   const ratingNum = Number(item.rating) || 5;
 
   return (
-    <div className="w-80 sm:w-[420px] glass-card glass-card-hover p-6 sm:p-7 rounded-3xl border border-white/10 flex flex-col justify-between shrink-0 transition-all duration-300 shadow-2xl relative group overflow-hidden">
+    <div className="w-[270px] xs:w-[310px] sm:w-[420px] h-full min-h-[230px] sm:min-h-[270px] glass-card glass-card-hover p-4.5 xs:p-5 sm:p-7 rounded-2xl sm:rounded-3xl border border-white/10 flex flex-col justify-between shrink-0 transition-all duration-300 shadow-2xl relative group overflow-hidden">
       {/* Background Subtle Watermark Quote */}
-      <Quote className="absolute top-5 right-5 w-8 h-8 text-white/5 pointer-events-none group-hover:text-sky-400/20 transition-colors duration-300" />
-      <div className="absolute top-0 right-0 w-28 h-28 bg-sky-500/10 rounded-full blur-xl group-hover:bg-sky-500/20 transition-all pointer-events-none" />
+      <Quote className="absolute top-4 right-4 sm:top-5 sm:right-5 w-6 h-6 sm:w-8 sm:h-8 text-white/5 pointer-events-none group-hover:text-sky-400/20 transition-colors duration-300" />
+      <div className="absolute top-0 right-0 w-24 sm:w-28 h-24 sm:h-28 bg-sky-500/10 rounded-full blur-xl group-hover:bg-sky-500/20 transition-all pointer-events-none" />
 
       <div>
         {/* Rating Stars & Badge */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-1">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <div className="flex items-center gap-0.5 sm:gap-1">
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className={`w-4 h-4 ${
+                className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${
                   i < Math.floor(ratingNum)
                     ? 'fill-amber-400 text-amber-400'
                     : i < ratingNum
@@ -72,29 +72,29 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
                 }`}
               />
             ))}
-            <span className="text-xs text-amber-300 font-extrabold ml-2 bg-neutral-950/80 px-2.5 py-0.5 rounded-full border border-amber-500/30">
+            <span className="text-[10px] sm:text-xs text-amber-300 font-extrabold ml-1.5 sm:ml-2 bg-neutral-950/80 px-2 py-0.5 rounded-full border border-amber-500/30">
               {ratingNum.toFixed(1)}
             </span>
           </div>
 
-          <span className="text-[10px] font-extrabold text-sky-400 bg-sky-500/15 px-3 py-1 rounded-full border border-sky-400/30 shrink-0">
+          <span className="text-[9px] sm:text-[10px] font-extrabold text-sky-400 bg-sky-500/15 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full border border-sky-400/30 shrink-0">
             {item.projectType}
           </span>
         </div>
 
         {/* Client Feedback Text */}
-        <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal mb-4">
+        <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal mb-3 sm:mb-4">
           "{item.comment}"
         </p>
 
         {/* Designed Project Image Attachment if provided */}
         {item.designImageUrl ? (
-          <div className="mb-4 rounded-2xl overflow-hidden border border-white/10 bg-neutral-950/80 p-2">
-            <p className="text-[10px] text-neutral-300 font-semibold mb-1.5 flex items-center gap-1">
+          <div className="mb-3 sm:mb-4 rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-neutral-950/80 p-1.5 sm:p-2">
+            <p className="text-[9px] sm:text-[10px] text-neutral-300 font-semibold mb-1 sm:mb-1.5 flex items-center gap-1">
               <ImageIcon className="w-3 h-3 text-sky-400" />
               <span>{language === 'bn' ? 'আমার জন্য করা ডিজাইন:' : 'Design for Client:'}</span>
             </p>
-            <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-900 border border-white/10">
+            <div className="relative aspect-video rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 border border-white/10">
               <img
                 src={item.designImageUrl}
                 alt="Client Designed Project"
@@ -112,7 +112,7 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
       </div>
 
       {/* Client Profile Info */}
-      <div className="flex items-center gap-3.5 pt-4 border-t border-white/10">
+      <div className="flex items-center gap-3 pt-3 sm:pt-4 border-t border-white/10 mt-auto">
         <img
           src={item.avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(item.name)}`}
           alt={item.name}
@@ -123,13 +123,13 @@ const TestimonialCardItem: React.FC<{ item: TestimonialItem }> = ({ item }) => {
             e.currentTarget.onerror = null;
             e.currentTarget.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(item.name)}`;
           }}
-          className="w-11 h-11 rounded-full object-cover border-2 border-sky-400/40 shadow-lg shrink-0 bg-neutral-950"
+          className="w-9 h-9 sm:w-11 sm:h-11 rounded-full object-cover border-2 border-sky-400/40 shadow-lg shrink-0 bg-neutral-950"
         />
         <div className="overflow-hidden">
-          <h4 className="text-sm font-extrabold text-white group-hover:text-sky-300 transition-colors truncate">
+          <h4 className="text-xs sm:text-sm font-extrabold text-white group-hover:text-sky-300 transition-colors truncate">
             {item.name}
           </h4>
-          <p className="text-[11px] text-neutral-300 font-medium truncate">
+          <p className="text-[10px] sm:text-[11px] text-neutral-300 font-medium truncate">
             {item.role} {item.company ? `• ${item.company}` : ''}
           </p>
         </div>
@@ -567,7 +567,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         required
                         value={newReview.name}
                         onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                        placeholder={language === 'bn' ? 'যেমন: মো. মাসুম বিল্লাহ' : 'e.g. Md. Masum Billah'}
+                        placeholder={language === 'bn' ? 'যেমন: তানভীর আহমেদ' : 'e.g. Tanvir Ahmed'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
@@ -597,7 +597,7 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         type="text"
                         value={newReview.company}
                         onChange={(e) => setNewReview({ ...newReview, company: e.target.value })}
-                        placeholder={language === 'bn' ? 'যেমন: Parahin Academy' : 'e.g. Parahin Academy'}
+                        placeholder={language === 'bn' ? 'যেমন: Tech Bangla' : 'e.g. Tech Media'}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       />
                     </div>
@@ -611,14 +611,17 @@ export const Testimonials3D: React.FC<Testimonials3DProps> = ({
                         onChange={(e) => setNewReview({ ...newReview, projectType: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-[#3A86FF]"
                       >
-                        <option value={language === 'bn' ? 'গ্রাফিক্স ডিজাইন' : 'Graphics Design'}>
-                          {language === 'bn' ? 'গ্রাফিক্স ডিজাইন' : 'Graphics Design'}
+                        <option value={language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}>
+                          {language === 'bn' ? 'পোস্টার ডিজাইন' : 'Poster Design'}
                         </option>
-                        <option value={language === 'bn' ? 'UI-UX ডিজাইন' : 'UI-UX Design'}>
-                          {language === 'bn' ? 'UI-UX ডিজাইন' : 'UI-UX Design'}
+                        <option value={language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}>
+                          {language === 'bn' ? 'ইউটিউব থাম্বনেল' : 'YouTube Thumbnail'}
                         </option>
-                        <option value={language === 'bn' ? 'ওয়েব ডেভেলপমেন্ট' : 'Web Development'}>
-                          {language === 'bn' ? 'ওয়েব ডেভেলপমেন্টে' : 'Web Development'}
+                        <option value={language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}>
+                          {language === 'bn' ? 'এডুকেশন থাম্বনেল' : 'Educational Graphics'}
+                        </option>
+                        <option value={language === 'bn' ? 'ব্র্যান্ডিং প্যাকেজ' : 'Branding Package'}>
+                          {language === 'bn' ? 'ব্র্যান্ডিং প্যাকেজ' : 'Branding Package'}
                         </option>
                       </select>
                     </div>

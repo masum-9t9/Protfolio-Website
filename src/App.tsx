@@ -19,6 +19,7 @@ import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { CreatorProfileModal } from './components/CreatorProfileModal';
+import { DesktopContactButton } from './components/DesktopContactButton';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -199,6 +200,12 @@ function MainContent() {
 
       {/* Glass Contact Section */}
       <Contact config={activeConfig.contact} socials={activeConfig.socials} />
+
+      {/* Floating Desktop Contact Shortcuts Button */}
+      <DesktopContactButton
+        whatsappNumber={activeConfig.contact?.whatsappNumber || '8801303623838'}
+        facebookUrl={activeConfig.socials?.facebook || 'https://www.facebook.com/masum.9t9.official'}
+      />
 
       {/* Footer */}
       <Footer socials={activeConfig.socials} />
