@@ -1,3 +1,6 @@
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 /**
  * Handles Viewing and Downloading Masum 9T9's Official Resume / CV
  * Supports both English and Bangla versions.
@@ -109,8 +112,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">1. Personal Portfolio (9t9.pro.bd)</div>
-          <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">Tech Stack:
-                                                                             React • TypeScript • Tailwind CSS • Vite</div>
+          <div style="font-size: 11.5px; color: #4b5563; margin-top: 3px;">React, TypeScript & Tailwind CSS interactive bilingual portfolio app.</div>
         </div>
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
           <div style="font-size: 12.5px; font-weight: 700; color: #111827;">2. Premium YouTube Thumbnails</div>
@@ -182,12 +184,6 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
   document.body.appendChild(container);
 
   try {
-    const html2canvasModule = await import('html2canvas');
-    const html2canvas = html2canvasModule.default;
-
-    const jsPDFModule = await import('jspdf');
-    const jsPDF = jsPDFModule.jsPDF || jsPDFModule.default;
-
     const canvas = await html2canvas(container, {
       scale: 2,
       useCORS: true,
@@ -196,7 +192,9 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
     });
 
     const imgData = canvas.toDataURL('image/jpeg', 0.98);
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    // Handle both default export and named export formats across bundlers
+    const PDFClass = typeof jsPDF === 'function' ? jsPDF : (jsPDF as any).jsPDF || (jsPDF as any).default;
+    const pdf = new PDFClass('p', 'mm', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
