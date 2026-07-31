@@ -408,7 +408,7 @@ export const Contact: React.FC<ContactProps> = ({ config, socials }) => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={isBangla ? 'যেমন: তানভীর হাসান' : 'e.g. Tanvir Hasan'}
+                      placeholder={isBangla ? 'যেমন: মো. মাসুম বিল্লাহ' : 'e.g. Md. Masum Billah'}
                       className="w-full px-4 py-3.5 rounded-xl bg-neutral-950/80 border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
                     />
                   </div>
