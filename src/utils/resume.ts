@@ -79,7 +79,7 @@ export const downloadResume = async (lang: 'bn' | 'en' = 'bn') => {
       <!-- 80-100px Circular Profile Photo -->
       <div style="text-align: center; flex-shrink: 0;">
         <img
-          src="https://i.postimg.cc/gJT7B3XX/Profile-pic.png"
+          src="https://i.postimg.cc/xCX1vY0H/Profile-pic.png"
           alt="Masum 9T9"
           crossorigin="anonymous"
           style="width: 88px; height: 88px; border-radius: 50%; border: 3px solid #3A86FF; object-fit: cover; box-shadow: 0 4px 12px rgba(58, 134, 255, 0.2);"

@@ -15,7 +15,7 @@ export const INITIAL_PORTFOLIO_CONFIG: PortfolioConfig = {
     bio: "আমি আধুনিক ওয়েব ডেভেলপমেন্ট, প্রফেশনাল গ্রাফিক্স ডিজাইন এবং কন্টেন্ট ক্রিয়েশনের সমন্বয়ে ব্র্যান্ডকে অনন্য উচ্চতায় নিয়ে যাই। হাই-কনভার্টিং ইউটিউব থাম্বনেল, ফটো-রিয়ালিস্টিক পোস্টার, রেসপন্সিভ ওয়েব অ্যাপ্লিকেশন এবং এডুকেশনাল ভিডিও কন্টেন্ট তৈরিতে অভিজ্ঞ।",
     statusBadge: "নতুন প্রজেক্টের জন্য উন্মুক্ত (Available for Work)",
     availableForHire: true,
-    profileImage: "https://i.postimg.cc/gJT7B3XX/Profile-pic.png",
+    profileImage: "https://i.postimg.cc/xCX1vY0H/Profile-pic.png",
     ctaPrimaryText: "প্রজেক্ট দেখুন",
     ctaSecondaryText: "যোগাযোগ করুন"
   },

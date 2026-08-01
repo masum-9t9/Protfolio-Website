@@ -237,12 +237,12 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
             {/* Profile Image Glass Container */}
             <div className="relative w-full h-full rounded-3xl overflow-hidden glass-card p-2.5 border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.8)] bg-neutral-900/90 group">
               <img
-                src={data.profileImage || "https://i.postimg.cc/FzTMvwBb/Profile-pic.png"}
+                src={data.profileImage || "https://i.postimg.cc/xCX1vY0H/Profile-pic.png"}
                 alt={data.name}
                 referrerPolicy="no-referrer"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = "https://i.postimg.cc/FzTMvwBb/Profile-pic.png";
+                  e.currentTarget.src = "https://i.postimg.cc/xCX1vY0H/Profile-pic.png";
                 }}
                 className="w-full h-full object-cover rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
               />
@@ -282,7 +282,7 @@ export const Hero: React.FC<HeroProps> = ({ data, socials }) => {
   style={{ display: data.logoImage ? 'none' : 'flex' }}
 >
               <img 
-               src="https://i.postimg.cc/gJT7B3XX/Profile-pic.png" 
+               src="https://i.postimg.cc/xCX1vY0H/Profile-pic.png" 
              alt="Profile pic" 
               className="w-full h-full object-cover" 
             />

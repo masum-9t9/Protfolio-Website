@@ -302,7 +302,7 @@ export const ENGLISH_PORTFOLIO_CONFIG: PortfolioConfig = {
     bio: "I specialize in creating modern, high-converting digital graphics art. From professional posters and high-CTR YouTube thumbnails to educational visuals and custom themes, I take your brand to the next level.",
     statusBadge: "Available for Work",
     availableForHire: true,
-    profileImage: "https://i.postimg.cc/gJT7B3XX/Profile-pic.png",
+    profileImage: "https://i.postimg.cc/xCX1vY0H/Profile-pic.png",
     ctaPrimaryText: "View Projects",
     ctaSecondaryText: "Contact Me"
   },

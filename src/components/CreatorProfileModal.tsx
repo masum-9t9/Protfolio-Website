@@ -21,7 +21,7 @@ export const CreatorProfileModal: React.FC<CreatorProfileModalProps> = ({
   creatorRole = "Graphics Designer & Full-Stack Developer",
   socials = {},
   contact = {},
-  profileImage = "https://i.postimg.cc/gJT7B3XX/Profile-pic.png",
+  profileImage = "https://i.postimg.cc/xCX1vY0H/Profile-pic.png",
 }) => {
   const [isCopied, setIsCopied] = useState(false);
 

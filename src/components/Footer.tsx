@@ -80,7 +80,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
             <div className="flex items-center gap-3">
 <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-xl shadow-sky-500/30 border border-white/20 shrink-0">
   <img 
-    src="https://i.postimg.cc/gJT7B3XX/Profile-pic.png" 
+    src="https://i.postimg.cc/xCX1vY0H/Profile-pic.png" 
     alt="Masum 9T9" 
     className="w-full h-full object-cover" 
   />
